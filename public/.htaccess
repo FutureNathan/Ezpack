@@ -1,0 +1,112 @@
+
+#################################################################################################### --- APACHE AUTHENTICATION
+
+# AuthType Basic
+# AuthName "Authentication required"
+# AuthUserFile "/home/_________/.htpasswd"
+# Require valid-user
+
+#################################################################################################### --- INITIALISE REWRITE ENGINE
+
+RewriteEngine On
+
+# RewriteRule's FIRST argument is a URL path based on the current directory (where .htaccess is located).
+
+# RewriteBase is a prefix for RewriteRule directives that substitute a RELATIVE path.
+# RewriteBase is prefixed to the SECOND part of RewriteRule directives.
+
+RewriteBase /
+
+#################################################################################################### --- PATHS
+
+# Edit author
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?autor/ndrysho/[a-z0-9-]+/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=autor/ndrysho&author_id=$5&status=$6 [QSA,L]
+
+# View author
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?autor/shiko/[a-z0-9-]+/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=autor/shiko&author_id=$5&status=$6 [QSA,L]
+
+# Author Page
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?autor/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=autor&authorID=$5 [QSA,L]
+
+# Edit book
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?liber/ndrysho/([a-z0-9-]+/)?([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=liber/ndrysho&book_id=$6&status=$7 [QSA,L]
+
+# View book
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?liber/shiko/([a-z0-9-]+/)?([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=liber/shiko&book_id=$6&status=$7 [QSA,L]
+
+# Read book
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?liber/lexo/[a-z0-9-]+/([0-9]+)(/([a-z-]+))?/?$ gate.php?locale=$2&requestedPath=liber/lexo&book_id=$5&status=$7 [QSA,L]
+
+# Book Page
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?liber/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=liber&bookID=$5 [QSA,L]
+
+# Edit category
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?kategori/ndrysho/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=kategori/ndrysho&cat_id=$5 [QSA,L]
+
+# Edit publisher
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?shtepi-botuese/ndrysho/[a-z0-9-]+/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=shtepi-botuese/ndrysho&publisher_id=$5&status=$6 [QSA,L]
+
+# View publisher
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?shtepi-botuese/shiko/[a-z0-9-]+/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=shtepi-botuese/shiko&publisher_id=$5&status=$6 [QSA,L]
+
+# Book Page
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?shtepi-botuese/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=shtepi-botuese&publisherID=$5 [QSA,L]
+
+# Edit review
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?pershtypje/ndrysho/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=pershtypje/ndrysho&review_id=$5&status=$6 [QSA,L]
+
+# View review
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?pershtypje/shiko/([0-9]+)/([a-z-]+)/?$ gate.php?locale=$2&requestedPath=pershtypje/shiko&review_id=$5&status=$6 [QSA,L]
+
+# Edit user
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?perdorues/ndrysho/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=perdorues/ndrysho&user_id=$5 [QSA,L]
+
+# View user
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?perdorues/shiko/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=perdorues/shiko&user_id=$5 [QSA,L]
+
+# Edit blog
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?blog/ndrysho/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=blog/ndrysho&blog_id=$5 [QSA,L]
+
+# View blog
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?blog/shiko/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=blog/shiko&blog_id=$5 [QSA,L]
+
+# View invoice
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?fature/shiko/([0-9]+)/?$ gate.php?locale=$2&requestedPath=fature/shiko&invoice_id=$5 [QSA,L]
+
+# All books page
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?libra(?:/s/([a-z0-9-]+))?(?:/c/([a-z-_]+))?(?:/p/([a-z0-9-_]+))?(?:/f/([a-z-_]+))?(?:/pr/([a-z0-9-_]+))?$ gate.php?locale=$2&requestedPath=libra&searchString=$5&category=$6&publisher=$7&format=$8&price=$9 [QSA,L]
+
+# Withdrawals
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?terheqjet/([0-9]+)/?$ gate.php?locale=$2&requestedPath=terheqjet&withdrawal_id=$5 [QSA,L]
+
+# Edit notification
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?njoftim/ndrysho/[a-z0-9-]+/([0-9]+)/?$ gate.php?locale=$2&requestedPath=ndrysho-njoftimin&notif_id=$5 [QSA,L]
+
+#################################################################################################### --- REWRITE PUBLIC REQUESTS
+
+# Keys must match the crc32b pattern.
+RewriteRule ^pub/file/([a-f0-9]{8})/ gate.php?purpose=pubRequest&requestType=fsFile&requestKey=$1 [L]
+
+RewriteRule ^pub/draft-image/([0-9]+)/([a-z]+)/?([0-9]*) gate.php?purpose=pubRequest&requestType=dbDraftImage&id=$1&type=$2&imgNr=$3 [L]
+
+RewriteRule ^pub/image/(profile|publisher|author|book|blog)/([0-9]+)/([a-z0-9]+) gate.php?purpose=pubRequest&requestType=dbImage&section=$1&imgId=$2&imgSize=$3 [L]
+
+RewriteRule ^pub/download/([0-9]+)/(draft|publikuar|blere|falas)/(pdf|epub|source) gate.php?purpose=pubRequest&requestType=dbBook&bookId=$1&bookStatus=$2&bookFormat=$3 [L]
+
+RewriteRule ^pub/download/invoice/([0-9]+) gate.php?purpose=pubRequest&requestType=invoice&invoiceId=$1 [L]
+
+#################################################################################################### --- REWRITE PAGE REQUESTS
+
+# Paths which match the pattern will be checked to see whether they correspond to a page.
+
+RewriteRule ^(([a-z]{2}(-[a-z]{2})?)(/|$))?([A-Za-z0-9_/-]*?)/?$ gate.php?locale=$2&requestedPath=$5 [QSA,L]
+
+#################################################################################################### --- REWRITE OTHER REQUESTS
+
+# Rewrite all paths to the gateway file. The gateway file is the only point of entry for the entire site.
+# All requests pass through it. For security reasons, the rest of the files are located outside of public_html.
+# This way they are not directly accessible through a browser.
+
+RewriteCond %{REQUEST_URI} !^/robots\.txt$
+RewriteCond %{REQUEST_URI} !^/sitemap\.xml$
+RewriteRule !gate.php gate.php [L]
