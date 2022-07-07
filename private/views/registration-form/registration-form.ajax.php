@@ -11,6 +11,10 @@ if ($_POST['formAction'] === 'userRegistration') {
     $errors['user_first_name'] = _('Empty or incorrect name.');
   }
   
+  if (isEmpty(filter_input(INPUT_POST, 'phone_number', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['phone_number'])))) === true) {
+    $errors['user_phone_number'] = _('Empty or incorrect phone number.');
+  }
+  
   if (isEmpty (filter_input (INPUT_POST, 'email', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => SYSTEM_REGEX['email_address'])))) === true) {
     $errors['user_email'] = _('Empty or incorrect email.');
   }
@@ -65,15 +69,17 @@ if ($_POST['formAction'] === 'userRegistration') {
       INSERT INTO users (
         user_name,
         user_email,
+        user_phone_number,
         user_password
       )
       
-      VALUES('%s', '%s', '%s')
+      VALUES('%s', '%s', '%s', '%s')
       RETURNING user_id
       ",
       
       pg_escape_string($dbc['read_write'], $_POST['name']),
       pg_escape_string($dbc['read_write'], strtolower($_POST['email'])),
+      pg_escape_string($dbc['read_write'], $_POST['phone_number']),
       pg_escape_string($dbc['read_write'], password_hash ($_POST['password'], PASSWORD_BCRYPT))
       
     ));
@@ -146,7 +152,7 @@ if ($_POST['formAction'] === 'userRegistration') {
   if ($errors) {
     echo json_encode([
       'feedbackType'    => 'attention',
-      'feedbackSummary' => [_('Ju lutemi plotësoni saktë të gjitha fushat.')],
+      'feedbackSummary' => [_('Please fill in all fields.')],
       'feedbackList'    => $errors
     ]);
   }

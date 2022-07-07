@@ -1,7 +1,7 @@
 <?php
 
 echo '
-  <form id="registrationForm">
+  <form>
     <input type="hidden" name="formAction" value="userRegistration">
     <input type="hidden" name="formToken" value="' . createToken('alphanumeric_all', 40) . '">
     <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('registration-form', 'registration-form.ajax.php', 'registration.php') . '">
@@ -16,16 +16,20 @@ echo '
       <input type="text" name="email" value="">
     </label>
     
+    <label class="required">
+      <span>Phone number</span>
+      <input type="text" name="phone_number" value="">
+    </label>
+    
     <label class="required passwordLabel">
-      <span>' . _('Fjalëkalimi') . '</span>
+      <span>' . _('Password') . '</span>
       <input type="password" name="password">
       <button type="button" class="eyeIcon"></button>
     </label>
     
     <label class="required passwordLabel">
-      <span>' . _('Konfirmo fjalëkalimin') . '</span>
+      <span>' . _('Confirm password') . '</span>
       <input type="password" name="confirm_password">
-      <button type="button" class="eyeIcon"></button>
     </label>
     
     <button type="submit" class="primaryButton">' . _('Regjistrohu') . '</button>

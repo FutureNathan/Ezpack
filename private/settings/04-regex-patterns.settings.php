@@ -11,7 +11,7 @@ const SYSTEM_REGEX = [
   
   'any_digits'              =>  '~^[0-9]+$~',
   'any_digits_positive'     =>  '~^[1-9][0-9]*$~',
-  'any_digits_optional'     => '~^[0-9]*$~',
+  'any_digits_optional'     =>  '~^[0-9]*$~',
   
   'latin_letters_lower'     =>  '~^[a-z]+$~',
   'latin_letters_upper'     =>  '~^[A-Z]+$~',
@@ -31,7 +31,9 @@ const SYSTEM_REGEX = [
   
   'email_address'           =>  '~^[A-Za-z0-9_.+-]+@[A-Za-z0-9-.]+\.[A-Za-z0-9]+$~',
   
-  'view_asset_path'         =>  '~^(?<fullPath>' . PATH_PRIVATE_VIEWS . '(?<viewName>[a-z0-9\-]+)/(?<relativePath>(?:(?<directoryType>[a-z.]+)/)?(?<fileName>[A-Za-z0-9_\-]+)(?<fileExtension>\.[a-z0-9.]+)))$~'
+  'view_asset_path'         =>  '~^(?<fullPath>' . PATH_PRIVATE_VIEWS . '(?<viewName>[a-z0-9\-]+)/(?<relativePath>(?:(?<directoryType>[a-z.]+)/)?(?<fileName>[A-Za-z0-9_\-]+)(?<fileExtension>\.[a-z0-9.]+)))$~',
+  
+  'integer_or_float'        =>  '~^[0-9]+(\.[0-9]+)?$~'
 ];
 
 #################################################################################################### --- APPLICATION REGEX PATTERNS
@@ -64,22 +66,7 @@ const APPLICATION_REGEX = [
   'orderLetter'                    => '~^[a-zA-Z]*$~',
   'review_score'                   => '~^[1-5]$~',
   'sort_by'                        => '~^(ASC|DESC)$~',
-  'reviews_order_by'               => '~^(review_date_time|review_likes|review_dislikes|review_score|review_likes\+review_dislikes)$~',
-  'users_order_by'                 => '~^(user_first_name|user_registration_date)$~',
-  'boolean'                        => '~^yes|no$~',
-  'favourites'                     => '~^(yes|no|except)$~',
-  'status'                         => '~^(draft|ne-pritje-per-miratim|publikuar|refuzuar|joaktiv|arkivuar)$~',
-  'user_status'                    => '~^(registered|confirmed|deactivated)$~',
-  'book_status_download'           => '~^(draft|publikuar|blere|falas)$~',
   'format'                         => '~^(epub|pdf|source)$~',
-  'price_optional'                 => '~^[0-9-><]*$~',
-  'image_size'                     => '~^(original|30|50|100|150|200|250|300|350|400|450|500|600|700|800|900|1000)$~',
-  
-  'true'                           => '~^true$~',
-  
-  'blog_sub_heading'               => '~<h2>(?<title>.+?)</h2>~',
-  
-  'book_search_parameters'         => '~^/libra(/s/(?<searchString>[a-z0-9-]+))?(/c/(?<categories>[a-z-_]+))?(/p/(?<publishers>[a-z-_]+))?(/pr/(?<prices>[a-z0-9-_]+))?$~',
   
   'contains_number'                => '~[0-9]~',
   

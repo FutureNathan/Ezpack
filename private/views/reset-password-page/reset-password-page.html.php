@@ -4,22 +4,19 @@
 
 insertView ('website-head');
 
-#################################################################################################### --- INSERT PAGE HEADER
-
-insertView ('main-navigation');
-
-#################################################################################################### --- PAGE CONTENT
-
-// insertView('menu', 'set-password-page');
-
 #################################################################################################### --- LOGIN FORM
 
 echo $errorMsg;
 unset($errorMsg);
 
-echo '
-  <main>
-    <div class="loginMain" style="background-color: #78a1bf;padding: 1em;">
+echo '<main>';
+  
+  echo 
+  $_SESSION['feedbackMessage'];
+  $_SESSION['feedbackMessage'] = '';
+    
+  echo '
+    <section class="loginMain" style="background-color: #78a1bf;padding: 1em;">
       <h2>' . _('RESET PASSWORD') . '</h2>
       
       <form class="loginForm" method="post">
@@ -37,7 +34,7 @@ echo '
         <button type="submit" class="button filledButton">' . _('Reset password') . '</button>
        
       </form>
-    </div>
+    </section>
   </main>
 ';
 

@@ -19,9 +19,9 @@ echo '
 
 .boxPricing {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(6.7em, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(7.5em, 1fr));
   margin-top: 1em;
-  grid-gap: 0.2em;
+  grid-gap: 1em 1em;
 }
 
 .boxPricing h2{

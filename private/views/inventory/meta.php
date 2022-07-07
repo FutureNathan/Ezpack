@@ -14,8 +14,8 @@
 
 # URL paths MUST be blank for the home page, as it is the base path.
 
-$meta['url_id']       = 'settings';
-$meta['url']          = 'settings'; // relative URL path
+$meta['url_id']       = 'inventory';
+$meta['url']          = 'inventory'; // relative URL path
 
 $meta['title']        = _('EZ pack - Settings');
 

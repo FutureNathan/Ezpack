@@ -8,11 +8,11 @@ if ($_POST['formAction'] === 'userLogin') {
 #################################################################################################### --- INPUT VALIDATION
   
   if (isEmpty (filter_input (INPUT_POST, 'email', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => SYSTEM_REGEX['email_address'])))) === true) {
-    $errors['user_email'] = _('Email-i është bosh ose i pavlefshëm.');
+    $errors['user_email'] = _('Email is empty or invalid.');
   }
   
   if (isEmpty(filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['safe'])))) === true) {
-    $errors['user_password'] = _('Fjalëkalimi është bosh ose i pavlefshëm.');
+    $errors['user_password'] = _('Password is empty or invalid.');
   }
   
 #################################################################################################### --- VALIDATION COMPLETE
@@ -34,7 +34,7 @@ if ($_POST['formAction'] === 'userLogin') {
     
     if (pg_num_rows($checkUserQ) !== 1) {
       
-      $errors['user_email'] = _('Ky email nuk ekziston.');
+      $errors['user_email'] = _('This email does not exists.');
       
     } else {
     
@@ -53,7 +53,7 @@ if ($_POST['formAction'] === 'userLogin') {
             pg_escape_string($dbc['read_write'], $checkUser['user_id'])
           ));
           
-          $msg = _('Llogaria juaj sapo u riaktivizua.');
+          $msg = _('Your account has just been reactivated.');
         }
         
         // ----------
@@ -74,12 +74,12 @@ if ($_POST['formAction'] === 'userLogin') {
 //         }
         
         echo json_encode([
-          'redirectUrl' => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['user-profile-page']['meta']['url']
+          'redirectUrl' => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['home-page']['meta']['url']
         ]);
         
       } else {
         
-        $errors['user_email'] = _('Emaili dhe fjalëkalimi nuk përputhen.');
+        $errors['user_email'] = _('Email and password do not match.');
       }
       
     
@@ -90,7 +90,7 @@ if ($_POST['formAction'] === 'userLogin') {
   if ($errors) {
     echo json_encode([
       'feedbackType'    => 'attention',
-      'feedbackSummary' => [_('Ju lutemi plotësoni saktë të gjitha fushat.')],
+      'feedbackSummary' => [_('Please fill in all fields.')],
       'feedbackList'    => $errors
     ]);
   }

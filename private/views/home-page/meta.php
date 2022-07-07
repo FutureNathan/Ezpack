@@ -18,7 +18,7 @@ $meta['url_id']       = '';
 $meta['url']          = ''; // relative URL path
 
 $meta['title']        = _('EZ pack');
-
+$meta['access'] = ['registered'];
 /*
 $meta['og_type']      = '';
 $meta['og_image']     = '';

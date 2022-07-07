@@ -4,16 +4,15 @@
 
 insertView('website-head');
 
-#################################################################################################### --- PAGE HEADER
-
-insertView('page-header');
-
-
 #################################################################################################### --- PAGE CONTENT
 
-echo '
+echo '<main>';
   
-  <main>
+  echo 
+  $_SESSION['feedbackMessage'];
+  $_SESSION['feedbackMessage'] = '';
+    
+  echo '
     <section id="registration" style="background-color: #78a1bf;">
       
       <h2>' . _('Create new account') . '</h2>';

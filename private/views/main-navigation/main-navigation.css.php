@@ -25,7 +25,7 @@ echo '
     text-decoration: none;
   }
   nav#stickyStripe > .logo {
-    margin: 0em auto;
+    margin: 0em auto 0em 1em;
     padding: 1em 0.5em;
   }
 ';

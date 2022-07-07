@@ -19,6 +19,7 @@ $meta['url']          = 'history'; // relative URL path
 
 $meta['title']        = _('EZ pack - History');
 
+$meta['access'] = ['registered'];
 /*
 $meta['og_type']      = '';
 $meta['og_image']     = '';

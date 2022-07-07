@@ -4,16 +4,15 @@
 
 insertView('website-head');
 
-#################################################################################################### --- PAGE HEADER
-
-insertView('page-header');
-
-
 #################################################################################################### --- PAGE CONTENT
 
-echo '
+echo '<main>';
   
-  <main>
+  echo 
+  $_SESSION['feedbackMessage'];
+  $_SESSION['feedbackMessage'] = '';
+    
+  echo '
     <section id="registration" style="background-color: #78a1bf;">
       
       <h2>' . _('Login') . '</h2>';
@@ -21,7 +20,9 @@ echo '
       insertView('login-form');
       
      echo '
+     <a href="' . WEBSITE_BASE_URL . VIEWS['forgot-password-page']['meta']['url'] . '">Forgot password?</a>
      <a href="' . WEBSITE_BASE_URL . VIEWS['registration-page']['meta']['url'] . '">Don\'t have an account?</a>
+
     </section>
   </main>
 ';

@@ -4,15 +4,15 @@
 
 insertView ('website-head');
 
-#################################################################################################### --- INSERT PAGE HEADER
-
-insertView ('main-navigation');
-
 #################################################################################################### --- PAGE CONTENT
 
-echo '
-  <main>
-    <div class="loginMain">
+echo '<main>';
+  
+  echo 
+  $_SESSION['feedbackMessage'];
+  $_SESSION['feedbackMessage'] = '';
+    
+  echo '
       <section style="background-color: #78a1bf;padding: 1em;">
         <h2>' . _('Recover password') . '</h2>
         
@@ -30,7 +30,6 @@ echo '
         
         <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url'] . '">' . _('Turn back') . '!</a>
     </section>
-    </div>
   </main>
 ';
 

@@ -123,6 +123,7 @@ if ($_GET['purpose'] === 'pubRequest') {
         break;
       }
     }
+    
   } else if (WEBSITE_STATUS === 'MAINTENANCE') {
     
   } else {

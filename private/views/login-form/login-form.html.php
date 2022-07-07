@@ -14,12 +14,10 @@ echo '
     </label>
     
     <label class="required passwordLabel">
-      <span>' . _('Fjalëkalimi') . '</span>
+      <span>' . _('Password') . '</span>
       <input type="password" name="password" value="">
       <button type="button" class="eyeIcon"></button>
     </label>
-    
-    <a href="' . WEBSITE_BASE_URL . VIEWS['forgot-password-page']['meta']['url'] . '">Forgot password?</a>
     
     <button type="submit" class="primaryButton">' . _('Login') . '</button>
   </form>

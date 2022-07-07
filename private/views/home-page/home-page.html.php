@@ -27,18 +27,10 @@ echo '
           <span class="mainBtn findBoxBtn">' . _('Find box') .'</span>
       </div>
       
-      <div class="boxSorting lightGreyBox">
-        <h2>' . _('Sort by') .'</h2>
-        <img src="' . getPubUrl('application-common', 'images/icons8-up-down-arrow-48.png') . '">
-        <span>' . _('Cost') .'</span>
-        <span>' . _('Dimensions') .'</span>
-        <span>' . _('Volume') .'</span>
-      </div>
-      
       <div class="boxLevel lightGreyBox">
         <h2>' . _('Packing level') .'</h2>
         <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">
-        <span class="packingLevelBtn" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
+        <span class="packingLevelBtn" data-span-type="standard">' . _('Box only <br> + 0') .'</span>
         <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 2') .'</span>
         <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 3') .'</span>
         <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 6') .'</span>

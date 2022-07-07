@@ -3,11 +3,11 @@
 echo '
   <div class="secondNav lightGreyBox">
   
-    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['settings']['meta']['url'] . '" class="whiteBox">
+    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '" class="whiteBox">
       Inventory
     </a>
     
-    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['settings']['meta']['url'] . '" class="whiteBox">
+    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '" class="whiteBox">
       Billing
     </a>
     

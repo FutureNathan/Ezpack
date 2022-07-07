@@ -57,7 +57,7 @@ if (($_POST['formAction'] === "setPassword")) {
       # send an email with the new account password
       
       $messageBody = '
-        <p>' . _('hello') . ' ' . $getClientR['user_name'] . '</p>
+        <p>' . _('Hello') . ' ' . $getClientR['user_name'] . '</p>
         <p>' . _('Your password was updated successfully. Your new pasword is:') . ' ' . $_POST['newPassword'] . '</p>
         <p>' . _('Thank you, Ezpack staff.') . '</p>
       ';

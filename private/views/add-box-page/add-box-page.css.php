@@ -1,0 +1,53 @@
+<?php
+
+echo '
+
+.boxPrices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+  grid-gap: 1em 2em;
+}
+
+.boxDimensions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+  grid-gap: 1em 2em;
+}
+
+.boxDetails {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1em 2em;
+}
+
+.boxPrices h2, .boxDimensions h2 {
+  grid-column: 1/-1;
+}
+
+
+.addBoxForm > * {
+  margin-top: 2em;
+}
+
+';
+
+
+
+
+echo '
+@media screen and (min-width: 400px) {
+
+  .boxDetails {
+  display: grid;
+  grid-template-columns:  1fr 1fr;
+  grid-gap: 1em 2em;
+}
+  
+
+}
+
+
+
+';
+
+?>
