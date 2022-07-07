@@ -52,6 +52,8 @@ main > * {
   color: #fff;
   background-color: #e2e8f0;
 }
+
+
 ';
 
 ?>

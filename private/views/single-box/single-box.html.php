@@ -11,9 +11,19 @@ echo '
   </div>
   
   <div class="actions">
+  
     <button class="expandCollapseBtn">
-      <img style="width:1em;"src="' . getPubUrl('application-common', 'images/icons8-chevron-down-50.png') . '">
+      <img src="' . getPubUrl('application-common', 'images/icons8-chevron-down-50.png') . '">
     </button>
+
+    <button class="deleteBoxBtn" data-action="deleteBox" data-delete-box-id="' . $viewOptions['prod_id'] . '" title="' . _('Delete box') .'">
+      <img src="' . getPubUrl('application-common', 'images/icons8-delete-60.png') . '" alt="' . _('Delete box') .'">
+    </button>
+    
+    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['edit-box-page']['meta']['url'] . '?box=' . $viewOptions['prod_id'] . '" title="' . _('Edit box') .'">
+      <img src="' . getPubUrl('application-common', 'images/icons8-edit-64.png') . '" alt="' . _('Edit box') .'">
+    </a>
+    
   </div>
 
   <div class="expandable">
@@ -32,11 +42,11 @@ echo '
           <h2>Pricing</h2>
           
           <div class="whiteBox price">Box only
-            <span>$' . $viewOptions['prod_price'] . '</span>
+            <span>$' . $viewOptions['prod_price'] / 100 . '</span>
           </div>
           
           <div class="whiteBox price">Packing Cost
-            <span>$' . $viewOptions['prod_packing_price'] . '</span>
+            <span>$' . $viewOptions['prod_packing_price'] / 100 . '</span>
           </div>
           
           <!--
@@ -54,7 +64,6 @@ echo '
           -->
         </div>
         
-        <button class="removeBtn">Remove</button>
       </div>
     </div>
   </div>

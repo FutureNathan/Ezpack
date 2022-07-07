@@ -63,6 +63,12 @@ echo '
 .boxDetails span{
   padding: 0.3em 0.5em;
 }
+
+.actions img {
+  width: 1.5em;
+}
+
+
 ';
 
 ?>
