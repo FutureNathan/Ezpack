@@ -9,7 +9,6 @@ echo '
     <span class="boxDimension">' . $viewOptions['height']. '</span>
     <span class="boxDimension">' . $viewOptions['width']. '</span>
     <span class="boxDimension">' . $viewOptions['depth']. '</span>
-
 </section>
 
 

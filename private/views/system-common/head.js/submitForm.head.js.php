@@ -24,7 +24,7 @@ result = {
  */
 
 function submitForm (form) {
-  console.log(form)
+  
 // ################################################################################################# --- PROCESS NORMAL SUBMISSION
   
   var formAjaxUrlInput = form.querySelector('input[name="formAjaxUrl"]');
@@ -85,6 +85,12 @@ function submitForm (form) {
       
       if (result.redirectUrl) {
         window.location.href = result.redirectUrl;
+      }
+      
+      if (result === false) {
+        
+        <?php require_once PATH_PRIVATE_VIEWS . 'home-page/display-result-boxes.include.js.php'; ?>
+        
       }
       
       // ----------

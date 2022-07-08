@@ -27,7 +27,7 @@ echo '
     grid-template-columns: 2em repeat(4, auto) 1fr;
   }
   
-  .boxSize span{
+  .boxSize button{
     margin-left: auto;
   }
   

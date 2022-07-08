@@ -28,10 +28,6 @@ echo '
   grid-column: 1/-1;
 }
 
-.boxInformation > div > h2 {
-  margin: 1em 0em;
-}
-
 .boxContainer {
   display: flex;
   flex-flow: row wrap;
@@ -65,7 +61,8 @@ echo '
 }
 
 .actions img {
-  width: 1.5em;
+  width: 1.2em;
+  margin-left: 0.5em;
 }
 
 

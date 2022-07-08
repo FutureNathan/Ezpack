@@ -103,7 +103,15 @@ CREATE TABLE invoices (
   invoice_stripe_coupon_name    TEXT
 );
 
+-- ################################################################################################# HISTORY
 
+CREATE TABLE history (
+
+  history_length             DECIMAL NOT NULL,
+  history_width              DECIMAL NOT NULL,
+  history_height             DECIMAL NOT NULL
+
+)
 
 
 
