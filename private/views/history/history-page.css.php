@@ -21,7 +21,7 @@ echo '
   
   .singleBox{
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 3fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
     grid-gap: 0.3em;
     justify-content: center;
     align-items: center;
@@ -35,12 +35,33 @@ echo '
     text-align: center;
     padding: 0.2em;
   }
-  .singleBox button {
+  .singleBox >  .findBtn {
     justify-self: flex-end;
+    text-decoration: none;
   }
   
   .historyResults h2 {
     text-align: center;
   }
+  
+  a.mainBtn.findBtn span {
+    display: none;
+  }
 ';
+
+
+echo '
+@media screen and (min-width: 350px) {
+
+  .singleBox{
+    grid-template-columns: 2fr 1fr 1fr 1fr 3fr;
+  }
+  
+  a.mainBtn.findBtn span {
+    display: inline;
+  }
+}
+
+';
+
 ?>

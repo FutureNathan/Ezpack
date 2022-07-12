@@ -71,6 +71,7 @@ echo '
   
   a {
     color: ' . COLOURS['text_dark'] . ';
+    text-decoration: none;
   }
   
   a:hover {

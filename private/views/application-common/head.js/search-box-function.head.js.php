@@ -1,22 +1,26 @@
-document.addEventListener ('change', function () {
-  event.stopPropagation();
+function searchBox() {
+  var packing_level = 'box_only';
+  var packingLevelBtn = document.querySelector ('.packingLevelBtn.active');
+  if(packingLevelBtn){
+    
+    packing_level = packingLevelBtn.getAttribute('data-span-type');
+  }
   
-  if (event.target.closest ('.boxSize > input')) {
+  var length = document.querySelector('.boxSize  input[name="length"]').value;
+  var width  = document.querySelector('.boxSize  input[name="width"]').value;
+  var height = document.querySelector('.boxSize  input[name="height"]').value;
+  var packing_box = document.querySelector('.boxLevel > div > input[name="packing_box"]').checked;
+  
+  if(length > 0 && width > 0 && height > 0){
+  
+  var formData = new FormData();
+  formData.append('formAction', 'searchBox');
+  formData.append('length', length);
+  formData.append('width', width);
+  formData.append('height', height);
+  formData.append('packing_box', packing_box);
+  formData.append('packing_level', packing_level);
     
-    var formData = new FormData();
-    formData.append('formAction', 'searchBox');
-    
-    if (allBoxDimensionsCompleted()){
-      boxSizeInputs = document.querySelectorAll('.boxSize > input');
-      boxSizeInputs .forEach (function (boxSizeInput) {
-        
-        if( boxSizeInput.value > 0 ) {
-          formData.append(boxSizeInput.getAttribute('name'), boxSizeInput.value);
-        }
-        
-      }, false);
-    
-      
       var identifier = createToken('alphanumeric_all', 40);
       var url         = "<?php echo getPubUrl('home-page', 'search.ajax.php', 'search.php'); ?>";
       
@@ -76,12 +80,5 @@ document.addEventListener ('change', function () {
           
         }
       });
-      
-      
-      
-    }
-    
-
   }
-  
-}, false);
+}

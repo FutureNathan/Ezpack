@@ -106,11 +106,13 @@ CREATE TABLE invoices (
 -- ################################################################################################# HISTORY
 
 CREATE TABLE history (
-
+  history_id                 INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1),
   history_length             DECIMAL NOT NULL,
   history_width              DECIMAL NOT NULL,
-  history_height             DECIMAL NOT NULL
-
+  history_height             DECIMAL NOT NULL,
+  history_user_id            INT NOT NULL
+                            REFERENCES users (user_id)
+                            ON UPDATE CASCADE
 )
 
 

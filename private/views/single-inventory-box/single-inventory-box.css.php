@@ -9,6 +9,7 @@ echo '
 .price {
   display: flex;
   flex-flow: column;
+  text-align: center;
 }
 
 .price span {
@@ -50,14 +51,19 @@ echo '
 
 .boxDetails {
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
+  grid-template-columns: auto 9em;
   justify-items: start;
   align-items: stretch;
   grid-gap: 0.5em;
 }
 
+.boxDetails span:nth-of-type(2){
+  display: none;
+}
+
 .boxDetails span{
   padding: 0.3em 0.5em;
+  width: 100%;
 }
 
 .actions img {
@@ -66,6 +72,21 @@ echo '
 }
 
 
+';
+
+echo '
+  
+  @media screen and (min-width: 400px) {
+    
+    .boxDetails {
+      grid-template-columns: auto 10em auto;
+    }
+    
+    .boxDetails span:nth-of-type(2){
+      display: block;
+    }
+    
+  }
 ';
 
 ?>

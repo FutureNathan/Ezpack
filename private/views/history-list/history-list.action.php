@@ -7,96 +7,33 @@
 # emails_list is a temporary table built with WITH
   
 $select = [
-  "prod_id",
-  "prod_owner_id",
-  "prod_name",
-  "prod_type",
-  "prod_length",
-  "prod_width",
-  "prod_height",
-  "prod_max_weight",
-  "prod_price",
-  "prod_packing_price",
-  "prod_availability"
+  "history.history_length",
+  "history.history_width",
+  "history.history_height",
+  "history.history_id"
+
 ];
 
 #################################################################################################### --- FROM CLAUSE
 
 $from = [
-  "products"
+  "history"
 ];
 
 #################################################################################################### --- JOIN CLAUSES
 
 $join = []; // initialise
+$join[] = "join distinct_rows on distinct_rows.history_id = history.history_id";
 
 #################################################################################################### --- WHERE CLAUSE
 
-$where = [];
+$where = []; // initialise
 
-$where[] =  "prod_owner_id =" . $_SESSION['user_id'];
+$where[] = "history.history_user_id =" . $_SESSION['user_id'];
 
 // this is used with the WITH clause below, to only select primary emails
-//
 
 #################################################################################################### --- FILTERS
- if($viewOptions['viewParams']['style'] === 'search-result') {
- 
-  $where[] =  "prod_availability = 'true' ";
- }
-$hasAllThree = true;
-
-if (isEmpty (filter_var ($viewOptions['searchParams']['length'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-  $hasAllThree = false;
-}
-
-if (isEmpty (filter_var ($viewOptions['searchParams']['height'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-  $hasAllThree = false;
-}
-
-if (isEmpty (filter_var ($viewOptions['searchParams']['width'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-  $hasAllThree = false;
-}
-
-if (! isEmpty (filter_var ($viewOptions['searchParams']['packing_level'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['packing_level']]]))) {
-  
-  $packingLevel = $viewOptions['searchParams']['packing_level'];
-  
-} else {
-
-  $packingLevel = 'box_only';
-  
-}
-
-if($packingLevel === 'fragile') {
-  $viewOptions['searchParams']['length'] += 3;
-  $viewOptions['searchParams']['height'] += 3;
-  $viewOptions['searchParams']['width'] += 3;
-}
-
-if($packingLevel === 'custom'){
-  $viewOptions['searchParams']['length'] += 6;
-  $viewOptions['searchParams']['height'] += 6;
-  $viewOptions['searchParams']['width'] += 6;
-}
-
-if($packingLevel === 'basic'){
-  $viewOptions['searchParams']['length'] += 2;
-  $viewOptions['searchParams']['height'] += 2;
-  $viewOptions['searchParams']['width'] += 2;
-}
-
-if ($hasAllThree) {
-  
-  $searchValuesArray = [
-    (string)$viewOptions['searchParams']['length'] ,
-    (string)$viewOptions['searchParams']['height'] ,
-    (string)$viewOptions['searchParams']['width'] 
-  ];
-  
-  sort ($searchValuesArray);
-//   var_dump($searchValuesArray);
-}
 
 #################################################################################################### --- ORDER BY CLAUSE
 
@@ -148,7 +85,8 @@ if ( ! isEmpty (filter_var ($viewOptions['searchParams']['orderBy'], FILTER_VALI
 
 # Add a last ordering differentiator, in case the other ordering fields are equal.
 
-$orderBy[] = "prod_id DESC";
+
+$orderBy[] = "history.history_id DESC";
 
 #################################################################################################### --- LIMIT & OFFSET
 
@@ -160,7 +98,7 @@ if ((int) $viewOptions['searchParams']['limit'] > 0) {
   
 } else {
   
-  $limit = 100; // default results per page
+  $limit = 10; // default results per page
 }
 
 // ----------
@@ -185,6 +123,14 @@ if ($viewOptions['showPagination'] === true) {
   # TODO: find more efficient solution, instead of running 2 queries
  
   $boxesCountSQL = sprintf ("
+    WITH distinct_rows AS (
+      SELECT
+        DISTINCT ON (history_length,history_width,history_height) history_height,
+        history_length,
+        history_width,
+        history_id
+      FROM history
+    )
     
     SELECT %s
     FROM %s
@@ -206,7 +152,14 @@ if ($viewOptions['showPagination'] === true) {
 #################################################################################################### --- GET PAGINATED RESULTS
 
 $boxesListSQL = sprintf ("
-   
+  WITH distinct_rows AS (
+    SELECT
+      DISTINCT ON (history_length,history_width,history_height) history_height,
+      history_length,
+      history_width,
+      history_id
+    FROM history
+  )
   SELECT %s
   FROM %s
   
@@ -231,7 +184,7 @@ $boxesListSQL = sprintf ("
 
 $boxesListQ = pg_query ($dbc['read_only'], $boxesListSQL);
 
-//  echo '<pre>' . $boxesListSQL . '</pre>';
+//   echo '<pre>' . $boxesListSQL . '</pre>';
 
 #################################################################################################### --- SHOW RESULTS
 
@@ -243,91 +196,11 @@ if ($boxesListQ) {
     
     # For each record, insert the single box post view.
     
-    #$boxesList = pg_fetch_all ($boxesListQ);
-    
-    $boxArray = [];
-    $unsortedBoxArray = [];
-    
-    if($viewOptions['viewParams']['style'] === 'search-result') {
-      while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
-        
-        $boxData = [$boxesListR['prod_height'], $boxesListR['prod_length'], $boxesListR['prod_width']];
-        
-        sort($boxData);
-        
-        $boxArray[] = $boxData;
-        
-        if($viewOptions['searchParams']['packing_box'] === true) {
-          
-          $price = $boxesListR['prod_price'] + $boxesListR['prod_packing_price'];
-          
-        } else {
-          
-          $price = $boxesListR['prod_price'];
-        }
-        
-        // ----------
-        
-        $unsortboxData = [
-          'name'        => $boxesListR['prod_name'],
-          'price'       => $price,
-          'type'        => $boxesListR['prod_type'],
-          'prod_height' => $boxesListR['prod_height'],
-          'prod_length' => $boxesListR['prod_length'],
-          'prod_width'  => $boxesListR['prod_width']
-        ];
-        
-        $unsortedBoxArray[] = $unsortboxData;
-      }
+    while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
       
-      // ----------
-      
-      $volumeArray = [];
-      
-      foreach ($boxArray as $key => $dimension) {
-        
-        if ($dimension[0] >= $searchValuesArray[0] && $dimension[1] >= $searchValuesArray[1] && $dimension[2] >= $searchValuesArray[2]) {
-        
-          $volume = $dimension[0] * $dimension[1] * $dimension[2];
-          
-          $volumeArray[$volume] = $key;
-          
-          ksort($volumeArray);
-        }
-        
-      }
-      $volumeArray = array_slice ($volumeArray, 0, 5, true);
-      
-      // ----------
-      if ($hasAllThree) {
-        echo '
-        <div class="resultsSection">';
-        
-        foreach ($volumeArray as $key) {
-          
-          if ($viewOptions['viewParams']['style'] === 'search-result') {
-            
-            insertView ('single-search-box', [
-              'name'    => $unsortedBoxArray[$key]['name'],
-              'boxType' => $unsortedBoxArray[$key]['type'],
-              'price'   => $unsortedBoxArray[$key]['price']/100,
-              'height'  => $unsortedBoxArray[$key]['prod_height'],
-              'width'   => $unsortedBoxArray[$key]['prod_width'],
-              'length'  => $unsortedBoxArray[$key]['prod_length']
-            ]);
-          }
-        }
-        echo '</div>';
-      }
+      insertView ('single-history-box', array_merge ($boxesListR, $viewOptions['viewParams']));
     }
     
-    if($viewOptions['viewParams']['style'] === 'inventory') {
-      
-      while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
-      
-        insertView ('single-inventory-box', array_merge ($boxesListR, $viewOptions['viewParams']));
-      }
-    }
 #################################################################################################### --- SHOW PAGINATION
     
     if ($viewOptions['showPagination'] === true) {

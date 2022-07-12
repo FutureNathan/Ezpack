@@ -22,7 +22,7 @@ echo '
     
     echo '
     
-    <section class="colorfulContainer">
+    <section class="lightGreyBigContainer">
       <p>Thanks so much for supporting us</p>
       <p>
         We continue to imporve this software with your help. Please reaach out if you are having any issue or have ideas how we

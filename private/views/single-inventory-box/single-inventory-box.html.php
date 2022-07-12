@@ -5,8 +5,8 @@ echo '
 <div class="boxContainer blueBox">
   
   <div class="boxDetails">
-    <input type="checkbox" ' . ($viewOptions['prod_availability'] ? "checked" : ""). '>
-    <span class="whiteBox">' . $viewOptions['prod_name']. '</span>
+    <input type="checkbox" ' . ($viewOptions['prod_availability'] === 't'  ? "checked" : ""). ' data-prod-id="' . $viewOptions['prod_id']. '">
+    <span class="whiteBox">' . $viewOptions['prod_name'] . '</span>
     <span>' . $viewOptions['prod_type']. '</span>
   </div>
   

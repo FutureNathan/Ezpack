@@ -20,26 +20,25 @@ echo '
     insertView('inside-page-navigation');
     
     echo '
-    <section class="searchingContainer lightGreyBox">
-      <div class="searchingHeader">
-        <span class="whiteBox">Show</span>
-        <span class="whiteBox">Box Name</span>
-        <button class="whiteBox">Search</button>
-      </div>
+    <section class="searchingContainer">
+      <a class="whiteBox addBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
       ';
       
 //       insertView('box-list');
       
       insertView ('box-list', [
-            
+        
         'searchParams' => [],
         
-        'viewParams' => []
+        // ----------
+        
+        'viewParams' => [
+          'style' => 'inventory'
+        ]
+        
       ]);
       
       echo '
-      <a class="whiteBox addBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
-      
     </section>
   </main>
 ';

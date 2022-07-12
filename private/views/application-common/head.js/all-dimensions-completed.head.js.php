@@ -1,6 +1,10 @@
+/*
+ * This function will return true if each one of the box dimensions' inputs has a 
+ * value greater than 0, otherwise it will return false.
+ * 
+*/
+
 function allBoxDimensionsCompleted() {
-  
-  
   
   var length = document.querySelector('.boxSize > input[name="length"]').value;
   var width = document.querySelector('.boxSize > input[name="width"]').value;

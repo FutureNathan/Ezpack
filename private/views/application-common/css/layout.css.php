@@ -72,8 +72,6 @@ echo '
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
-    
-    padding: 1em;
   }
   
   footer > section {

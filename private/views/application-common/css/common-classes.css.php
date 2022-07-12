@@ -5,10 +5,9 @@ echo '
 main > * {
   padding: 1em;
   margin-bottom: 2em;
-  border-radius: 0.5em;
 }
 
-.colorfulContainer {
+.lightGreyBigContainer {
   background-color: #fbfbfb;
   border: 1px solid #e2e8f0;
 }
@@ -36,7 +35,6 @@ main > * {
   padding: 0.7em;
   border-radius: 0.5em;
   
-  font-size: 0.8em;
   font-weight: 700;
   text-align: center;
   cursor: pointer;

@@ -26,7 +26,7 @@ echo '
 
 
 .addBoxForm > * {
-  margin-top: 2em;
+  margin-top: 1.5em;
 }
 
 ';

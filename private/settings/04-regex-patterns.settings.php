@@ -76,7 +76,8 @@ const APPLICATION_REGEX = [
   'contains_letter_upper'          => '~[A-Z]~',
   'contains_unicode_letter_upper'  => '~[\p{Lu}]~u',
   
-  'contains_unicode_symbol'        => '~[\p{S}\p{P}]~u'
+  'contains_unicode_symbol'        => '~[\p{S}\p{P}]~u',
+  'packing_level'                  => '~^(box_only|basic|fragile|custom)$~'
 ];
 
 ?>

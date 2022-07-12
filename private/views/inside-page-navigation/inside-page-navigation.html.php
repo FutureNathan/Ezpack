@@ -1,7 +1,7 @@
 <?php
 
 echo '
-  <div class="secondNav lightGreyBox">
+  <div class="secondNav">
   
     <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '" class="whiteBox">
       Inventory

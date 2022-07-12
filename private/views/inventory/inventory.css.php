@@ -2,12 +2,6 @@
 
 echo '
 
-.searchingHeader {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  grid-gap: 0.5em;
-}
-
 .searchingHeader button {
   margin-left: auto;
 }
@@ -19,7 +13,8 @@ echo '
 }
 
 .addBtn {
-  justify-self: flex-start;
+  justify-self: flex-end;
+  background-color: #eaeaea;
 }
   
 ';

@@ -24,11 +24,24 @@ echo '
   }
   
   .boxLevel {
-    grid-template-columns: 2em repeat(4, auto) 1fr;
+    grid-template-columns:  repeat(4, 1fr);
+  }
+  
+  .boxLevel > div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-self: flex-end;
+    grid-column: 2/-1;
+  }
+  
+  .boxLevel > div > input{
+    width: 1.5em;
   }
   
   .boxSize button{
     margin-left: auto;
+    height: 2.5em;
+    background-color: #907cff;
   }
   
   form h2 {
@@ -74,8 +87,12 @@ echo '
     min-height: 53vh;
   }
   
-  .resultsHeader {
+  .results > .resultsHeader{
     display: none;
+  }
+  
+  .resultsSection section:nth-of-type(1) {
+    background-color: #78a1bf;
   }
   
   .results > div {
@@ -88,39 +105,60 @@ echo '
   .resetBtn {
     align-self: center;
   }
+  
 ';
 
 echo '
 
+@media screen and (min-width: 500px) {
+  
+  .boxLevel {
+    grid-template-columns: 2em repeat(4, auto) 1fr;
+  }
+
+  .boxLevel > div {
+    grid-column: 6/7;
+    order: 6;
+  }
+
+}
+
 @media screen and (min-width: 590px) {
 
-  .resultsHeader {
+   .results > .resultsHeader {
     display: block;
     padding: 0.5em 1em;
   }
   
-  .resultsHeader > div {
+   .results > .resultsHeader > div {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
   }
   
-  .resultsHeader > div span {
+  .results > .resultsHeader > div span {
     margin: 0em;
     padding: 0.3em 0.2em;
     text-align: center;
-    flex: 0 0 calc(100%/6 - 0.4em);
+    flex: 0 0 calc(100%/6 - 1.5em);
   }
   
-  .resultsHeader > div span:not(:nth-of-type(1)) {
+  .results > .resultsHeader > div span.name {
+    flex: 0 0 12em;
+  }
+  
+   .results > .resultsHeader > div span:not(:nth-of-type(1)) {
     margin-left: 0.5em;
   }
-
+  
+  .results > .resultsHeader + div {
+    margin-top: 1em;
+  }
 
 }
 
 
-@media screen and (min-width: 530px) {
+@media screen and (min-width: 650px) {
 
   form h2 {
     display: block;
