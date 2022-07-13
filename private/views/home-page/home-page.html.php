@@ -16,7 +16,7 @@ insertView('page-header');
 
 echo '
   <main>';
-    
+  
     insertView ('search-boxes', [
       'formId' => 'searchBoxes',
       'length'        => $_GET['length'],

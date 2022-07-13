@@ -8,15 +8,15 @@ if ($_POST['formAction'] === 'userRegistration') {
 #################################################################################################### --- INPUT VALIDATION
   
   if (isEmpty(filter_input(INPUT_POST, 'name', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['safe'])))) === true) {
-    $errors['user_first_name'] = _('Empty or incorrect name.');
+    $errors['name'] = _('Empty or incorrect name.');
   }
   
   if (isEmpty(filter_input(INPUT_POST, 'phone_number', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['phone_number'])))) === true) {
-    $errors['user_phone_number'] = _('Empty or incorrect phone number.');
+    $errors['phone_number'] = _('Empty or incorrect phone number.');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'email', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => SYSTEM_REGEX['email_address'])))) === true) {
-    $errors['user_email'] = _('Empty or incorrect email.');
+    $errors['email'] = _('Empty or incorrect email.');
   }
   
   $checkEmailQ = pg_query($dbc['read_write'], sprintf("
@@ -28,21 +28,21 @@ if ($_POST['formAction'] === 'userRegistration') {
   ));
   
   if (pg_num_rows($checkEmailQ) !== 0) {
-    $errors['user_email'] = _('Email must be unique, this email already exists on database');
+    $errors['email'] = _('Email must be unique, this email already exists on database');
   }
   
   
   
   if (isEmpty(filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['safe'])))) === true) {
     
-    $errors['user_password'] = _('Empty or incorrect password.');
+    $errors['password'] = _('Empty or incorrect password.');
     
   }
   
-  if (isEmpty($errors['user_password'])) {
+  if (isEmpty($errors['password'])) {
     
     if ($_POST['password'] !== $_POST['confirm_password']) {
-      $errors['user_password'] = _('Passwords do not match');
+      $errors['confirm_password'] = _('Passwords do not match');
     }
   }
   
@@ -125,7 +125,7 @@ if ($_POST['formAction'] === 'userRegistration') {
       
       $completedPurchaseEmail = send_email([
         'senderEmailAddress'      => 'xhovana@ketri.al',
-        'senderName'              => 'Xhovana Ndreu',
+        'senderName'              => 'Ezpack',
         
         'recipientEmailAddresses' => [strtolower($_POST['email'])],
         
@@ -143,7 +143,7 @@ if ($_POST['formAction'] === 'userRegistration') {
       $_SESSION['feedbackMessage'] = feedbackMessage([_('Welcome') . ' ' . escape($_POST['name']) . '! ' . _('End your registration by clicking the link that we sent to your email') . ' "' . strtolower($_POST['email']) . '". ' . _('Please check the junk and spam folders.')], 'confirmation');
       
       echo json_encode([
-          'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['home-page']['meta']['url']
+          'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url']
         ]);
       
     }

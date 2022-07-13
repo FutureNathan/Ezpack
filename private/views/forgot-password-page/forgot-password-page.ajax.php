@@ -50,7 +50,7 @@ if ($_POST['formAction'] === "recoverPassword") {
         $recoverPasswordEmail = send_email([
         
           'senderEmailAddress'      => 'xhovana@ketri.al',
-          'senderName'              => 'PROHOST',
+          'senderName'              => 'Ezpack',
           
           'recipientEmailAddresses' => [$forgotPassword['user_email']],
 

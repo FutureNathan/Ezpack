@@ -51,6 +51,9 @@ main > * {
   background-color: #e2e8f0;
 }
 
+.confirmation {
+  margin: 0em;
+}
 
 ';
 

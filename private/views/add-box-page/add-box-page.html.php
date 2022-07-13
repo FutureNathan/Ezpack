@@ -11,9 +11,9 @@ insertView ('page-header');
 #################################################################################################### --- PAGE CONTENT
 
 echo '
-      <main class="dashboardMain" >
+      <main>
       
-        <section style="background-color: #78a1bf;">
+        <section class="addBoxSection">
           <h2>' . _('Add new box') . '</h2>
           
           <form class="addBoxForm" method="post">

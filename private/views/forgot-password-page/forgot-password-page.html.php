@@ -6,13 +6,8 @@ insertView ('website-head');
 
 #################################################################################################### --- PAGE CONTENT
 
-echo '<main>';
-  
-  echo 
-  $_SESSION['feedbackMessage'];
-  $_SESSION['feedbackMessage'] = '';
-    
-  echo '
+echo '
+  <main>
       <section style="background-color: #78a1bf;padding: 1em;">
         <h2>' . _('Recover password') . '</h2>
         

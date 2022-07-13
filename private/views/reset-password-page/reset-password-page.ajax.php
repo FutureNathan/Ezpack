@@ -65,7 +65,7 @@ if (($_POST['formAction'] === "setPassword")) {
       $sendContactEmail = send_email([
       
         'senderEmailAddress'      => WEBSITE_EMAIL,
-        'senderName'              => 'PROHOST',
+        'senderName'              => 'Ezpack',
         
         'recipientEmailAddresses' => [$getClientR['user_email']],
         

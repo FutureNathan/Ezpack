@@ -109,7 +109,7 @@ if ($_POST['formAction'] === "editBox") {
     
     if ($txStatusR['txid_status'] === 'committed') {
       
-       $_SESSION['feedbackMessage'] = feedbackMessage([_('Box was added successfully')], 'confirmation');
+       $_SESSION['feedbackMessage'] = feedbackMessage([_('Box was updated successfully')], 'confirmation');
       
       echo json_encode([
         'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url']

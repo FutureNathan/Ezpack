@@ -6,13 +6,8 @@ insertView('website-head');
 
 #################################################################################################### --- PAGE CONTENT
 
-echo '<main>';
-  
-  echo 
-  $_SESSION['feedbackMessage'];
-  $_SESSION['feedbackMessage'] = '';
-    
-  echo '
+echo '
+  <main>
     <section id="registration" style="background-color: #78a1bf;">
       
       <h2>' . _('Login') . '</h2>';

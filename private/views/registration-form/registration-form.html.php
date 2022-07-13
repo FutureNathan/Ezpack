@@ -32,7 +32,7 @@ echo '
       <input type="password" name="confirm_password">
     </label>
     
-    <button type="submit" class="primaryButton">' . _('Regjistrohu') . '</button>
+    <button type="submit" class="primaryButton">' . _('Register') . '</button>
   </form>
 ';
 

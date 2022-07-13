@@ -68,7 +68,7 @@ if (!isEmpty($_GET['key'])) {
       $_SESSION['feedbackMessage'] = feedbackMessage(['Your account confirmation failed!'], 'attention');
     }
     
-  } elseif (($_GET['key'] === sha1($userData['user_email'])) && ($userData['user_email_confirmed'] === 't')) {
+  } else if (($_GET['key'] === sha1($userData['user_email'])) && ($userData['user_email_confirmed'] === 't')) {
     
     if ($_SESSION['user_id'] === $userData['user_id']) {
       
@@ -84,14 +84,7 @@ if (!isEmpty($_GET['key'])) {
     $_SESSION['feedbackMessage'] = feedbackMessage([_('Confirmation link is invalid!')], 'attention');
   }
   
-  if ($_SESSION['user_id'] === $userData['user_id']) {
-  
-    header('Location: ' . WEBSITE_BASE_URL . VIEWS['view-profile-page']['meta']['url']);
-    
-  } else {
-  
-    header('Location: ' . WEBSITE_BASE_URL);
-  }
+  header('Location: ' . WEBSITE_BASE_URL);
 }
 
 ?>

@@ -9,13 +9,8 @@ insertView ('website-head');
 echo $errorMsg;
 unset($errorMsg);
 
-echo '<main>';
-  
-  echo 
-  $_SESSION['feedbackMessage'];
-  $_SESSION['feedbackMessage'] = '';
-    
-  echo '
+echo '
+  <main>
     <section class="loginMain" style="background-color: #78a1bf;padding: 1em;">
       <h2>' . _('RESET PASSWORD') . '</h2>
       

@@ -13,7 +13,7 @@ insertView ('page-header');
 echo '
       <main class="dashboardMain" >
       
-        <section style="background-color: #78a1bf;">
+        <section class="editBoxSection">
           <h2>' . _('Edit box') . '</h2>
           
           <form class="addBoxForm" method="post">

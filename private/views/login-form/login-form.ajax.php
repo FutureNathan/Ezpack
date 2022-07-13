@@ -8,11 +8,11 @@ if ($_POST['formAction'] === 'userLogin') {
 #################################################################################################### --- INPUT VALIDATION
   
   if (isEmpty (filter_input (INPUT_POST, 'email', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => SYSTEM_REGEX['email_address'])))) === true) {
-    $errors['user_email'] = _('Email is empty or invalid.');
+    $errors['email'] = _('Email is empty or invalid.');
   }
   
   if (isEmpty(filter_input(INPUT_POST, 'password', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['safe'])))) === true) {
-    $errors['user_password'] = _('Password is empty or invalid.');
+    $errors['password'] = _('Password is empty or invalid.');
   }
   
 #################################################################################################### --- VALIDATION COMPLETE
@@ -34,7 +34,7 @@ if ($_POST['formAction'] === 'userLogin') {
     
     if (pg_num_rows($checkUserQ) !== 1) {
       
-      $errors['user_email'] = _('This email does not exists.');
+      $errors['email'] = _('This email does not exists.');
       
     } else {
     
@@ -79,7 +79,7 @@ if ($_POST['formAction'] === 'userLogin') {
         
       } else {
         
-        $errors['user_email'] = _('Email and password do not match.');
+        $errors['email'] = _('Email and password do not match.');
       }
       
     
