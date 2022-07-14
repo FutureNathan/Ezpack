@@ -15,11 +15,11 @@ insertView('page-header');
 #################################################################################################### --- PAGE CONTENT
 
 echo '
-  <main id="settingsPage">';
+  <main id="settingsPage">
   
-    insertView('inside-page-navigation');
-    
-    echo '
+    <section class="pageTitle lightGreyBigContainer">
+      <h2>' . _('Support') . '</h2>
+    </section>
     
     <section class="lightGreyBigContainer">
       <p>Thanks so much for supporting us</p>

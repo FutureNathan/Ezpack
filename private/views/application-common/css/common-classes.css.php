@@ -60,7 +60,7 @@ main .mainBtn {
 
 
 .user-acces form {
-  background-color: #78a1bf63;
+  background-color: #b9d3e5;
   padding: 1em;
   border-radius: 0.5em;
   
@@ -104,7 +104,7 @@ main .mainBtn {
   margin: 1em 1em 0em 1em;
   border-radius: 0.5em;
   
-  background-color: #78a1bf63;
+  background-color: #b9d3e5;
 }';
 
 #################################################################################################### RESPONSIVE

@@ -11,7 +11,7 @@ insertView('page-header');
 #################################################################################################### --- PAGE CONTENT
 
 echo '
-  <main id="historyPage">
+  <main>
       
     <section class="pageTitle lightGreyBigContainer">
       <h2>' . _('History') . '</h2>

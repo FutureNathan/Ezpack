@@ -15,11 +15,12 @@ insertView('page-header');
 #################################################################################################### --- PAGE CONTENT
 
 echo '
-  <main id="settingsPage">';
-  
-    insertView('inside-page-navigation');
+  <main id="settingsPage">
     
-    echo '
+    <section class="pageTitle lightGreyBigContainer">
+      <h2>' . _('Inventory') . '</h2>
+    </section>
+    
     <section class="searchingContainer">
       <a class="whiteBox addBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
       ';
