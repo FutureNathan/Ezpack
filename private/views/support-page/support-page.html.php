@@ -18,7 +18,7 @@ echo '
   <main id="settingsPage">
   
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('Support') . '</h2>
+      <h1>' . _('Support') . '</h1>
     </section>
     
     <section class="lightGreyBigContainer">

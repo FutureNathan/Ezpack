@@ -19,7 +19,7 @@ echo "
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    font-family: 'menu';
+    font-family: 'default', sans-serif;
     background-color: #b9d3e5;
   }
 ";

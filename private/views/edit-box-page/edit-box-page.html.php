@@ -14,7 +14,7 @@ echo '
 <main class="dashboardMain">
 
   <section class="pageTitle lightGreyBigContainer">
-    <h2>' . _('Edit box') . '</h2>
+    <h1>' . _('Edit box') . '</h1>
   </section>
   
   <section class="boxForm">

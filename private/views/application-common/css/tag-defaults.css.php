@@ -20,7 +20,7 @@ $h1FontSize = $h2FontSize       * $fontSizeIncrement;
 
 echo '
   h1, h2, h3, h4, h5, h6 {
-    font-family: "default-font-regular", sans-serif;
+    font-family: "default", sans-serif;
     font-weight: normal;
   }
   

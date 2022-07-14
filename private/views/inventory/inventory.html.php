@@ -18,7 +18,7 @@ echo '
   <main id="settingsPage">
     
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('Inventory') . '</h2>
+      <h1>' . _('Inventory') . '</h1>
     </section>
     
     <section class="searchingContainer">

@@ -99,13 +99,20 @@ main .mainBtn {
 .pageTitle {
   text-align: center;
 }
+.pageTitle h1 {
+  text-align: center;
+  padding: 0em;
+  font-size: 1.5rem;
+}
 
 .boxForm {
   margin: 1em 1em 0em 1em;
   border-radius: 0.5em;
   
   background-color: #b9d3e5;
-}';
+}
+
+';
 
 #################################################################################################### RESPONSIVE
 

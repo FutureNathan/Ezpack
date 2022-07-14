@@ -14,7 +14,7 @@ echo '
   <main>
   
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('Create new account') . '</h2>
+      <h1>' . _('Create new account') . '</h1>
     </section>
     
     <section class="user-acces">';

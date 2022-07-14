@@ -14,7 +14,7 @@ echo '
   <main>
   
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('Recover password') . '</h2>
+      <h1>' . _('Recover password') . '</h1>
     </section>
     
     <section class="user-acces">

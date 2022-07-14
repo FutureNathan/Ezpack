@@ -14,7 +14,7 @@ echo '
   <main>
   
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('Login') . '</h2>
+      <h1>' . _('Login') . '</h1>
     </section>
     
     <section class="user-acces">';

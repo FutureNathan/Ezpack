@@ -5,7 +5,7 @@
  * The name "default" in particular does not get recognised unless within quotes (could be a special
  * keyword).
  */
-
+/*
 echo '
   @font-face {
     font-family: "OPEN-SANS-DEFAULT";
@@ -41,6 +41,44 @@ echo '
     font-family: "FONT_AWESOME_BRANDS";
     src: url("' . getPubUrl('application-common', 'fonts/fa-brands-400.ttf') . '");
   }
+';*/
+
+
+
+
+
+echo '
+  @font-face {
+    font-family: "default";
+    font-display: fallback;
+    src: url("' . getPubUrl ($currentView, 'fonts/poppins-light.ttf', 'default.ttf') . '");
+  }
+  
+  @font-face {
+    font-family: "heading";
+    font-display: swap;
+    src: url("' . getPubUrl ($currentView, 'fonts/candara-bold.woff', 'heading.woff') . '");
+  }
+  
+  @font-face {
+    font-family: "menu";
+    font-display: fallback;
+    src: url("' . getPubUrl ($currentView, 'fonts/poppins-regular.ttf', 'menu.ttf') . '");
+  }
+  
+  @font-face {
+    font-family: "oswald-medium";
+    font-display: fallback;
+    src: url("' . getPubUrl ($currentView, 'fonts/oswald-medium.ttf', 'oswald-medium.ttf') . '");
+  }
+  
+  @font-face {
+    font-family: "font_awesome";
+    src: url("' . getPubUrl($currentView, 'fonts/fontawesome-webfont.ttf') . '");
+  }
 ';
+
+
+
 
 ?>

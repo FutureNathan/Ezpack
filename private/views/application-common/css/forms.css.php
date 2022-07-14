@@ -49,11 +49,11 @@ echo '
   }
   
   button[type="submit"] {
-    font-family: "default-font-regular";
+    font-family: "default", sans-serif;
     background: #000;
     color: #fff;
     
-    padding: 0.5em 1.5em;
+    padding: 0.3em 0.8em;
     border: 1px solid black;
     border-radius: 0.5em;
 
@@ -100,7 +100,7 @@ echo '
   }
   
   label {
-    font-family: "default-font-regular";
+    font-family: "default", sans-serif;
   }
   
   form *:last-of-type(2) {

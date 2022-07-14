@@ -15,7 +15,7 @@ $initialSectionPadding  = '1';
 
 echo '
   html {
-    font-family: "default-font-regular", sans-serif;
+    font-family: "default", sans-serif;
     font-size: ' . $defaultFontSize . 'px;
     
     line-height: 1.5;

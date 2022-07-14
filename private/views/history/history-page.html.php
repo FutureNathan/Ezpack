@@ -14,7 +14,7 @@ echo '
   <main>
       
     <section class="pageTitle lightGreyBigContainer">
-      <h2>' . _('History') . '</h2>
+      <h1>' . _('History') . '</h1>
     </section>
     
     <section class="historyResults">';

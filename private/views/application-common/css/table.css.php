@@ -48,7 +48,7 @@ echo '
   .cell::before {
     content: attr(data-title);
     
-    font-family: "default-font-semibold";
+    font-family: "default", sans-serif;
     -webkit-box-flex: 0;
         -ms-flex: 0 0 7em;
             flex: 0 0 7em;
@@ -61,7 +61,7 @@ echo '
   }
   
   .cell:first-child {
-    font-family: "default-font-regular";
+    font-family: "default", sans-serif;
     color: #044291;
   }
 ';
@@ -90,7 +90,7 @@ echo '
     }
     
     .table-head .cell {
-      font-family: "default-font-semibold";
+      font-family: "default", sans-serif;
       color: #606060;
     }
     

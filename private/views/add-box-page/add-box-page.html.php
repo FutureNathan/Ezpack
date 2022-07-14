@@ -14,7 +14,7 @@ echo '
 <main>
   
   <section class="pageTitle lightGreyBigContainer">
-    <h2>' . _('Add new box') . '</h2>
+    <h1>' . _('Add new box') . '</h1>
   </section>
   
   <section class="boxForm">
