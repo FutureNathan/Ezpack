@@ -13,9 +13,9 @@ insertView('page-header');
 echo '
   <main id="historyPage">
       
-    <div class="history lightGreyBigContainer">
-      <h2>' . _('History') .'</h2>
-    </div>
+    <section class="pageTitle lightGreyBigContainer">
+      <h2>' . _('History') . '</h2>
+    </section>
     
     <section class="historyResults">
       <h2>' . _('Most recent on top') .'</h2>';

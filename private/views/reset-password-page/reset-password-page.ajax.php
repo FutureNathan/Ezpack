@@ -18,7 +18,7 @@ if (($_POST['formAction'] === "setPassword")) {
   }
   
   if ($_POST['newPassword'] != $_POST['confirmPassword']){
-    $errors[] = _('Password do not match!');
+    $errors['confirmPassword'] = _('Password do not match!');
   }
   
   if (isEmpty($errors)) {

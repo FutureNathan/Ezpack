@@ -9,6 +9,7 @@ echo '
     flex-flow: row wrap;*/
     justify-content: flex-start;
     align-items: flex-start;
+    
   }
   
   input,
@@ -48,7 +49,6 @@ echo '
   }
   
   button[type="submit"] {
-    flex: 0 0 6em !important;
     font-family: "default-font-regular";
     background: #000;
     color: #fff;

@@ -4,6 +4,10 @@
 
 insertView ('website-head');
 
+#################################################################################################### --- PAGE HEADER
+
+insertView('page-header');
+
 #################################################################################################### --- LOGIN FORM
 
 echo $errorMsg;
@@ -11,10 +15,13 @@ unset($errorMsg);
 
 echo '
   <main>
-    <section class="loginMain" style="background-color: #78a1bf;padding: 1em;">
-      <h2>' . _('RESET PASSWORD') . '</h2>
+    <section class="pageTitle lightGreyBigContainer">
+      <h2>' . _('Reset password') . '</h2>
+    </section>
+    
+    <section class="user-acces">
       
-      <form class="loginForm" method="post">
+      <form method="post">
         <input type="hidden" name="formAction" value="setPassword">
         <input type="hidden" name="formToken" value="' . createToken('alphanumeric_all', 40) . '">
         <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('reset-password-page', 'reset-password-page.ajax.php', 'setPassword.php') . '">

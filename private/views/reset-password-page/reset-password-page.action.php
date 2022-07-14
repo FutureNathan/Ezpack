@@ -5,7 +5,7 @@
 ####################################################################################################
 
 if (isEmpty(filter_var($_REQUEST['authenticationCode'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['alphanumeric_all_40']]]))) {
-  $_SESSION['feedbackMessage'] = feedbackMessage([_('Faqja që po kërkoni nuk u gjet!')], 'attention');
+  $_SESSION['feedbackMessage'] = feedbackMessage([_('Page you were looking for was not found!')], 'attention');
   header('Location:' . WEBSITE_BASE_URL . WEBSITE_LOCALE);
   exit;
 }
@@ -23,7 +23,7 @@ $getClientQ = pg_query($dbc['read_write'], sprintf("
 
 if (pg_num_rows($getClientQ) !== 1) {
 
-  $_SESSION['feedbackMessage'] = feedbackMessage([_('Kodi i vërtetimit që dhatë nuk mund të verifikohej!')], 'attention');
+  $_SESSION['feedbackMessage'] = feedbackMessage([_('Authentication code could not be verified!')], 'attention');
   header('Location:' . WEBSITE_BASE_URL . WEBSITE_LOCALE);
   
   exit;

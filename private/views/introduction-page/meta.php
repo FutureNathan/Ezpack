@@ -14,11 +14,11 @@
 
 # URL paths MUST be blank for the home page, as it is the base path.
 
-$meta['url_id']       = 'home-page';
-$meta['url']          = 'home-page'; // relative URL path
+$meta['url_id']       = '';
+$meta['url']          = ''; // relative URL path
 
 $meta['title']        = _('EZ pack');
-$meta['access'] = ['registered'];
+
 /*
 $meta['og_type']      = '';
 $meta['og_image']     = '';

@@ -55,6 +55,49 @@ main > * {
   margin: 0em;
 }
 
+
+.user-acces form {
+  background-color: #78a1bf63;
+  padding: 1em;
+  
+  flex: 1 0 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.user-acces form button {
+  margin-top: 1em;
+}
+.user-acces form input {
+  margin-bottom: 1em;
+}
+
+.user-acces > div {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  margin-top: 1em;
+  
+}
+
+.user-acces > div a {
+  margin-bottom: 0.5em;
+  text-decoration: underline;
+  color: #009ec3;
+}
+
+@media screen and (min-width: 450px){
+  .user-acces {
+    margin: 0 auto;
+    width: 32em;
+  }
+}
+
+.pageTitle {
+  text-align: center;
+}
 ';
 
 ?>

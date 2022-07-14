@@ -74,13 +74,13 @@ if ($_POST['formAction'] === "recoverPassword") {
         
       } else {
       
-        $errors[] = _('This email could not be found.');
+        $errors['email'] = _('This email could not be found.');
         
       }
       
     } else {
     
-      $errors[] = _('This email could not be found.');
+      $errors['email'] = _('This email could not be found.');
       
     }
   

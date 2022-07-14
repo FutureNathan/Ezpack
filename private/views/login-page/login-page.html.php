@@ -4,20 +4,28 @@
 
 insertView('website-head');
 
+#################################################################################################### --- PAGE HEADER
+
+insertView('page-header');
+
 #################################################################################################### --- PAGE CONTENT
 
 echo '
   <main>
-    <section id="registration" style="background-color: #78a1bf;">
-      
-      <h2>' . _('Login') . '</h2>';
+  
+    <section class="pageTitle lightGreyBigContainer">
+      <h2>' . _('Login') . '</h2>
+    </section>
+    
+    <section class="user-acces">';
       
       insertView('login-form');
       
-     echo '
-     <a href="' . WEBSITE_BASE_URL . VIEWS['forgot-password-page']['meta']['url'] . '">Forgot password?</a>
-     <a href="' . WEBSITE_BASE_URL . VIEWS['registration-page']['meta']['url'] . '">Don\'t have an account?</a>
-
+      echo '
+      <div>
+        <a href="' . WEBSITE_BASE_URL . VIEWS['forgot-password-page']['meta']['url'] . '">Forgot password?</a>
+        <a href="' . WEBSITE_BASE_URL . VIEWS['registration-page']['meta']['url'] . '">Create account</a>
+      </div>
     </section>
   </main>
 ';
