@@ -16,12 +16,16 @@ echo '
   text-align: center;
   padding: 0.2em 0.5em;
   background-color: #858585b8;
+  border-radius: 0.5em;
+}
+
+.boxInformation > div {
+  margin-top: 1em;
 }
 
 .boxPricing {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(7.5em, 1fr));
-  margin-top: 1em;
   grid-gap: 1em 1em;
 }
 
@@ -37,11 +41,11 @@ echo '
   
   padding: 1em;
   border-radius: 0.5em;
-  background-color: #b8adf9a6;
+  background-color: #eaeaea7a;
 }
 
 .boxContainer:hover {
-  background-color: #b8adf947;
+  background-color: #eaeaeae8;
 }
 
 
@@ -51,7 +55,7 @@ echo '
 
 .boxDetails {
   display: grid;
-  grid-template-columns: auto 9em;
+  grid-template-columns: auto auto;
   justify-items: start;
   align-items: stretch;
   grid-gap: 0.5em;
@@ -76,17 +80,6 @@ echo '
 
 echo '
   
-  @media screen and (min-width: 400px) {
-    
-    .boxDetails {
-      grid-template-columns: auto 10em auto;
-    }
-    
-    .boxDetails span:nth-of-type(2){
-      display: block;
-    }
-    
-  }
 ';
 
 ?>

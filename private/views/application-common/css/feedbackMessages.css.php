@@ -4,12 +4,14 @@
 
 echo '
   .feedback {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     
     padding: 0em 0.5em;
     margin-top: 0.2em;
     
-    background-color: #b8e0df;
+    background-color: #b8e0bbb3;
+    padding: 1em;
+    border-radius: 0.5em;
   }
   
   .feedback.confirmation {

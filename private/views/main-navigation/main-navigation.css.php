@@ -21,7 +21,7 @@ echo '
     padding: 0em;
     font-size: 1.6rem;
     margin-left: auto;
-    color: white;
+    color: #000;
     text-decoration: none;
   }
   nav#stickyStripe > .logo {
@@ -38,7 +38,7 @@ echo '
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    background-color: #78a1bf;
+    background-color: #78a1bf7d;
   }
 ';
 

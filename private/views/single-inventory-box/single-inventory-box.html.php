@@ -6,8 +6,7 @@ echo '
   
   <div class="boxDetails">
     <input type="checkbox" ' . ($viewOptions['prod_availability'] === 't'  ? "checked" : ""). ' data-prod-id="' . $viewOptions['prod_id']. '">
-    <span class="whiteBox">' . $viewOptions['prod_name'] . '</span>
-    <span>' . $viewOptions['prod_type']. '</span>
+    <span>' . $viewOptions['prod_name'] . '</span>
   </div>
   
   <div class="actions">
@@ -15,14 +14,6 @@ echo '
     <button class="expandCollapseBtn">
       <img src="' . getPubUrl('application-common', 'images/icons8-chevron-down-50.png') . '">
     </button>
-
-    <button class="deleteBoxBtn" data-action="deleteBox" data-delete-box-id="' . $viewOptions['prod_id'] . '" title="' . _('Delete box') .'">
-      <img src="' . getPubUrl('application-common', 'images/icons8-delete-60.png') . '" alt="' . _('Delete box') .'">
-    </button>
-    
-    <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['edit-box-page']['meta']['url'] . '?box=' . $viewOptions['prod_id'] . '" title="' . _('Edit box') .'">
-      <img src="' . getPubUrl('application-common', 'images/icons8-edit-64.png') . '" alt="' . _('Edit box') .'">
-    </a>
     
   </div>
 
@@ -30,6 +21,11 @@ echo '
     <div class="boxExpanded">
     
       <div class="boxInformation ">
+        <div class="boxDimensions" >
+          <h2>Box Type</h2>
+          <span>' . $viewOptions['prod_type']. '</span>
+        </div>
+        
         <div class="boxDimensions" >
           <h2>Dimensions</h2>
           <span class="whiteBox">' . $viewOptions['prod_length'] . '\'\'</span>
@@ -45,23 +41,20 @@ echo '
             <span>$' . $viewOptions['prod_price'] / 100 . '</span>
           </div>
           
-          <div class="whiteBox price">Packing Cost
+          <div class="whiteBox price">Packing price
             <span>$' . $viewOptions['prod_packing_price'] / 100 . '</span>
           </div>
           
-          <!--
-          <div class="whiteBox price">Standard +
-            <span>$' . $viewOptions['standardPlus'] . '</span>
-          </div>
+        </div>
+        
+         <div>
+          <button class="deleteBoxBtn secondaryBtn" data-action="deleteBox" data-delete-box-id="' . $viewOptions['prod_id'] . '" title="' . _('Delete box') .'">
+            ' . _('Remove') . '
+          </button>
           
-          <div class="whiteBox price">Fragile
-            <span>$' . $viewOptions['fragile'] . '</span>
-          </div>
-          
-          <div class="whiteBox price">Custom
-            <span>$' . $viewOptions['custom'] . '</span>
-          </div>
-          -->
+          <a class="secondaryBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['edit-box-page']['meta']['url'] . '?box=' . $viewOptions['prod_id'] . '" title="' . _('Edit box') .'">
+            ' . _('Edit') . '
+          </a>
         </div>
         
       </div>

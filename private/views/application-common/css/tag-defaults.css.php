@@ -25,14 +25,14 @@ echo '
   }
   
   h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     
-    padding: 0.5em 0em;
+    padding: 0.5em;
     margin: 0em 0em 0em 0em;
   
     position: relative;
     
-    color: ' . COLOURS['brand_main'] . ';
+    color: #000;
     flex: 0 0 100%;
   }
   

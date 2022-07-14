@@ -3,18 +3,19 @@
 echo '
 
 main > * {
-  padding: 1em;
   margin-bottom: 2em;
+  padding: 1em;
 }
 
 .lightGreyBigContainer {
-  background-color: #fbfbfb;
   border: 1px solid #e2e8f0;
+  background-color: #fbfbfb;
 }
 
 .whiteBox {
   padding: 0.3em 0.9em;
   border-radius: 0.3em;
+  
   background-color: #fff;
 }
 
@@ -23,14 +24,16 @@ main > * {
   background-color: #eaeaea7a;
 }
 
-.removeBtn {
-  border-radius: 1em;
-  padding: 0.5em 1em;
-  background-color: #ff5858;
+.secondaryBtn {
   margin: 1em 0em;
+  padding: 0.4em 1em;
+  border-radius: 0.5em;
+  border: 1px solid #85858599;
+  
+  background-color: #e2e8f0;
 }
 
-.mainBtn {
+main .mainBtn {
   display: inline-block;
   padding: 0.7em;
   border-radius: 0.5em;
@@ -43,11 +46,11 @@ main > * {
   background-color: #907cff;
   
   transition-property: background-color,border-color,color,box-shadow,filter;
-  transition-duration: .3s;
+  transition-duration: 0.3s;
 }
 
 .mainBtn:hover {
-  color: #fff;
+  color: #606060;
   background-color: #e2e8f0;
 }
 
@@ -59,6 +62,7 @@ main > * {
 .user-acces form {
   background-color: #78a1bf63;
   padding: 1em;
+  border-radius: 0.5em;
   
   flex: 1 0 0;
   display: flex;
@@ -70,6 +74,7 @@ main > * {
 .user-acces form button {
   margin-top: 1em;
 }
+
 .user-acces form input {
   margin-bottom: 1em;
 }
@@ -78,16 +83,33 @@ main > * {
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
+  
   margin-top: 1em;
   
 }
 
 .user-acces > div a {
   margin-bottom: 0.5em;
-  text-decoration: underline;
+  border-radius: 0.5em;
+  
   color: #009ec3;
+  text-decoration: underline;
 }
 
+.pageTitle {
+  text-align: center;
+}
+
+.boxForm {
+  margin: 1em 1em 0em 1em;
+  border-radius: 0.5em;
+  
+  background-color: #78a1bf63;
+}';
+
+#################################################################################################### RESPONSIVE
+
+echo '
 @media screen and (min-width: 450px){
   .user-acces {
     margin: 0 auto;
@@ -95,9 +117,6 @@ main > * {
   }
 }
 
-.pageTitle {
-  text-align: center;
-}
 ';
 
 ?>

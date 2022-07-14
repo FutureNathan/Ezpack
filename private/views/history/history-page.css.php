@@ -13,7 +13,9 @@ echo '
   
   .historyResults {
     width: 100%;
+    
     margin: 2em 0em;
+    
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1em;
@@ -21,22 +23,32 @@ echo '
   
   .singleBox{
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
-    grid-gap: 0.3em;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
     justify-content: center;
+    grid-gap: 0.3em;
     align-items: center;
+    
+    padding: 0.5em;
+    border-radius: 0.5em;
+    
+    background-color: #eaeaea7a;
   }
   
   .dimension {
-    max-width: 3.5em;
-    background-color: #f0f0f0;
+    max-width: 5.5em;
+    padding: 0.2em;
+    
     border: 0.12em solid #616467;
     border-radius: 0.3em;
+    
     text-align: center;
-    padding: 0.2em;
+    
+    background-color: #f0f0f0;
   }
+  
   .singleBox >  .findBtn {
     justify-self: flex-end;
+    
     text-decoration: none;
   }
   
@@ -54,7 +66,7 @@ echo '
 @media screen and (min-width: 350px) {
 
   .singleBox{
-    grid-template-columns: 2fr 1fr 1fr 1fr 3fr;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
   }
   
   a.mainBtn.findBtn span {

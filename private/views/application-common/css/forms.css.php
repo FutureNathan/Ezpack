@@ -53,7 +53,10 @@ echo '
     background: #000;
     color: #fff;
     
-    padding: 0.2em 1em;
+    padding: 0.5em 1.5em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+
     letter-spacing: 0.1em;
   }
   

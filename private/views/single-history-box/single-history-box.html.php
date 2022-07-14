@@ -1,8 +1,7 @@
 <?php
 
 echo '
-  <div class=" singleBox">
-    <span>' . _('Box Size') . '</span>
+  <div class="singleBox ">
     <span class="dimension" title="Length">' . $viewOptions['history_length'] . '</span>
     <span class="dimension" title="Width">' .  $viewOptions['history_width'] . '</span>
     <span class="dimension" title="Height">' . $viewOptions['history_height'] . '</span>

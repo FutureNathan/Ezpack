@@ -4,14 +4,14 @@ echo '
 .resultboxContainer {
   padding: 0.5em 1em;
   border-radius: 0.5em;
-  background-color: #e1edff;
+  background-color: #eaeaea7a;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
 }
 
 .resultboxContainer:hover {
-  background-color: #78a1bf;
+  background-color: #dddddd;
 }
 
 .boxName {
