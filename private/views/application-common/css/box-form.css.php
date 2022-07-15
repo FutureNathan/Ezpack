@@ -2,6 +2,13 @@
 
 echo '
 
+.editableBox {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 0.5em;
+  margin-top: 0.5em
+}
+
 .boxDimensions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
@@ -25,7 +32,7 @@ echo '
 }
 
 
-.addBoxForm > * {
+.addBoxForm > *:not(.editableBox) {
   margin-top: 1.5em;
 }
 

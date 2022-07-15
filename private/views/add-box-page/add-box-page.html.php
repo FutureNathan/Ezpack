@@ -31,9 +31,15 @@ echo '
       </label>
       
       <label class="required">
+      
         <span>' . _('Box type') . '</span>
-        <input type="text" name="box_type">
+        <select name="box_type">
+          <option value="custom">Custom</option>
+          <option value="ups">UPS</option>
+        </select>
+        
       </label>
+      
       </div>
       
       <div class="boxDimensions">
@@ -53,13 +59,16 @@ echo '
           <span>' . _('Height') . '</span>
           <input type="text" name="box_height">
         </label>
+        ';
         
+        /* echo '
         <label class="required">
           <span>' . _('Max weight') . '</span>
           <input type="text" name="box_weight">
-        </label>
+        </label>'; */
+        
+        echo '
       </div>
-      
       
       <div class="boxPrices">
         <h2> Box prices</h2>
@@ -70,7 +79,7 @@ echo '
         </label>
         
         <label class="required">
-          <span>' . _('Paking price') . '</span>
+          <span>' . _('Packing price') . '</span>
           <input type="text" name="packing_price">
         </label>
         

@@ -7,23 +7,13 @@
 # emails_list is a temporary table built with WITH
   
 $select = [
-  "prod_id",
-  "prod_owner_id",
-  "prod_name",
-  "prod_type",
-  "prod_length",
-  "prod_width",
-  "prod_height",
-  "prod_max_weight",
-  "prod_price",
-  "prod_packing_price",
-  "prod_availability"
+  "union_tables.*"
 ];
 
 #################################################################################################### --- FROM CLAUSE
 
 $from = [
-  "products"
+  "union_tables"
 ];
 
 #################################################################################################### --- JOIN CLAUSES
@@ -34,7 +24,8 @@ $join = []; // initialise
 
 $where = [];
 
-$where[] =  "prod_owner_id =" . $_SESSION['user_id'];
+$where[] =  "custom_prod_owner_id =" . $_SESSION['user_id'];
+$where[] =  "union_tables.custom_prod_owner_id = " . $_SESSION['user_id'] . " AND union_tables.custom_prod_availability = 'true' OR  union_tables.custom_prod_owner_id IS NULL AND union_tables.custom_prod_availability = 'true'";
 
 // this is used with the WITH clause below, to only select primary emails
 //
@@ -42,7 +33,7 @@ $where[] =  "prod_owner_id =" . $_SESSION['user_id'];
 #################################################################################################### --- FILTERS
  if($viewOptions['viewParams']['style'] === 'search-result') {
  
-  $where[] =  "prod_availability = 'true' ";
+  $where[] =  "custom_prod_availability = 'true' ";
  }
 $hasAllThree = true;
 
@@ -95,7 +86,7 @@ if ($hasAllThree) {
   ];
   
   sort ($searchValuesArray);
-//   var_dump($searchValuesArray);
+  
 }
 
 #################################################################################################### --- ORDER BY CLAUSE
@@ -148,7 +139,7 @@ if ( ! isEmpty (filter_var ($viewOptions['searchParams']['orderBy'], FILTER_VALI
 
 # Add a last ordering differentiator, in case the other ordering fields are equal.
 
-$orderBy[] = "prod_id DESC";
+$orderBy[] = "custom_prod_id DESC";
 
 #################################################################################################### --- LIMIT & OFFSET
 
@@ -185,6 +176,61 @@ if ($viewOptions['showPagination'] === true) {
   # TODO: find more efficient solution, instead of running 2 queries
  
   $boxesCountSQL = sprintf ("
+    WITH union_tables AS (
+      SELECT
+        custom_prod_owner_id,
+        custom_prod_id,
+        custom_prod_name,
+        custom_prod_type,
+        custom_prod_length,
+        custom_prod_width,
+        custom_prod_height,
+        custom_prod_max_weight,
+        custom_prod_price,
+        custom_prod_packing_price,
+        custom_prod_availability
+      FROM custom_products
+        
+      UNION
+      
+      SELECT
+        vendor_prod_owner_id,
+        vendor_prod_id,
+        vendor_prod_name,
+        vendor_prod_type,
+        vendor_prod_length,
+        vendor_prod_width,
+        vendor_prod_height,
+        vendor_prod_max_weight,
+        vendor_prod_price,
+        vendor_prod_packing_price,
+        vendor_prod_availability
+      FROM vendor_products
+
+      WHERE vendor_prod_id NOT IN  (SELECT vendor_prod_id
+                                    FROM vendor_products
+                                    JOIN edited_vendor_products
+                                    ON edited_vendor_prod_id = vendor_prod_id
+                                    )
+                                    
+      UNION
+      
+      SELECT
+        vendor_prod_owner_id,
+        vendor_prod_id,
+        vendor_prod_name,
+        vendor_prod_type,
+        vendor_prod_length,
+        vendor_prod_width,
+        vendor_prod_height,
+        vendor_prod_max_weight,
+        edited_vendor_prod_price,
+        edited_vendor_prod_packing_price,
+        vendor_prod_availability
+      FROM vendor_products
+      
+      JOIN edited_vendor_products ON edited_vendor_prod_id = vendor_prod_id
+    )
     
     SELECT %s
     FROM %s
@@ -206,7 +252,61 @@ if ($viewOptions['showPagination'] === true) {
 #################################################################################################### --- GET PAGINATED RESULTS
 
 $boxesListSQL = sprintf ("
-   
+  WITH union_tables AS (
+    SELECT
+      custom_prod_owner_id,
+      custom_prod_id,
+      custom_prod_name,
+      custom_prod_type,
+      custom_prod_length,
+      custom_prod_width,
+      custom_prod_height,
+      custom_prod_max_weight,
+      custom_prod_price,
+      custom_prod_packing_price,
+      custom_prod_availability
+    FROM custom_products
+      
+    UNION
+    
+    SELECT
+      vendor_prod_owner_id,
+      vendor_prod_id,
+      vendor_prod_name,
+      vendor_prod_type,
+      vendor_prod_length,
+      vendor_prod_width,
+      vendor_prod_height,
+      vendor_prod_max_weight,
+      vendor_prod_price,
+      vendor_prod_packing_price,
+      vendor_prod_availability
+    FROM vendor_products
+
+    WHERE vendor_prod_id NOT IN  (SELECT vendor_prod_id
+                                  FROM vendor_products
+                                  JOIN edited_vendor_products
+                                  ON edited_vendor_prod_id = vendor_prod_id
+                                  )
+                                  
+    UNION
+    
+    SELECT
+      vendor_prod_owner_id,
+      vendor_prod_id,
+      vendor_prod_name,
+      vendor_prod_type,
+      vendor_prod_length,
+      vendor_prod_width,
+      vendor_prod_height,
+      vendor_prod_max_weight,
+      edited_vendor_prod_price,
+      edited_vendor_prod_packing_price,
+      vendor_prod_availability
+    FROM vendor_products
+    
+    JOIN edited_vendor_products ON edited_vendor_prod_id = vendor_prod_id
+  )
   SELECT %s
   FROM %s
   
@@ -231,7 +331,7 @@ $boxesListSQL = sprintf ("
 
 $boxesListQ = pg_query ($dbc['read_only'], $boxesListSQL);
 
-//  echo '<pre>' . $boxesListSQL . '</pre>';
+//   echo '<pre>' . $boxesListSQL . '</pre>';
 
 #################################################################################################### --- SHOW RESULTS
 
@@ -251,7 +351,7 @@ if ($boxesListQ) {
     if($viewOptions['viewParams']['style'] === 'search-result') {
       while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
         
-        $boxData = [$boxesListR['prod_height'], $boxesListR['prod_length'], $boxesListR['prod_width']];
+        $boxData = [$boxesListR['custom_prod_height'], $boxesListR['custom_prod_length'], $boxesListR['custom_prod_width']];
         
         sort($boxData);
         
@@ -259,22 +359,22 @@ if ($boxesListQ) {
         
         if($viewOptions['searchParams']['packing_box'] === true) {
           
-          $price = $boxesListR['prod_price'] + $boxesListR['prod_packing_price'];
+          $price = $boxesListR['custom_prod_price'] + $boxesListR['custom_prod_packing_price'];
           
         } else {
           
-          $price = $boxesListR['prod_price'];
+          $price = $boxesListR['custom_prod_price'];
         }
         
         // ----------
         
         $unsortboxData = [
-          'name'        => $boxesListR['prod_name'],
+          'name'        => $boxesListR['custom_prod_name'],
           'price'       => $price,
-          'type'        => $boxesListR['prod_type'],
-          'prod_height' => $boxesListR['prod_height'],
-          'prod_length' => $boxesListR['prod_length'],
-          'prod_width'  => $boxesListR['prod_width']
+          'type'        => $boxesListR['custom_prod_type'],
+          'prod_height' => $boxesListR['custom_prod_height'],
+          'prod_length' => $boxesListR['custom_prod_length'],
+          'prod_width'  => $boxesListR['custom_prod_width']
         ];
         
         $unsortedBoxArray[] = $unsortboxData;

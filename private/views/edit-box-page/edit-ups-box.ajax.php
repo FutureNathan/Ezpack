@@ -1,35 +1,11 @@
 <?php
 
-if ($_POST['formAction'] === "editBox") {
+if ($_POST['formAction'] === "editUpsBox") {
   
 //   $_POST = array_map ('trim', $_POST);
   $errors = [];
   
 #################################################################################################### --- INPUT VALIDATION
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_name', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['safe']]]))) {
-    $errors['box_name'] = _('Box name is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_type', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['safe']]]))) {
-    $errors['box_type'] = _('Box type is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_length'] = _('Length is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_width', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_width'] = _('Width is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_height', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_height'] = _('Height is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_weight', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_weight'] = _('Weight is empty or invalid');
-  }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_price', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
     $errors['box_price'] = _('Box only price is empty or invalid');
@@ -58,36 +34,56 @@ if ($_POST['formAction'] === "editBox") {
     $txIdR = pg_fetch_assoc ($txIdQ);
 
 #################################################################################################### --- INSERT BOX
-  
-    $addBoxQ = pg_query($dbc['read_write'], sprintf("
-      UPDATE  products 
-      SET 
-        prod_owner_id = '%s',
-        prod_name = '%s',
-        prod_type = '%s',
-        
-        prod_length = '%s',
-        prod_width = '%s',
-        prod_height = '%s',
-        prod_max_weight = '%s',
-        
-        prod_price = '%s',
-        prod_packing_price = '%s'
-      WHERE  prod_id = '%s'
+    
+    
+    $editedBoxQ = pg_query($dbc['read_write'], sprintf("
+      select  *
+      from edited_vendor_products
+      where edited_vendor_prod_owner_id = '%s'
+      and  edited_vendor_prod_id = '%s'
       ",
       pg_escape_string($_SESSION['user_id']),
-      pg_escape_string($dbc['read_write'], $_POST['box_name']),
-      pg_escape_string($dbc['read_write'], $_POST['box_type']),
-      pg_escape_string($dbc['read_write'], $_POST['box_length']),
-      pg_escape_string($dbc['read_write'], $_POST['box_width']),
-      pg_escape_string($dbc['read_write'], $_POST['box_height']),
-      pg_escape_string($dbc['read_write'], $_POST['box_weight']),
-      pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
-      pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
       pg_escape_string($dbc['read_write'], $_POST['box'])
     ));
     
-    $addBoxQ = pg_fetch_assoc($addBoxQ);
+    
+    if (pg_num_rows($editedBoxQ) === 1) {
+    
+      $updateBoxQ = pg_query($dbc['read_write'], sprintf("
+      UPDATE  edited_vendor_products
+      SET
+        
+        edited_vendor_prod_price = '%s',
+        edited_vendor_prod_packing_price = '%s'
+      where edited_vendor_prod_owner_id = '%s'
+      and  edited_vendor_prod_id = '%s'
+      ",
+      pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
+      pg_escape_string($_SESSION['user_id']),
+      pg_escape_string($dbc['read_write'], $_POST['box'])
+      ));
+    }
+    
+    if (pg_num_rows($editedBoxQ) === 0) {
+    
+    
+    $addNewUpsEditBoxQ = pg_query($dbc['read_write'], sprintf("
+      INSERT INTO edited_vendor_products (
+        edited_vendor_prod_id,
+        edited_vendor_prod_owner_id,
+        edited_vendor_prod_price,
+        edited_vendor_prod_packing_price
+        )
+      VALUES ('%s', '%s', '%s', '%s')
+      ",
+      pg_escape_string($dbc['read_write'], $_POST['box']),
+      pg_escape_string($_SESSION['user_id']),
+      pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
+    ));
+    
+    }
     
 
 #################################################################################################### --- COMMIT TRANSACTION

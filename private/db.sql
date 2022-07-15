@@ -17,29 +17,68 @@ CREATE TABLE users (
 );
 
 
+-- ################################################################################################# --- VENDOR PRODUCTS
+
+CREATE TABLE vendor_products (
+  
+  vendor_prod_id                 INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 2022),
+  
+  vendor_prod_owner_id           INT,
+  
+  vendor_prod_name               TEXT NOT NULL,
+  
+  vendor_prod_type               TEXT NOT NULL  CHECK (vendor_prod_type IN ('ups')),
+  
+  vendor_prod_length             DECIMAL NOT NULL,
+  vendor_prod_width              DECIMAL NOT NULL,
+  vendor_prod_height             DECIMAL NOT NULL,
+  
+  vendor_prod_max_weight         DECIMAL,
+  
+  vendor_prod_price              INT NOT NULL,
+  vendor_prod_packing_price      INT NOT NULL,
+  vendor_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
+);
+
 -- ################################################################################################# --- PRODUCTS
 
-CREATE TABLE products (
+CREATE TABLE custom_products (
   
-  prod_id                 INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 2022),
+  custom_prod_id                 INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 2022),
   
-  prod_owner_id           INT NOT NULL REFERENCES users (user_id)
-                          ON UPDATE CASCADE
-                          ON DELETE CASCADE,
+  custom_prod_owner_id           INT REFERENCES users (user_id)
+                                  ON UPDATE CASCADE
+                                  ON DELETE CASCADE,
   
-  prod_name               TEXT NOT NULL,
+  custom_prod_name               TEXT NOT NULL,
   
-  prod_type               TEXT NOT NULL,
+  custom_prod_type               TEXT NOT NULL  CHECK (custom_prod_type IN ('custom')),
   
-  prod_length             DECIMAL NOT NULL,
-  prod_width              DECIMAL NOT NULL,
-  prod_height             DECIMAL NOT NULL,
+  custom_prod_length             DECIMAL NOT NULL,
+  custom_prod_width              DECIMAL NOT NULL,
+  custom_prod_height             DECIMAL NOT NULL,
   
-  prod_max_weight         DECIMAL NOT NULL,
+  custom_prod_max_weight         DECIMAL,
   
-  prod_price              INT NOT NULL,
-  prod_packing_price      INT NOT NULL,
-  prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
+  custom_prod_price              INT NOT NULL,
+  custom_prod_packing_price      INT NOT NULL,
+  custom_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- ################################################################################################# --- EDITED VENDOR PRODUCTS
+
+CREATE TABLE edited_vendor_products (
+  
+  edited_vendor_prod_id                 INT REFERENCES vendor_products (vendor_prod_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_owner_id           INT REFERENCES users (user_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_price              INT NOT NULL,
+  edited_vendor_prod_packing_price      INT NOT NULL
 );
 
 -- ################################################################################################# --- SUBSCRIPTIONS
