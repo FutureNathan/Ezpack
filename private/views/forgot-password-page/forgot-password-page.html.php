@@ -6,16 +6,17 @@ insertView ('website-head');
 
 #################################################################################################### --- PAGE HEADER
 
-insertView('page-header');
+insertView('page-header',[
+
+  'includePageTitle' => true,
+  'pageTitle' => _('Recover password')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
   <main>
-  
-    <section class="pageTitle lightGreyBigContainer">
-      <h1>' . _('Recover password') . '</h1>
-    </section>
     
     <section class="user-acces">
       

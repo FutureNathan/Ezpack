@@ -6,16 +6,17 @@ insertView ('website-head');
 
 #################################################################################################### --- INSERT PAGE HEADER
 
-insertView ('page-header');
+insertView('page-header',[
+
+  'includePageTitle' => true,
+  'pageTitle' => _('Add new box')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
 <main>
-  
-  <section class="pageTitle lightGreyBigContainer">
-    <h1>' . _('Add new box') . '</h1>
-  </section>
   
   <section class="boxForm">
     <form class="addBoxForm" method="post">

@@ -2,15 +2,15 @@
 
 echo '
 
-.boxPrices {
+.boxDimensions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
   grid-gap: 1em 2em;
 }
 
-.boxDimensions {
+.boxPrices {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(10.5em, 1fr));
   grid-gap: 1em 2em;
 }
 

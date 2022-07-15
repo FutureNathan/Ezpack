@@ -50,11 +50,11 @@ echo '
       <ul>
         
         <li>
-           <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['history']['meta']['url'] . '">History</a>
+          <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '">Inventory</a>
         </li>
         
         <li>
-          <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '">Inventory</a>
+           <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['history']['meta']['url'] . '">History</a>
         </li>
         
         <li>

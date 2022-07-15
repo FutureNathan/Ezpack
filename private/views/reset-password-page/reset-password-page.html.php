@@ -6,7 +6,12 @@ insertView ('website-head');
 
 #################################################################################################### --- PAGE HEADER
 
-insertView('page-header');
+insertView('page-header',[
+
+  'includePageTitle' => true,
+  'pageTitle' => _('Reset password')
+  
+]);
 
 #################################################################################################### --- LOGIN FORM
 
@@ -15,9 +20,6 @@ unset($errorMsg);
 
 echo '
   <main>
-    <section class="pageTitle lightGreyBigContainer">
-      <h1>' . _('Reset password') . '</h1>
-    </section>
     
     <section class="user-acces">
       

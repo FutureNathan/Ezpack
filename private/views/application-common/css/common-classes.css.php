@@ -54,11 +54,6 @@ main .mainBtn {
   background-color: #e2e8f0;
 }
 
-.confirmation {
-  margin: 0em;
-}
-
-
 .user-acces form {
   background-color: #b9d3e5;
   padding: 1em;
@@ -75,8 +70,12 @@ main .mainBtn {
   margin-top: 1em;
 }
 
-.user-acces form input {
+.user-acces form label {
   margin-bottom: 1em;
+}
+
+.user-acces p.feedback {
+  padding: 1em 0em 0em 0em;
 }
 
 .user-acces > div {
@@ -94,15 +93,6 @@ main .mainBtn {
   
   color: #009ec3;
   text-decoration: underline;
-}
-
-.pageTitle {
-  text-align: center;
-}
-.pageTitle h1 {
-  text-align: center;
-  padding: 0em;
-  font-size: 1.5rem;
 }
 
 .boxForm {

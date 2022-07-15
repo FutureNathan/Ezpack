@@ -6,16 +6,17 @@ insertView('website-head');
 
 #################################################################################################### --- PAGE HEADER
 
-insertView('page-header');
+insertView('page-header',[
+
+  'includePageTitle' => true,
+  'pageTitle' => _('History')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
   <main>
-      
-    <section class="pageTitle lightGreyBigContainer">
-      <h1>' . _('History') . '</h1>
-    </section>
     
     <section class="historyResults">';
       

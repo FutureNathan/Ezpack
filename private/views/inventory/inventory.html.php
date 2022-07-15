@@ -6,21 +6,18 @@ insertView('website-head');
 
 #################################################################################################### --- PAGE HEADER
 
-insertView('page-header');
+insertView('page-header',[
 
-#################################################################################################### --- HERO
-
-// insertView('hero');
+  'includePageTitle' => true,
+  'pageTitle' => _('Inventory')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
   <main id="settingsPage">
-    
-    <section class="pageTitle lightGreyBigContainer">
-      <h1>' . _('Inventory') . '</h1>
-    </section>
-    
+  
     <section class="searchingContainer">
       <a class="whiteBox addBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
       ';

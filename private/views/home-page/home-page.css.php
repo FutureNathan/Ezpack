@@ -117,6 +117,7 @@ form span:hover {
 
 .resetBtn {
   align-self: center;
+  margin-bottom: 2em;
 }
   
 ';

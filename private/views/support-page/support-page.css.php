@@ -2,6 +2,10 @@
 
 echo '
 
+#supportPage > section {
+  margin-top: 1em;
+}
+
 .boxSize {
   display: flex;
   flex-flow: row nowrap;

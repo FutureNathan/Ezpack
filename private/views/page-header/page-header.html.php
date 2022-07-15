@@ -2,9 +2,17 @@
 
 echo '
   <header id="pageHeader">';
-    
    
-      insertView('main-navigation');
+    insertView('main-navigation');
+    
+    if($viewOptions['includePageTitle'] === true) {
+      
+      echo '
+      <div class="pageTitle lightGreyBigContainer">
+        <h1>' . $viewOptions['pageTitle'] . '</h1>
+      </div>';
+      
+    }
     
     echo 
     $_SESSION['feedbackMessage'];
@@ -12,6 +20,7 @@ echo '
     
     echo '
   </header>
+  
 ';
 
 

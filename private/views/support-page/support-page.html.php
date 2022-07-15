@@ -6,22 +6,20 @@ insertView('website-head');
 
 #################################################################################################### --- PAGE HEADER
 
-insertView('page-header');
+insertView('page-header',[
 
-#################################################################################################### --- HERO
-
-// insertView('hero');
+  'includePageTitle' => true,
+  'pageTitle' => _('Support')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
-  <main id="settingsPage">
-  
-    <section class="pageTitle lightGreyBigContainer">
-      <h1>' . _('Support') . '</h1>
-    </section>
+  <main id="supportPage">
     
     <section class="lightGreyBigContainer">
+    
       <p>Thanks so much for supporting us</p>
       <p>
         We continue to imporve this software with your help. Please reaach out if you are having any issue or have ideas how we

@@ -14,8 +14,6 @@ echo '
   .historyResults {
     width: 100%;
     
-    margin: 2em 0em;
-    
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1em;

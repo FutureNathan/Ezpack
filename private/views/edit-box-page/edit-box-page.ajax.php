@@ -16,23 +16,23 @@ if ($_POST['formAction'] === "editBox") {
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_length'] = _('Box length is empty or invalid');
+    $errors['box_length'] = _('Length is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_width', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_width'] = _('Box width is empty or invalid');
+    $errors['box_width'] = _('Width is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_height', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_height'] = _('Box height is empty or invalid');
+    $errors['box_height'] = _('Height is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_weight', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_weight'] = _('Box weight is empty or invalid');
+    $errors['box_weight'] = _('Weight is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_price', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_only_price'] = _('Box only price is empty or invalid');
+    $errors['box_price'] = _('Box only price is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'packing_price', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {

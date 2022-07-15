@@ -6,16 +6,17 @@ insertView ('website-head');
 
 #################################################################################################### --- INSERT PAGE HEADER
 
-insertView ('page-header');
+insertView('page-header',[
+
+  'includePageTitle' => true,
+  'pageTitle' => _('Edit box')
+  
+]);
 
 #################################################################################################### --- PAGE CONTENT
 
 echo '
 <main class="dashboardMain">
-
-  <section class="pageTitle lightGreyBigContainer">
-    <h1>' . _('Edit box') . '</h1>
-  </section>
   
   <section class="boxForm">
     

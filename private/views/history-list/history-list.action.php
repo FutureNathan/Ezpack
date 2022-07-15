@@ -29,8 +29,6 @@ $join[] = "join distinct_rows on distinct_rows.history_id = history.history_id";
 
 $where = []; // initialise
 
-$where[] = "history.history_user_id =" . $_SESSION['user_id'];
-
 // this is used with the WITH clause below, to only select primary emails
 
 #################################################################################################### --- FILTERS
@@ -130,6 +128,7 @@ if ($viewOptions['showPagination'] === true) {
         history_width,
         history_id
       FROM history
+      WHERE history.history_user_id =" . $_SESSION['user_id'] . "
     )
     
     SELECT %s
@@ -159,6 +158,7 @@ $boxesListSQL = sprintf ("
       history_width,
       history_id
     FROM history
+    WHERE history.history_user_id =" . $_SESSION['user_id'] . "
   )
   SELECT %s
   FROM %s

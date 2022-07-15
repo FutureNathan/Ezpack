@@ -14,10 +14,10 @@
 
 # URL paths MUST be blank for the home page, as it is the base path.
 
-$meta['url_id']       = 'contatto';
-$meta['url']          = _('contatto'); // relative URL path
+$meta['url_id']       = 'support';
+$meta['url']          = _('support'); // relative URL path
 
-$meta['title']        = _('Conttato');
+$meta['title']        = _('Support');
 $meta['description']  = '';
 $meta['keywords']     = '';
 
