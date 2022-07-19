@@ -8,77 +8,81 @@ echo '
   <input type="hidden" name="box" value="' . $_GET['box'] . '">
   <input type="hidden" name="boxUpdate" value="' . $_GET['boxtype'] . '">';
   
-  if($_GET['boxtype'] === 'cutom'){
+  if ($_GET['boxtype'] === 'custom') {
+  
     echo '
-    <div class="boxDetails">
-    <label class="required">
-      <span>' . _('Box name') . '</span>
-      <input type="text" name="box_name" value="'. $boxR['prod_name'] . '" >
-    </label>
-    
-    <label class="required">
-    
-      <span>' . _('Box type') . '</span>
-      <select name="box_type">
-        <option value="custom">Custom</option>
-      </select>
+      <div class="boxDetails">
       
-    </label>
-    </div>
-    
-    <div class="boxDimensions">
-      <h2>Box dimensions</h2>
-    
-      <label class="required">
-        <span>' . _('Length') . '</span>
-        <input type="text" name="box_length" value="'. $boxR['prod_length'] . '">
-      </label>
+        <label class="required">
+          <span>' . _('Box name') . '</span>
+          <input type="text" name="box_name" value="'. $boxR['prod_name'] . '" >
+        </label>
+        
+        <label class="required">
+        
+          <span>' . _('Box type') . '</span>
+          <select name="box_type">
+            <option value="custom">Custom</option>
+          </select>
+          
+        </label>
+      </div>
       
-      <label class="required">
-        <span>' . _('Width') . '</span>
-        <input type="text" name="box_width" value="'. $boxR['prod_width'] . '">
-      </label>
+      <div class="boxDimensions">
+        <h2>Box dimensions</h2>
       
-      <label class="required">
-        <span>' . _('Height') . '</span>
-        <input type="text" name="box_height" value="'. $boxR['prod_height'] . '">
-      </label>
-      
-    </div>';
+        <label class="required">
+          <span>' . _('Length') . '</span>
+          <input type="text" name="box_length" value="'. $boxR['prod_length'] . '">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Width') . '</span>
+          <input type="text" name="box_width" value="'. $boxR['prod_width'] . '">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Height') . '</span>
+          <input type="text" name="box_height" value="'. $boxR['prod_height'] . '">
+        </label>
+        
+      </div>
+    ';
     
   } else {
+  
     echo '
-    <div class="boxDetails">
-      <div>
-        <span>' . _('Box name') . '</span>
-        <span class="value">' . $boxR['prod_name'] . '</span>
+      <div class="boxDetails">
+        <div>
+          <span>' . _('Box name') . '</span>
+          <span class="value">' . $boxR['prod_name'] . '</span>
+        </div>
+        
+        <div>
+          <span>' . _('Box type') . '</span>
+          <span class="value">' . $boxR['prod_type'] . '</span>
+        </div>
       </div>
       
-      <div>
-        <span>' . _('Box type') . '</span>
-        <span class="value">' . $boxR['prod_type'] . '</span>
-      </div>
-    </div>
-    
-    <div class="boxDimensions">
-      <h2>Box dimensions</h2>
-    
-      <div>
-        <span>' . _('Length') . '</span>
-        <span class="value">'. $boxR['prod_length'] . '</span>
-      </div>
+      <div class="boxDimensions">
+        <h2>Box dimensions</h2>
       
-      <div>
-        <span>' . _('Width') . '</span>
-        <span class="value">'. $boxR['prod_width'] . '</span>
+        <div>
+          <span>' . _('Length') . '</span>
+          <span class="value">'. $boxR['prod_length'] . '</span>
+        </div>
+        
+        <div>
+          <span>' . _('Width') . '</span>
+          <span class="value">'. $boxR['prod_width'] . '</span>
+        </div>
+        
+        <div>
+          <span>' . _('Height') . '</span>
+          <span class="value">'. $boxR['prod_height'] . '</span>
+        </div>
+        
       </div>
-      
-      <div>
-        <span>' . _('Height') . '</span>
-        <span class="value">'. $boxR['prod_height'] . '</span>
-      </div>
-      
-    </div>
     ';
   }
   

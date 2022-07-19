@@ -104,8 +104,7 @@ CREATE TABLE subscriptions (
   subscription_stripe_product_id    TEXT NOT NULL,
   subscription_stripe_price_id      TEXT NOT NULL,
   subscription_stripe_customer_id   TEXT NOT NULL,
-  subscription_stripe_coupon_id     TEXT
-  
+  subscription_stripe_coupon_id     TEXT,
   
   UNIQUE (subscription_user_id, subscription_stripe_product_id)
 );
