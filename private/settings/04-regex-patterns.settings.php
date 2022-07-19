@@ -49,6 +49,9 @@ const APPLICATION_REGEX = [
   'safe'                           => '~^[\p{L}\p{M}\p{N}\p{P}\p{S}\p{Z}\s]+$~u',
   'safe_optional'                  => '~^[\p{L}\p{M}\p{N}\p{P}\p{Sm}\p{Sc}\s]*$~u',
   
+  'name'                           => '~^[\p{L}\p{M}\p{N} \'.-]+$~u',
+  'name_optional'                  => '~^([\p{L}\p{M}\p{N} \'.-]+)*$~u',
+  
   'latin_letters_optional'         =>  '~^[A-Za-z]*$~',
   'sq_letters_lower'               =>  '~^[a-zëç]*$~',
   

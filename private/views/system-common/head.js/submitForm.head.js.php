@@ -24,6 +24,14 @@ result = {
  */
 
 function submitForm (form) {
+
+// ################################################################################################# --- HANDLE PAYMENT FORM
+  
+  if (form.id === 'payment-form') {
+    
+    // handle in a separate file
+    return;
+  }
   
 // ################################################################################################# --- PROCESS NORMAL SUBMISSION
   

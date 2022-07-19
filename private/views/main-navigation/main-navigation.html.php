@@ -58,7 +58,7 @@ echo '
         </li>
         
         <li>
-          <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '">Billing</a>
+          <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['billing-page']['meta']['url'] . '">Billing</a>
         </li>
         
         <li>

@@ -38,6 +38,14 @@
   <meta property="og:type" content="">
   <meta property="og:url" content="">
   
+  <?php
+  
+    if ($viewOptions['loadStripe'] === true) {
+    
+      echo '<script src="https://js.stripe.com/v3/"></script>';
+    }
+  
+  ?>
   
 </head>
 

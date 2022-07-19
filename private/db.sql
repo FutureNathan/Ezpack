@@ -98,13 +98,12 @@ CREATE TABLE subscriptions (
   subscription_renewal_date         TIMESTAMPTZ NOT NULL,
   subscription_billing_period       TEXT NOT NULL,        -- monthly, annually, etc.
   
-  subscription_active               BOOLEAN NOT NULL DEFAULT FALSE,
+  subscription_active               BOOLEAN NOT NULL DEFAULT TRUE,
   
   subscription_stripe_sub_id        TEXT NOT NULL,
   subscription_stripe_product_id    TEXT NOT NULL,
   subscription_stripe_price_id      TEXT NOT NULL,
   subscription_stripe_customer_id   TEXT NOT NULL,
-  subscription_stripe_coupon_id     TEXT,
   
   UNIQUE (subscription_user_id, subscription_stripe_product_id)
 );
@@ -119,26 +118,37 @@ CREATE TABLE invoices (
                                 REFERENCES users (user_id)
                                 ON UPDATE CASCADE,
   
-  invoice_total                 INT NOT NULL,
-  
-  invoice_subscription_title    TEXT NOT NULL,
+  invoice_total_amount          INT NOT NULL,
   
   invoice_issue_date            TIMESTAMPTZ NOT NULL,
+  
   invoice_sub_renewal_date      TIMESTAMPTZ NOT NULL,
   invoice_billing_period        TEXT NOT NULL,
   
-  invoice_user_name             TEXT NOT NULL,
-  invoice_user_email            TEXT NOT NULL,
-  invoice_user_phone_number     TEXT NOT NULL,
+  invoice_customer_details      JSONB NOT NULL, /*
+                                                  {
+                                                    "user_name"           => "Full name",
+                                                    "user_email"          => "user@gmail.com",
+                                                    "user_phone_number"   => "+355 6974070444",
+                                                    
+                                                    "billing_address" => {
+                                                      "address_street_and_number"   =>  "Blv. Gjergj Fishta Nd.23",
+                                                      "address_zip_code"            =>  "1013",
+                                                      "address_city"                =>  "Tiranë",
+                                                      "address_country"             =>  "Shqipëri"
+                                                    }
+                                                  }
+                                                */
   
-  invoice_stripe_invoice_id     TEXT NOT NULL,
-  invoice_stripe_sub_id         TEXT NOT NULL,
-  invoice_stripe_product_id     TEXT NOT NULL,
-  invoice_stripe_price_id       TEXT NOT NULL,
-  invoice_stripe_customer_id    TEXT NOT NULL,
-  
-  invoice_stripe_coupon_id      TEXT,
-  invoice_stripe_coupon_name    TEXT
+  invoice_stripe_details        JSONB NOT NULL  /*
+                                                  {
+                                                    "stripe_invoice_id"         => "",
+                                                    "stripe_subscription_id"    => "",
+                                                    "stripe_product_id"         => "",
+                                                    "stripe_price_id"           => "",
+                                                    "stripe_customer_id"        => ""
+                                                  }
+                                                */
 );
 
 -- ################################################################################################# HISTORY

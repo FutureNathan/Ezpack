@@ -82,10 +82,16 @@ echo '
   
   .radio,
   .checkbox {
+    display: flex;
     flex-flow: row nowrap;
     align-items: baseline;
 
     margin: 0.3em 0em 0em 0em;
+  }
+  
+  .radio input,
+  .checkbox input {
+    width: auto;
   }
   
   fieldset {

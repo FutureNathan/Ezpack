@@ -1,0 +1,505 @@
+<?php
+
+/**
+ * Handles data posted to this endpoint by Stripe (aka "webhooks").
+ * 
+ * https://stripe.com/docs/webhooks/build
+ */
+
+#################################################################################################### --- INCLUDE DEPENDENCIES
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+use \Dompdf\Dompdf;
+use \Dompdf\Options;
+
+require_once PATH_PRIVATE . 'PHPMailer/src/PHPMailer.php';
+require_once PATH_PRIVATE . 'PHPMailer/src/Exception.php';
+
+require_once PATH_PRIVATE . 'dompdf/autoload.inc.php';
+
+require_once PATH_PRIVATE . 'stripe-php-7.67.0/init.php';
+
+#################################################################################################### --- GET STRIPE PAYLOAD
+
+$stripe = new \Stripe\StripeClient (STRIPE_KEY_PHP);
+
+$payload     = @file_get_contents('php://input');
+
+$sig_header  = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+
+// ----------
+
+$app->post('/stripe-webhook', function(Request $request, Response $response) {
+
+  $event = $request->getParsedBody();
+  
+  $stripe = $this->stripe;
+
+  // Parse the message body (and check the signature if possible)
+  
+  $webhookSecret = getenv(STRIPE_WEBHOOK_SECRET);
+  
+  if ($webhookSecret) {
+  
+    try {
+    
+      $event = $stripe->webhooks->constructEvent(
+      
+        $payload,
+        
+        $sig_header,
+        
+        $webhookSecret
+      );
+
+    } catch (Exception $e) {
+    
+      return $response->withJson([ 'error' => $e->getMessage() ])->withStatus(403);
+      
+      // Invalid payload
+  
+      error_log ("INVALID PAYLOAD\n\n");
+      error_log ($e . "\n\n");
+      
+      http_response_code (403);
+      exit;
+    }
+    
+  } else {
+  
+    $event = $request->getParsedBody();
+  }
+  
+  $type = $event['type'];
+  
+  $object = $event['data']['object'];
+}
+
+#################################################################################################### --- CONSTRUCT EVENT
+/*
+$event = NULL; // initialise
+
+// ----------
+
+try {
+
+  // verify that post came from stripe
+  
+  $event = \Stripe\Webhook::constructEvent (
+    
+    $payload,
+    
+    $sig_header,
+    
+    $endpoint_secret
+  );
+  
+} catch (\UnexpectedValueException $e) {
+
+  // Invalid payload
+  
+  error_log ("INVALID PAYLOAD\n\n");
+  error_log ($e . "\n\n");
+  
+  http_response_code (400);
+  exit;
+  
+} catch (\Stripe\Exception\SignatureVerificationException $e) {
+
+  // Invalid signature
+  
+  error_log ("INVALID SIGNATURE\n\n");
+  error_log ($e . "\n\n");
+  
+  http_response_code (400);
+  exit;
+}
+
+#################################################################################################### -- VERIFY EVENT
+
+if (isEmpty ($event)) {
+  
+  error_log ("EMPTY EVENT\n\n");
+  error_log ($event . "\n\n");
+  
+  exit;
+}
+
+$payment = $event->data->object;
+
+#################################################################################################### -- INPUT VALIDATION
+
+if (isEmpty (filter_var ($payment->metadata->invoice_id, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['any_digits_positive']]]))) {
+  
+  error_log ("INVALID INVOICE ID\n\n");
+  error_log ($payment->metadata->invoice_id . "\n\n");
+  
+  exit;
+}
+#################################################################################################### -- GET SUBSCRIPTION INFO
+
+# Get invoice_id from stripe payload's metadata, and find matching invoice in database.
+
+$invoiceQ = pg_query ($dbc['read_only'], sprintf ("
+  SELECT 
+    invoices.*,
+    to_char(acc_subscription_end_date, 'YYYY-MM-DD') AS \"subEndDate\"
+    
+  FROM invoices
+  LEFT JOIN account_subscriptions
+    ON invoices.invoice_id = account_subscriptions.invoice_id
+  
+  WHERE invoices.invoice_id = '%s'
+  ",
+  pg_escape_string ($dbc['read_only'], $payment->metadata->invoice_id)
+));
+
+// -------------------------------------------------------------------------------------------------
+
+$invoiceItemsQ = pg_query($dbc['read_only'], sprintf("
+  SELECT
+    invoice_items.*,
+    subscriptions.*
+
+  FROM invoice_items
+    
+  INNER JOIN subscriptions
+    ON subscriptions.sub_id = invoice_items.sub_id
+    
+  WHERE invoice_id = '%s'
+  ",
+  pg_escape_string($dbc['read_only'], $invoiceR['invoice_id'])
+));
+
+$invoiceR['invoice_items'] = pg_fetch_all($invoiceItemsQ);
+
+*/
+#################################################################################################### -- VERIFY INVOICE
+
+if (pg_num_rows ($invoiceQ) !== 1) {
+  
+  $errorMsg = 'Received POST but invoice could not be found in the database. Invoice ID: ' . $payment->metadata->invoice_id;
+  
+  error_log ("INVOICE NOT FOUND\n\n");
+  error_log ($payment->metadata->invoice_id . "\n\n");
+  
+  # send email
+  
+  $headers = [
+    'MIME-Version: 1.0',
+    'Content-type: text/html; charset=UTF-8',
+    'From: Crewin Website <' . WEBSITE_EMAIL . '>'
+  ];
+  
+  mail (WEBSITE_EMAIL, 'Crewin - Webhook error', $errorMsg, implode("\r\n", $headers));
+  
+  exit;
+}
+
+#################################################################################################### --- PROCESS WEBHOOK: UPDATE INVOICE
+
+if ($event->type === 'payment_intent.succeeded') {
+
+  $updateInvoiceQ = pg_query ($dbc['read_write'], sprintf ("
+    
+    UPDATE invoice
+    SET invoice_status = 'succeeded'
+    WHERE invoice_id = '%s'
+    AND invoice_status = 'pending'
+    ",
+    pg_escape_string ($dbc['read_write'], $payment->metadata->invoice_id)
+  ));
+  
+  // ----------
+  
+  if (pg_affected_rows ($updateInvoiceQ) !== 1) {
+    
+    error_log ("INVOICE UPDATE FAILED\n\n");
+    error_log ($payment->metadata->invoice_id . "\n\n");
+    
+    exit;
+  }
+
+#################################################################################################### --- SEND EMAIL TO ADMIN IF A PAYMENT IS DONE
+
+  // send email
+      
+  $headers = [
+    'MIME-Version: 1.0',
+    'Content-type: text/html; charset=UTF-8',
+    'From: Crewin Website <' . WEBSITE_EMAIL . '>'
+  ];
+  
+  $subject = _('Crewin - A new payment has been made.');
+  
+  $body = '
+    <p>' . _('A new payment has been made to Crewin by ') . $payment->customer . '</p>
+  ';
+  
+  $sent = mail (WEBSITE_EMAIL, $subject, $body, implode("\r\n", $headers));
+
+#################################################################################################### --- START SUBSCRIPTION
+
+
+#################################################################################################### --- INVOICE: CREATE PDF
+  
+  $invoiceR = pg_fetch_assoc ($invoiceQ);
+  
+  // ----------
+  
+  $invoiceHtml = '
+    <html>
+      <head>
+        <style>
+      
+          h2 {
+            font-size: 32px;
+            margin: 0px 0px 16px 0px;
+          }
+          
+          h3 {
+            font-size: 24px;
+            margin: 0px 0px 16px 0px;
+          }
+          
+          p {
+            margin-bottom: 0px;
+            margin-top: 8px;
+          }
+          
+          .rightAlign {
+            text-align: right;
+          }
+          
+          #invoiceContent {
+            position: relative;
+          }
+          
+          #invoiceHead {
+            margin-bottom: 50px;
+          }
+          
+          #invoiceHead > h2 {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+          }
+          
+          #invoiceBody {
+            position: relative;
+            padding-bottom: 32px;
+            margin-bottom: 32px;
+            
+            border-bottom: 1px solid #ced4da;
+          }
+          
+          #invoiceDetails {
+            position: absolute;
+            top: 0px;
+            left: 500px;
+          }
+          
+          #invoiceDetails span {
+            font-weight: 700;
+          }
+          
+          #invoiceTable {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          
+          thead {
+            background-color: #f1f4f7;
+          }
+          
+          th {
+            text-align: left;
+          }
+          
+          th,
+          td {
+            padding: 16px;
+            border-top: 1px solid #ced4da;
+          }
+          
+          #invoiceTotal {
+            padding: 16px;
+            margin: 0px;
+            border-top: 1px solid #ced4da;
+          }
+          
+          #invoiceTotal span {
+            font-weight: bold;
+            padding-right: 1em;
+          }
+          
+        </style>
+      </head>
+      
+      <body>
+        <div id="invoiceContent">
+          <div id="invoiceHead">
+            <div>
+              <h3>Crewin</h3>
+              
+              <p>Crewin HQ</p>
+              <p>61 Bridge Street, Kington</p>
+              <p>United Kingdom, HR5 3DJ</p>
+            </div>  
+              
+            <h2>Invoice</h2>
+          </div>
+          
+          <div id="invoiceBody">  
+            
+            <div id="invoiceRecipient">
+              <h3>Recipient</h3>
+              
+              <p>' . $invoiceR['invoice_user_first_name'] . ' ' . $invoiceR['invoice_user_last_name'] . '</p>
+              <p>' . $invoiceR['invoice_user_email'] . '</p>
+              <p>' . $invoiceR['invoice_user_phone_number'] . '</p>
+              <p>' . $invoiceR['invoice_user_address'] . '</p>
+              <p>' . $invoiceR['invoice_user_city'] . ', ' . $invoiceR['invoice_user_country'] . '</p>
+            </div>
+            
+            <div id="invoiceDetails">
+              <p>
+                <span>INVOICE: </span>
+                ' . $invoiceR['invoice_id'] . '
+              </p>
+              
+              <p>
+                <span>ISSUE DATE: </span>
+                ' . $invoiceR['invoice_issue_date'] . '
+              </p>
+            </div>
+            
+          </div>
+          
+          <table id="invoiceTable">
+            <thead>
+              <tr>
+                <th>DESCRIPTION</th>
+                <th class="rightAlign">AMOUNT</th>
+              </tr>
+            </thead>
+            
+            <tbody>';
+            
+              foreach($invoiceR['invoice_items'] as $item) {
+                echo '
+                  <tr>
+                    <td>' . $item['sub_title'] . ' (From ' . $invoiceR['invoice_issue_date'] . ' to ' . $invoiceR['subEndDate'] . ')</td>
+                    <td class="rightAlign">' . $invoiceR['invoice_amount'] . ' GBP</td>
+                  </tr>
+                ';
+              }
+              
+              echo '
+            </tbody>
+          </table>
+          
+          <p id="invoiceTotal" class="rightAlign">
+            <span>TOTAL</span>
+            ' . $invoiceR['invoice_amount'] . ' GBP
+          </p>
+        </div>
+      </body>
+    </html>
+  ';
+  
+  // ----------
+
+  $dompdf = new DOMPDF();
+  $dompdf->load_html($invoiceHtml);
+  $dompdf->set_paper("letter", "portrait");
+  $dompdf->render();
+  
+  $output = $dompdf->output();
+  
+#################################################################################################### --- INVOICE: SEND TO EMAIL
+
+  $mailClientBody = '
+    <p>Hello ' . $invoiceR['invoice_user_first_name'] . ' ' . $invoiceR['invoice_user_last_name'] . ',</p>
+    
+    <p>Your payment was received.</p>
+    
+    <p>
+      You are now subscribed to our ' . $invoiceR['invoice_sub_title'] . ' plan
+      and can use Crewin\'s premium features.
+    </p>
+    
+    <p>You\'ll find the invoice attached below.</p>
+    
+    <p>Thank you for being part of Crewin.</p>
+    
+    <p>The Crewin Team</p>
+  ';
+  
+  // ----------
+  
+  $mailYPBody = '
+    <p>Hello,</p>
+    
+    <p>A new subscription has been made.</p>
+    
+    <p>Invoice #' . $invoiceR['invoice_id'] . '</p>
+    <p>Subscription: ' . $invoiceR['invoice_sub_title'] . '</p>
+  ';
+  
+  // ----------
+  
+  $mailClient = new PHPMailer (true);
+  $mailYP     = new PHPMailer (true);
+
+  $mailClient->CharSet  = "UTF-8";
+  $mailYP->CharSet      = "UTF-8";
+
+  $mailClient->setFrom (WEBSITE_EMAIL, 'Crewin');
+  $mailYP->setFrom (WEBSITE_EMAIL, 'Crewin Website');
+
+  $mailClient->Subject  = 'Crewin Subscription Confirmation #' . $invoiceR['invoice_id'];
+  $mailYP->Subject      = 'A new subscription has been made! #' . $invoiceR['invoice_id'];
+
+  $mailClient->addStringAttachment ($output, 'Crewin-invoice_nr-' . $invoiceR['invoice_id'] . '_' . $invoiceR['invoice_issue_date'] . '.pdf');
+  $mailYP->addStringAttachment ($output, 'Crewin-invoice_nr-' . $invoiceR['invoice_id'] . '_' . $invoiceR['invoice_issue_date'] . '.pdf');
+
+  $mailClient->isHTML(true);
+  $mailYP->isHTML(true);
+
+  $mailClient->Body = $mailClientBody;
+  $mailYP->Body     = $mailYPBody;
+
+  $mailClient->addAddress ($invoiceR['invoice_user_email']);
+  $mailYP->addAddress (WEBSITE_EMAIL);
+  
+  // ----------
+  
+  $mailClient->send();
+  $mailYP->send();
+  
+} else if ($event['type'] === 'payment_intent.payment_failed') {
+  
+  $errorMsg = 'A payment failed. Invoice ID: ' . $payment->metadata->invoice_id;
+  
+  error_log ("PAYMENT FAILED\n\n");
+  error_log ($payment->metadata->invoice_id . "\n\n");
+  
+  // send email
+  
+  $headers = [
+    'MIME-Version: 1.0',
+    'Content-type: text/html; charset=UTF-8',
+    'From: Crewin Website <' . WEBSITE_EMAIL . '>'
+  ];
+  
+  mail (WEBSITE_EMAIL, 'Crewin - Webhook error', $errorMsg, implode("\r\n", $headers));
+  
+} else {
+  
+  // TODO
+}
+
+?>

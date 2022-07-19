@@ -81,10 +81,8 @@ echo '
         <label class="required">
           <span>' . _('Packing price') . '</span>
           <input type="text" name="packing_price">
-        </label>
-        
+        </label>  
       </div>
-      
       
       <div class="formButtons">
         <a class="secondaryBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '" role="button" class="button unfilledButton">' . _('Cancel') . '</a>
