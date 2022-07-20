@@ -24,7 +24,7 @@ require_once PATH_PRIVATE_THIRD_PARTY . 'PHPMailer/src/Exception.php';
  
 #################################################################################################### --- FUNCTION DECLARATION 
 
-function send_email (array $emailParams) {
+function sendEmail (array $emailParams) {
   
   $mail = new PHPMailer (true);
   

@@ -57,8 +57,10 @@ if ($_SESSION['userRole'] === 'admin') {
       invoices.invoice_customer_details ->> 'user_name' AS user_name,
       invoices.invoice_customer_details ->> 'user_email' AS user_email,
       invoices.invoice_customer_details ->> 'user_phone_number' AS user_phone_number,
-      
       invoices.invoice_customer_details ->  'billing_address' AS billing_address,
+      
+      invoices.invoice_stripe_details ->> 'stripe_invoice_id' AS stripe_invoice_id,
+      invoices.invoice_stripe_details ->> 'stripe_sub_id' AS stripe_sub_id,
       
       subscription_title
       

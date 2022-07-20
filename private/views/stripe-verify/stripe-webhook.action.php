@@ -238,6 +238,128 @@ if ($type === 'invoice.payment_succeeded') {
   // ----------
   
   $insertInvoiceR = pg_fetch_assoc($insertInvoiceQ);
+  
+#################################################################################################### --- CREATE INVOICE PDF
+  
+  $insertOutput = insertView ('invoice-pdf', [
+    'invoiceId'      => $insertInvoiceR['invoice_id'],
+    'invoiceUserId'  => $userId,
+    'streamOutput'   => false
+  ]);
+  
+#################################################################################################### --- INVOICE: SEND TO EMAIL
+  
+  # Depending on the billing reason, we create different emails
+  
+  if ($object->billing_reason === 'subscription_cycle') {
+    
+    # Recurring payment for the subscription
+    
+    $clientEmailBody = '
+      <p>Hi ' . $object->customer_name . ',</p>
+      <p>Your ' . $product->name . ' was renewed for ' . $object->total / 100 . ' ' . strtoupper($object->currency) . ' on ' . $insertOutput['invoiceDetails']['invoiceIssueDate'] . '</p>
+      <p>You\'ll find the invoice attached below.</p>
+      <p>If you have any questions, please reply to this email and we will get back to you.</p>
+      <p>Ezpack</p>
+    ';
+    
+  } else if ($object->billing_reason === 'subscription_create') {
+    
+    # First time payment upon subscription creation
+    
+    $clientEmailBody = '
+      <p>Hi ' . $object->customer_name . ',</p>
+      <p>We received your first payment of ' . $object->total / 100 . ' ' . strtoupper($object->currency) . ' for your ' . $product->name . '</p>
+      <p>You\'ll find the invoice attached below.</p>
+      <p>If you have any questions, please reply to this email and we will get back to you.</p>
+      <p>Ezpack</p>
+    ';
+  }
+  
+  // ----------
+  
+  $invoiceEmailClient = sendEmail ([
+  
+    'senderEmailAddress'      => WEBSITE_EMAIL,
+    'senderName'              => 'Ezpack',
+    
+    'recipientEmailAddresses' => [$insertOutput['invoiceDetails']['user_email']],
+    
+    'emailSubject'            => 'Ezpack - Your payment was received!',
+    'emailBody'               => $clientEmailBody,
+    
+    'attachmentFiles'         => ["Ezpack_Invoice_" . $insertOutput['invoiceDetails']['invoice_id'] . "_dt_" . $insertOutput['invoiceDetails']['invoiceIssueDate'] . ".pdf" => $insertOutput['pdfOutput']],
+    
+    'isHTML'                  => true
+  ]);
+  
+  // ----------
+  
+  # Create the email that will be sent to the admin
+  
+  $adminEmailBody = '
+    <p>Hello,</p>
+    
+    <p>A new payment was received today.</p>
+    
+    <p>Stripe Invoice #' . $insertOutput['invoiceDetails']['stripe_invoice_id'] . '</p>
+    <p>Stripe Subscription ID: ' . $insertOutput['invoiceDetails']['stripe_sub_id'] . '</p>
+    
+    <p>Website Invoice ID: ' . $insertOutput['invoiceDetails']['invoice_id'] . '</p>
+  ';
+  
+  $invoiceEmailAdmin = sendEmail ([
+  
+    'senderEmailAddress'      => WEBSITE_EMAIL,
+    'senderName'              => 'Ezpack website',
+    
+    'recipientEmailAddresses' => [WEBSITE_EMAIL],
+    
+    'emailSubject'            => 'A new payment was received!',
+    'emailBody'               => $adminEmailBody,
+    
+    'attachmentFiles'         => ["Ezpack_Invoice_" . $insertOutput['invoiceDetails']['invoice_id'] . "_dt_" . $insertOutput['invoiceDetails']['invoiceIssueDate'] . ".pdf" => $insertOutput['pdfOutput']],
+    
+    'isHTML'                  => true
+  ]);
+  
+  // ----------
+  
+  if ( ! $invoiceEmailClient) {
+
+    error_log('################################################################################' . "\n");
+
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ SUBSCRIPTION PAYMENT EMAIL TO THE CLIENT' . "\n");
+    
+    error_log('----------' . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Attempting to send email with payment details to the client ' . $insertOutput['invoiceDetails']['user_email'] . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Email could not be sent to ' . $insertOutput['invoiceDetails']['user_email'] . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ PHPMailer object: ' . $mailClient . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ /srv/ezpack.git/private/views/stripe-verify/stripe-webhook.action.php' . "\n");
+  }
+  
+  // ----------
+  
+  if ( ! $invoiceEmailAdmin) {
+  
+    error_log('################################################################################' . "\n");
+
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ SUBSCRIPTION PAYMENT EMAIL TO THE ADMIN' . "\n");
+    
+    error_log('----------' . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Attempting to send email with payment details of ' . $insertOutput['invoiceDetails']['user_email'] . ' to the admin' . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Email could not be sent to the admin' . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ PHPMailer object: ' . $mailAdmin . "\n");
+    
+    error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ /srv/ezpack.git/private/views/stripe-verify/stripe-webhook.action.php' . "\n");
+  }
 }
 
 #################################################################################################### --- PAYMENT FAILED
@@ -370,6 +492,98 @@ if ($type === 'customer.subscription.created') {
       $object->customer,
       []
     );
+    
+    // -----------------------------------------------------------------------------------------------
+    
+    // Get the account email
+    
+    $accountEmailQ = pg_query($dbc['read_only'], sprintf("
+      SELECT user_email
+      FROM users
+      WHERE user_id = '%s'
+      ",
+      pg_escape_string($dbc['read_only'], $object->metadata->user_id)
+    ));
+    
+    $accountEmailR = pg_fetch_assoc($accountEmailQ);
+    
+    // -----------------------------------------------------------------------------------------------
+    
+    $mailAdminBody = '
+      Customer full name: ' . $customer->name . '<br>
+      Customer email: ' . $customer->email . '<br>
+      Stripe subscription id: ' . $object->id . '<br>
+      Website subscription id: ' . $createSubscriptionR['subscription_id'] . '
+    ';
+    
+    $subscriptionEmailAdmin = sendEmail ([
+  
+      'senderEmailAddress'      => WEBSITE_EMAIL,
+      'senderName'              => 'Ezpack website',
+      
+      'recipientEmailAddresses' => [WEBSITE_EMAIL],
+      
+      'emailSubject'            => 'A new subscription was created!',
+      'emailBody'               => $mailAdminBody,
+      
+      'isHTML'                  => true
+    ]);
+    
+    if ( ! $subscriptionEmailAdmin) {
+    
+      error_log('################################################################################' . "\n");
+
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ SUBSCRIPTION CREATION EMAIL TO THE ADMIN' . "\n");
+      
+      error_log('----------' . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Attempting to send email with the subscription details of ' . $customer->email . ' to the admin' . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Email could not be sent to the admin' . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ /srv/ezpack.git/private/views/stripe-verify/stripe-webhook.action.php' . "\n");
+    }
+    
+    // -----------------------------------------------------------------------------------------------
+    
+    // Send an email to the client
+    
+    $clientEmailBody = '
+      Hello ' . $customer->name . ',
+      Thank you for subscription to Ezpack.<br>
+      If you have any questions, please reply to this email and we will get back to you.
+      Ezpack
+    ';
+    
+    $subscriptionEmailClient = sendEmail ([
+  
+      'senderEmailAddress'      => WEBSITE_EMAIL,
+      'senderName'              => 'Ezpack',
+      
+      'recipientEmailAddresses' => [$accountEmailR['user_email']],
+      
+      'emailSubject'            => 'Your Ezpack subscription is confirmed!',
+      'emailBody'               => $clientEmailBody,
+      
+      'isHTML'                  => true
+    ]);
+    
+    // ----------
+    
+    if ( ! $subscriptionEmailClient) {
+    
+      error_log('################################################################################' . "\n");
+
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ SUBSCRIPTION CREATION EMAIL TO THE CLIENT' . "\n");
+      
+      error_log('----------' . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Attempting to send email with the subscription details to the client ' . $customer->email . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ Email could not be sent to ' . $customer->email . "\n");
+      
+      error_log(gmdate('T Y-m-d H:i:s') . ' ⚫ /srv/ezpack.git/private/views/stripe-verify/stripe-webhook.action.php' . "\n");
+    }
   } 
 }
 
@@ -426,7 +640,7 @@ if ($type === 'customer.subscription.deleted') {
     
     'isHTML'                  => true
   ]);
-  
+
   if ( ! $canceledSubscriptionEmail) {
     
     error_log('################################################################################' . "\n");

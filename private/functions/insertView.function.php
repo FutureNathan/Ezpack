@@ -128,7 +128,7 @@ function insertView (string $currentView, $viewOptions = NULL) {
   
 #################################################################################################### --- RETURN STATUS
   
-  return true; // success
+  return $insertViewResult; // success
   
 }
 
