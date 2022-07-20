@@ -69,7 +69,7 @@ echo '
 #################################################################################################### --- RESPONSIVE
 
 echo '
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 450px) {
     .table-head {
       padding: 0.5em;
       

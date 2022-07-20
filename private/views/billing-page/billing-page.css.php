@@ -1,5 +1,7 @@
 <?php
 
+#################################################################################################### --- SUBSCRIPTION FORM
+
 echo '
   .subscriptionForm {
     display: grid;
@@ -49,6 +51,52 @@ echo '
   
   .button[type=submit] {
     justify-self: start;
+  }
+';
+
+#################################################################################################### --- SUBSCRIPTION DETAILS
+
+echo '
+  .subscriptionContainer {
+    display: grid;
+    grid-gap: 0.5em;
+  }
+  
+  .subscriptionDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+    grid-gap: 0.5em;
+  }
+  
+  .subscriptionDetails > div {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  
+  .subscriptionDetails > div > span {
+    font-weight: bold;
+  }
+  
+  .subscriptionContainer a {
+    color: #009ec3;
+    text-decoration: underline;
+  }
+  
+  .table-head {
+    -webkit-box-shadow: none;
+              box-shadow: none;
+  }
+  
+  .table-head .cell {
+    font-weight: bold;
+  }
+  
+  .table-row .cell:first-child {
+    color: #907cff;
+  }
+  
+  .invoiceList {
+    padding: 0em;
   }
 ';
 
