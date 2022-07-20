@@ -40,13 +40,9 @@ if ($_GET['requestType'] === 'fsFile') {
   
   require_once PATH_PRIVATE_HANDLERS . 'dbDraftImageRequest.handler.php';
   
-} else if ($_GET['requestType'] === 'dbBook') {
-  
-  require_once PATH_PRIVATE_HANDLERS . 'dbBookRequest.handler.php';
-  
 } else if ($_GET['requestType'] === 'invoice') {
   
-  require_once PATH_PRIVATE_HANDLERS . 'invoiceRequest.handler.php';
+  require_once PATH_PRIVATE_HANDLERS . 'dbInvoiceRequest.handler.php';
   
 } else {
   
