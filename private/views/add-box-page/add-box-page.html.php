@@ -25,21 +25,10 @@ echo '
       <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('add-box-page', 'add-box-page.ajax.php') . '">
       
       <div class="boxDetails">
-      <label class="required">
-        <span>' . _('Box name') . '</span>
-        <input type="text" name="box_name">
-      </label>
-      
-      <label class="required">
-      
-        <span>' . _('Box type') . '</span>
-        <select name="box_type">
-          <option value="custom">Custom</option>
-          <option value="ups">UPS</option>
-        </select>
-        
-      </label>
-      
+        <label class="required">
+          <span>' . _('Box name') . '</span>
+          <input type="text" name="box_name">
+        </label>  
       </div>
       
       <div class="boxDimensions">

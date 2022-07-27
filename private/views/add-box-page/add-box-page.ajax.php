@@ -11,10 +11,6 @@ if ($_POST['formAction'] === "addBox") {
     $errors['box_name'] = _('Box name is empty or invalid');
   }
   
-  if (isEmpty (filter_input (INPUT_POST, 'box_type', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['safe']]]))) {
-    $errors['box_type'] = _('Box type is empty or invalid');
-  }
-  
   if (isEmpty (filter_input (INPUT_POST, 'box_length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
     $errors['box_length'] = _('Length is empty or invalid');
   }
@@ -72,12 +68,11 @@ if ($_POST['formAction'] === "addBox") {
         custom_prod_price,
         custom_prod_packing_price
       )
-      VALUES ('%s', '%s', '%s','%s', '%s', '%s', '%s', '%s')
+      VALUES ('%s', '%s', 'custom','%s', '%s', '%s', '%s', '%s')
       RETURNING custom_prod_id
       ",
       pg_escape_string($_SESSION['user_id']),
       pg_escape_string($dbc['read_write'], $_POST['box_name']),
-      pg_escape_string($dbc['read_write'], $_POST['box_type']),
       pg_escape_string($dbc['read_write'], $_POST['box_length']),
       pg_escape_string($dbc['read_write'], $_POST['box_width']),
       pg_escape_string($dbc['read_write'], $_POST['box_height']),
