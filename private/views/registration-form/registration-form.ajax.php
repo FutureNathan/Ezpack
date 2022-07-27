@@ -123,9 +123,9 @@ if ($_POST['formAction'] === 'userRegistration') {
       </a>
       <br><p>Thank you</p>';
       
-      $completedPurchaseEmail = send_email([
-        'senderEmailAddress'      => 'xhovana@ketri.al',
-        'senderName'              => 'Ezpack',
+      $completedPurchaseEmail = sendEmail([
+        'senderEmailAddress'      => WEBSITE_EMAIL,
+        'senderName'              => WEBSITE_EMAIL_FROM,
         
         'recipientEmailAddresses' => [strtolower($_POST['email'])],
         

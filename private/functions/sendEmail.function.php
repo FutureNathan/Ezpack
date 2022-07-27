@@ -112,7 +112,7 @@ Sample function call
 $subject = 'blablabal';
 $body    = 'blablabla';
 
-send_email ([
+sendEmail ([
   
   'senderEmailAddress'    => 'info@crewin.com'
   'senderName'            => 'Crewin',

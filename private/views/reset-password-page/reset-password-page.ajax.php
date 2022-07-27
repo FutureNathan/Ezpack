@@ -62,7 +62,7 @@ if (($_POST['formAction'] === "setPassword")) {
         <p>' . _('Thank you, Ezpack staff.') . '</p>
       ';
       
-      $sendContactEmail = send_email([
+      $sendContactEmail = sendEmail([
       
         'senderEmailAddress'      => WEBSITE_EMAIL,
         'senderName'              => 'Ezpack',

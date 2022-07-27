@@ -47,10 +47,10 @@ if ($_POST['formAction'] === "recoverPassword") {
           <p>Thank you, Ezpack staff.</p>
         ';
         
-        $recoverPasswordEmail = send_email([
+        $recoverPasswordEmail = sendEmail([
         
-          'senderEmailAddress'      => 'xhovana@ketri.al',
-          'senderName'              => 'Ezpack',
+          'senderEmailAddress'      => WEBSITE_EMAIL,
+          'senderName'              => WEBSITE_EMAIL_FROM,
           
           'recipientEmailAddresses' => [$forgotPassword['user_email']],
 
