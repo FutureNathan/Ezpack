@@ -1,12 +1,21 @@
 <?php
 
+if ($viewOptions['custom_prod_type'] === 'custom') {
+
+  $boxType = 'custom';
+
+} else {
+  
+  $boxType = 'ups';
+}
+
 echo '
   <div class="boxContainer blueBox">
     
-    <div class="boxDetails">
-      <input type="checkbox" ' . ($viewOptions['custom_prod_availability'] === 't'  ? "checked" : "") . ' data-prod-id="' . $viewOptions['custom_prod_id']. '" 
-      ' . ($viewOptions['custom_prod_type'] === 'ups' ? "disabled" : ""). '>
+    <div class="boxInfo">
+      <input type="checkbox"' . ($viewOptions['custom_prod_availability'] === 't' ? " checked" : "") . ' data-prod-id="' . $viewOptions['custom_prod_id']. '" data-prod-type="' . $boxType . '">
       <span>' . $viewOptions['custom_prod_name'] . '</span>
+      <span>' . ($boxType === 'ups' ? 'UPS' : 'Custom') . '</span>
     </div>
     
     <div class="actions">
@@ -21,15 +30,11 @@ echo '
         
         if ($viewOptions['custom_prod_type'] === 'custom') {
           
-          $boxType    = 'custom';
-          
           $formAction = 'editCustomBox';
           
           $actionFile = 'edit-custom-box.ajax.php';
         
         } else {
-          
-          $boxType    = 'ups';
           
           $formAction = 'editUpsBox';
           

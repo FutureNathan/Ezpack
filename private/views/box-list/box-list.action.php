@@ -25,16 +25,18 @@ $join = []; // initialise
 $where = [];
 
 $where[] =  "custom_prod_owner_id =" . $_SESSION['user_id'];
-$where[] =  "union_tables.custom_prod_owner_id = " . $_SESSION['user_id'] . " AND union_tables.custom_prod_availability = 'true' OR  union_tables.custom_prod_owner_id IS NULL AND union_tables.custom_prod_availability = 'true'";
+$where[] =  "(union_tables.custom_prod_owner_id = " . $_SESSION['user_id'] . ") OR (union_tables.custom_prod_owner_id IS NULL)";
 
 // this is used with the WITH clause below, to only select primary emails
 //
 
 #################################################################################################### --- FILTERS
- if($viewOptions['viewParams']['style'] === 'search-result') {
+
+if($viewOptions['viewParams']['style'] === 'search-result') {
  
   $where[] =  "custom_prod_availability = 'true' ";
- }
+}
+
 $hasAllThree = true;
 
 if (isEmpty (filter_var ($viewOptions['searchParams']['length'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {

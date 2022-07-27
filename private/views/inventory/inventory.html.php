@@ -19,10 +19,13 @@ echo '
   <main id="settingsPage">
   
     <section class="searchingContainer">
-      <a class="whiteBox addBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
-      ';
+      <a class="whiteBox addBtn mainBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
       
-//       insertView('box-list');
+      <div class="boxListHeader">
+        <div>' . _('Show') . '</div>
+        <div>' . _('Box name') . '</div>
+        <div>' . _('Box type') . '</div>
+      </div>';
       
       insertView ('box-list', [
         

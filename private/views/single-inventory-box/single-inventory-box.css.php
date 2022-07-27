@@ -1,7 +1,6 @@
 <?php
 
 echo '
-
   .boxExpanded {
     padding-top: 0.5em;
   }
@@ -48,25 +47,34 @@ echo '
     background-color: #eaeaeae8;
   }
 
-
   .expandable {
     flex: 0 0 100%;
   }
 
-  .boxDetails {
+  .boxInfo {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 8rem auto;
     justify-items: start;
     align-items: stretch;
-    grid-gap: 0.5em;
+    grid-gap: 1em;
+  }
+  
+  .boxInfo input {
+    width: 1.5em;
+    margin: 0em;
   }
 
-  .boxDetails span:nth-of-type(2){
+  .boxInfo span:nth-of-type(2){
     /*display: none;*/
   }
 
-  .boxDetails span{
+  .boxInfo > span {
     width: 100%;
+  }
+  
+  .boxInfo > span > span {
+    font-size: 0.9em;
+    margin-left: 0.5em;
   }
 
   .actions img {
