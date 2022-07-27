@@ -2,18 +2,13 @@
 
 if ($_POST['formAction'] === "editCustomBox") {
   
-//   $_POST = array_map ('trim', $_POST);
+  $_POST = array_map ('trim', $_POST);
   $errors = [];
-//   var_dump($_POST);
-  
+
 #################################################################################################### --- INPUT VALIDATION
   
   if (isEmpty (filter_input (INPUT_POST, 'box_name', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['safe']]]))) {
     $errors['box_name'] = _('Box name is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'box_type', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['safe']]]))) {
-    $errors['box_type'] = _('Box type is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'box_length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
@@ -56,11 +51,11 @@ if ($_POST['formAction'] === "editCustomBox") {
 
 #################################################################################################### --- INSERT BOX
     
-    $addBoxQ = pg_query($dbc['read_write'], sprintf("
+    $updateBoxQ = pg_query($dbc['read_write'], sprintf("
       UPDATE  custom_products 
       SET 
         custom_prod_name = '%s',
-        custom_prod_type = '%s',
+        custom_prod_type = 'custom',
         
         custom_prod_length = '%s',
         custom_prod_width = '%s',
@@ -68,21 +63,18 @@ if ($_POST['formAction'] === "editCustomBox") {
         
         custom_prod_price = '%s',
         custom_prod_packing_price = '%s'
-      WHERE  custom_prod_id = '%s'
+      WHERE custom_prod_id = '%s'
       ",
-      
       pg_escape_string($dbc['read_write'], $_POST['box_name']),
-      pg_escape_string($dbc['read_write'], $_POST['box_type']),
       pg_escape_string($dbc['read_write'], $_POST['box_length']),
       pg_escape_string($dbc['read_write'], $_POST['box_width']),
       pg_escape_string($dbc['read_write'], $_POST['box_height']),
       pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
       pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
-      pg_escape_string($dbc['read_write'], $_POST['box'])
+      pg_escape_string($dbc['read_write'], $_POST['boxId'])
     ));
     
-    $addBoxQ = pg_fetch_assoc($addBoxQ);
-    
+    $updateBoxR = pg_fetch_assoc($updateBoxQ);
 
 #################################################################################################### --- COMMIT TRANSACTION
   
@@ -103,11 +95,13 @@ if ($_POST['formAction'] === "editCustomBox") {
     
     if ($txStatusR['txid_status'] === 'committed') {
       
-       $_SESSION['feedbackMessage'] = feedbackMessage([_('Box was updated successfully')], 'confirmation');
-      
-      echo json_encode([
-        'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url']
+      echo json_encode ([
+        'feedbackSummary' => [_('Box was updated successfully.')],
+        'feedbackType'    => 'confirmation',
+        'resetForm'       => 'false'
       ]);
+      
+      exit;
       
     } else {
       
@@ -117,19 +111,17 @@ if ($_POST['formAction'] === "editCustomBox") {
       ]);
       
       exit;
-     
     }
-    
   }
 
 #################################################################################################### --- DISPLAY ERRORS  
-    
+
   if ($errors) {
   
     echo json_encode ([
-      'feedbackSummary'    => [_('Please fill in all fields')],
-      'feedbackType'       => 'attention',
-      'feedbackList'       => $errors
+      'feedbackSummary' => [_('Please fill in all fields')],
+      'feedbackType'    => 'attention',
+      'feedbackList'    => $errors
     ]);
   }
 }

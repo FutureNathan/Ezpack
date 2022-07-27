@@ -35,57 +35,51 @@ if ($_POST['formAction'] === "editUpsBox") {
 
 #################################################################################################### --- INSERT BOX
     
-    
     $editedBoxQ = pg_query($dbc['read_write'], sprintf("
-      select  *
-      from edited_vendor_products
-      where edited_vendor_prod_owner_id = '%s'
-      and  edited_vendor_prod_id = '%s'
+      SELECT  *
+      FROM edited_vendor_products
+      WHERE edited_vendor_prod_owner_id = '%s'
+      AND edited_vendor_prod_id = '%s'
       ",
-      pg_escape_string($_SESSION['user_id']),
-      pg_escape_string($dbc['read_write'], $_POST['box'])
+      pg_escape_string($dbc['read_write'], $_SESSION['user_id']),
+      pg_escape_string($dbc['read_write'], $_POST['boxId'])
     ));
-    
     
     if (pg_num_rows($editedBoxQ) === 1) {
     
       $updateBoxQ = pg_query($dbc['read_write'], sprintf("
-      UPDATE  edited_vendor_products
+      UPDATE edited_vendor_products
       SET
-        
         edited_vendor_prod_price = '%s',
         edited_vendor_prod_packing_price = '%s'
-      where edited_vendor_prod_owner_id = '%s'
-      and  edited_vendor_prod_id = '%s'
+      WHERE edited_vendor_prod_owner_id = '%s'
+      AND edited_vendor_prod_id = '%s'
       ",
       pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
       pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
-      pg_escape_string($_SESSION['user_id']),
-      pg_escape_string($dbc['read_write'], $_POST['box'])
+      pg_escape_string($dbc['read_write'], $_SESSION['user_id']),
+      pg_escape_string($dbc['read_write'], $_POST['boxId'])
       ));
     }
     
     if (pg_num_rows($editedBoxQ) === 0) {
     
-    
-    $addNewUpsEditBoxQ = pg_query($dbc['read_write'], sprintf("
-      INSERT INTO edited_vendor_products (
-        edited_vendor_prod_id,
-        edited_vendor_prod_owner_id,
-        edited_vendor_prod_price,
-        edited_vendor_prod_packing_price
-        )
-      VALUES ('%s', '%s', '%s', '%s')
-      ",
-      pg_escape_string($dbc['read_write'], $_POST['box']),
-      pg_escape_string($_SESSION['user_id']),
-      pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
-      pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
-    ));
-    
+      $addNewUpsEditBoxQ = pg_query($dbc['read_write'], sprintf("
+        INSERT INTO edited_vendor_products (
+          edited_vendor_prod_id,
+          edited_vendor_prod_owner_id,
+          edited_vendor_prod_price,
+          edited_vendor_prod_packing_price
+          )
+        VALUES ('%s', '%s', '%s', '%s')
+        ",
+        pg_escape_string($dbc['read_write'], $_POST['boxId']),
+        pg_escape_string($dbc['read_write'], $_SESSION['user_id']),
+        pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
+        pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
+      ));
     }
     
-
 #################################################################################################### --- COMMIT TRANSACTION
   
     pg_query ($dbc['read_write'], 'COMMIT');
@@ -105,11 +99,13 @@ if ($_POST['formAction'] === "editUpsBox") {
     
     if ($txStatusR['txid_status'] === 'committed') {
       
-       $_SESSION['feedbackMessage'] = feedbackMessage([_('Box was updated successfully')], 'confirmation');
-      
-      echo json_encode([
-        'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url']
+      echo json_encode ([
+        'feedbackSummary' => [_('Box was updated successfully.')],
+        'feedbackType'    => 'confirmation',
+        'resetForm'       => 'false'
       ]);
+      
+      exit;
       
     } else {
       
@@ -119,9 +115,7 @@ if ($_POST['formAction'] === "editUpsBox") {
       ]);
       
       exit;
-     
     }
-    
   }
 
 #################################################################################################### --- DISPLAY ERRORS  

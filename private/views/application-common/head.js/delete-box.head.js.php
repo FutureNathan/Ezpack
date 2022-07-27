@@ -1,19 +1,20 @@
+
 document.addEventListener ('click', function () {
+  
   event.stopPropagation();
   
   if (event.target.closest ('.deleteBoxBtn')) {
     
     var deleteBtn = event.target.closest ('.deleteBoxBtn');
-    deleteBox (deleteBtn);
     
+    deleteBox (deleteBtn);
   }
   
 }, false);
  
 // #################################################################################################
 
-
-function deleteBox(deleteBtn) {
+function deleteBox (deleteBtn) {
   
   if (confirm ("<?= _('Are you sure you want to delete this box?') ?>")) { // click OK in the dialog
     
@@ -21,9 +22,9 @@ function deleteBox(deleteBtn) {
     
     var formData = new FormData();
     formData.append('action', deleteBtn.getAttribute('data-action'));
-    formData.append('prod_id', deleteBtn.getAttribute('data-delete-box-id'));
+    formData.append('prod_id', deleteBtn.getAttribute('data-box-id'));
     
-    var identifier = createToken('alphanumeric_all', 40);
+    var identifier  = createToken('alphanumeric_all', 40);
     var url         = "<?php echo getPubUrl('application-common', 'ajax/delete-box.ajax.php', 'delete-box.php'); ?>";
     
     // ----------

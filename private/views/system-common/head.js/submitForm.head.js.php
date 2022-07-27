@@ -171,8 +171,30 @@ function submitForm (form) {
 // ################################################################################################# --- FEEDBACK SUMMARY
       
       if (result.feedbackSummary) {
+        
         feedbackElement.content = result.feedbackSummary;
+        
         insertElement(feedbackElement, form);
+        
+        // ----------
+        
+        // If the form is inside an expandable element, recalculate and resize the expandable element's height
+        // after the insertion of the feedback element.
+        
+        // NOTE Maybe make this a function, so that we don't have to copy everywhere, or find another way.
+        
+        var expandableElement = form.closest('.expandable');
+        
+        if (expandableElement !== null) {
+          
+          var expandableContent = expandableElement.firstElementChild;
+          
+          expandableElementBounds = expandableElement.getBoundingClientRect();
+          expandableContentBounds = expandableContent.getBoundingClientRect();
+          
+          expandableElement.style.height = expandableContentBounds.height + "px";
+          
+        }
       }
       
       if (result.feedbackType === "confirmation") {
