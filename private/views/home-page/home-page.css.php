@@ -52,8 +52,6 @@ echo '
     color: #606060;
   }
 
-
-
   form h2 {
     display: none;
   }

@@ -13,10 +13,10 @@
 
 #################################################################################################### --- HANDLE CACHING
 
+/*
 $headers = apache_request_headers();
 
 # TODO: Find a better solution for caching dates (eTags).
-
 if (isEmpty ($headers['If-Modified-Since'])) {
   
   header ('Last-Modified: Fri, 01 Jan 2021 00:00:00 GMT', true, 200);  // get fresh
@@ -25,7 +25,7 @@ if (isEmpty ($headers['If-Modified-Since'])) {
   
   header ('Last-Modified: Fri, 01 Jan 2021 00:00:00 GMT', true, 304);  // cache
 }
-
+*/
 #################################################################################################### --- HANDLE REQUEST
 
 if ($_GET['requestType'] === 'fsFile') {

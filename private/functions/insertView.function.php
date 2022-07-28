@@ -41,7 +41,7 @@ function insertView (string $currentView, $viewOptions = NULL) {
     return false;
   }
   
-#################################################################################################### --- CHECK ACCESS
+#################################################################################################### --- CHECK ACCESS BASED ON USER ROLE
   
   if ( ! isEmpty (VIEWS[$currentView]['meta']['access'])) {
     
@@ -70,6 +70,46 @@ function insertView (string $currentView, $viewOptions = NULL) {
         insertView ('login-page');
         
         return false;
+      }
+    }
+  }
+  
+#################################################################################################### --- CHECK ACCESS BASED ON SUBSCRIPTION
+  
+  # All pages are only to be accessed by registered users with a subscription.
+  # Before displaying the requested page, we check if the user has a subscription.
+  # If they are not subscribed, the user will be redirected to the page where they can buy one.
+  
+  if (in_array ($_SESSION['userRole'], USER_ROLES, true)) {
+    
+    # User is logged in
+    
+    if ( ! isEmpty ($mainView)) {
+      
+      # $mainView is not empty, ie. this is not system-common or application-common, it is one of the website's pages.
+      
+      # We check if this user has subscription
+      
+      $checkSubscriptionQ = pg_query($dbc['read_write'], sprintf("
+        SELECT subscription_id
+        FROM subscriptions
+        WHERE subscription_user_id = '%s'
+        AND subscription_renewal_date > NOW()
+        ",
+        pg_escape_string($dbc['read_write'], $_SESSION['user_id'])
+      ));
+      
+      if (! in_array ($mainView, EXCLUDED_VIEWS, true) && pg_num_rows($checkSubscriptionQ) !== 1) {
+        
+        # See docs in /settings/subscription-redirection-excluded-views.settings.php
+        
+        # If it is not one of the exluded views and the user does not have a subscription.
+        # They are redirected to the billing page to buy a subscription, in order
+        # to access other pages.
+        
+        header('Location: ' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['billing-page']['meta']['url']);
+        
+        exit;
       }
     }
   }

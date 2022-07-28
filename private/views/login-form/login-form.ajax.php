@@ -19,7 +19,6 @@ if ($_POST['formAction'] === 'userLogin') {
   
   if (isEmpty($errors)) {
 
-    
     // check if email exists in database
     
     $checkUserQ = pg_query($dbc['read_write'], sprintf("
@@ -43,6 +42,7 @@ if ($_POST['formAction'] === 'userLogin') {
       if (password_verify ($_POST['password'], $checkUser['user_password'])) {
         
         // if account is deactivated, activate it
+        
         if ($checkUser['user_active'] === 'f') {
    
           $activateAccountQ = pg_query($dbc['read_write'], sprintf("
@@ -52,26 +52,18 @@ if ($_POST['formAction'] === 'userLogin') {
             ",
             pg_escape_string($dbc['read_write'], $checkUser['user_id'])
           ));
-          
-          $msg = _('Your account has just been reactivated.');
         }
         
-        // ----------
+#################################################################################################### --- HANDLE LOGIN
         
         // user login
         
         $_SESSION['username'] = $checkUser['user_name'];
-        $_SESSION['user_id'] = $checkUser['user_id'];
+        $_SESSION['user_id']  = $checkUser['user_id'];
+        
         setUserRole('registered');
         
-//       var_dump($_POST);
-//       var_dump($_SESSION);
-//         if (!isEmpty($msg)) {
-//    
-//           $_SESSION['feedbackMessage'] = feedbackMessage([_('Mirë se erdhe') . ' ' . $checkUser['user_name'] . '! ' . $msg], 'confirmation');
-//         } else {
-//           $_SESSION['feedbackMessage'] = feedbackMessage([_('whateveeer');
-//         }
+        // ----------
         
         echo json_encode([
           'redirectUrl' => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['home-page']['meta']['url']
@@ -81,13 +73,13 @@ if ($_POST['formAction'] === 'userLogin') {
         
         $errors['email'] = _('Email and password do not match.');
       }
-      
-    
     }
   }
-  // ----------
+  
+#################################################################################################### --- DISPLAY ERRORS
   
   if ($errors) {
+  
     echo json_encode([
       'feedbackType'    => 'attention',
       'feedbackSummary' => [_('Please fill in all fields.')],

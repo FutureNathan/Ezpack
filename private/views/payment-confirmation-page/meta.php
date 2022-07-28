@@ -25,6 +25,10 @@ $meta['og_title']        = $meta['title'];
 $meta['og_description']  = $meta['description'];
 $meta['og_image']        = '';
 
+$meta['access'] = [
+  'registered'
+];
+
 /*
 $meta['preload'] = [
   [
