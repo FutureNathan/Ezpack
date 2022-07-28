@@ -62,21 +62,21 @@ if (! isEmpty (filter_var ($viewOptions['searchParams']['packing_level'], FILTER
 }
 
 if($packingLevel === 'fragile') {
-  $viewOptions['searchParams']['length'] += 3;
-  $viewOptions['searchParams']['height'] += 3;
-  $viewOptions['searchParams']['width'] += 3;
-}
-
-if($packingLevel === 'custom'){
   $viewOptions['searchParams']['length'] += 6;
   $viewOptions['searchParams']['height'] += 6;
   $viewOptions['searchParams']['width'] += 6;
 }
 
+if($packingLevel === 'custom'){
+  $viewOptions['searchParams']['length'] += 12;
+  $viewOptions['searchParams']['height'] += 12;
+  $viewOptions['searchParams']['width'] += 12;
+}
+
 if($packingLevel === 'basic'){
-  $viewOptions['searchParams']['length'] += 2;
-  $viewOptions['searchParams']['height'] += 2;
-  $viewOptions['searchParams']['width'] += 2;
+  $viewOptions['searchParams']['length'] += 4;
+  $viewOptions['searchParams']['height'] += 4;
+  $viewOptions['searchParams']['width'] += 4;
 }
 
 if ($hasAllThree) {

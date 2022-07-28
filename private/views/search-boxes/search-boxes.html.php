@@ -28,9 +28,9 @@ echo '
       
       <span class="packingLevelBtn" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
       <span class="packingLevelBtn active" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
-      <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 2') .'</span>
-      <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 3') .'</span>
-      <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 6') .'</span>
+      <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 4') .'</span>
+      <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 6') .'</span>
+      <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 12') .'</span>
       
     </div>
     
