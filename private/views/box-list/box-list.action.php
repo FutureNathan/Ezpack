@@ -348,9 +348,11 @@ if ($boxesListQ) {
     #$boxesList = pg_fetch_all ($boxesListQ);
     
     $boxArray = [];
+    
     $unsortedBoxArray = [];
     
-    if($viewOptions['viewParams']['style'] === 'search-result') {
+    if ($viewOptions['viewParams']['style'] === 'search-result') {
+    
       while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
         
         $boxData = [$boxesListR['custom_prod_height'], $boxesListR['custom_prod_length'], $boxesListR['custom_prod_width']];
@@ -359,7 +361,7 @@ if ($boxesListQ) {
         
         $boxArray[] = $boxData;
         
-        if($viewOptions['searchParams']['packing_box'] === true) {
+        if ($viewOptions['searchParams']['packing_box'] === true) {
           
           $price = $boxesListR['custom_prod_price'] + $boxesListR['custom_prod_packing_price'];
           
@@ -398,10 +400,13 @@ if ($boxesListQ) {
         }
         
       }
+      
       $volumeArray = array_slice ($volumeArray, 0, 5, true);
       
       // ----------
+      
       if ($hasAllThree) {
+      
         echo '
         <div class="resultsSection">';
         
@@ -419,17 +424,19 @@ if ($boxesListQ) {
             ]);
           }
         }
+        
         echo '</div>';
       }
     }
     
-    if($viewOptions['viewParams']['style'] === 'inventory') {
+    if ($viewOptions['viewParams']['style'] === 'inventory') {
       
       while ($boxesListR = pg_fetch_assoc ($boxesListQ)) {
       
         insertView ('single-inventory-box', array_merge ($boxesListR, $viewOptions['viewParams']));
       }
     }
+    
 #################################################################################################### --- SHOW PAGINATION
     
     if ($viewOptions['showPagination'] === true) {

@@ -6,7 +6,9 @@ echo '
     <input type="hidden" name="formAction" value="searchBox">
     <input type="hidden" name="formToken" value="' . createToken('alphanumeric_all', 40) . '">
     <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('home-page', 'search.ajax.php') . '">
-
+    
+    <input type="hidden" name="packing_level" value="standard">
+    
     <div class="boxSize lightGreyBox">
       <h2>Box size</h2>
       
@@ -25,7 +27,7 @@ echo '
       <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">
       
       <span class="packingLevelBtn" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
-      <span class="packingLevelBtn" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
+      <span class="packingLevelBtn active" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
       <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 2') .'</span>
       <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 3') .'</span>
       <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 6') .'</span>

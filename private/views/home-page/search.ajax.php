@@ -23,7 +23,7 @@ if ($_POST['formAction'] === 'searchBox') {
   }
 
 #################################################################################################### --- BOX RESULTS
-    
+  
   if (isEmpty($errors)) {
   
     insertView ('box-list', [
@@ -33,7 +33,7 @@ if ($_POST['formAction'] === 'searchBox') {
         'height'        => $_POST['height'],
         'width'         => $_POST['width'],
         'packing_box'   => ($_POST['packing_level'] === 'box_only' ? false : true),
-        'packing_level' => ( ! isEmpty($_POST['packing_level']) ? $_POST['packing_level'] : 'box_only')
+        'packing_level' => (isEmpty ($_POST['packing_level']) ? 'standard' : $_POST['packing_level'])
       ],
       
       // ----------
