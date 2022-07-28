@@ -1,10 +1,10 @@
 <?php
 
-
 if ($_POST['formAction'] === 'searchBox') {
   
-  // ----------
   $errors = [];
+  
+#################################################################################################### --- VALIDATION  
   
   if (isEmpty (filter_input (INPUT_POST, 'length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
     $errors['box_height'] = _('Box length is empty or invalid');
@@ -21,7 +21,9 @@ if ($_POST['formAction'] === 'searchBox') {
   if ( filter_input (INPUT_POST, 'packing_level', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['packing_level']]]) === false) {
     $errors['packing_level'] = _('Invalid packing level is empty or invalid');
   }
-  
+
+#################################################################################################### --- BOX RESULTS
+    
   if (isEmpty($errors)) {
   
     insertView ('box-list', [
@@ -30,7 +32,7 @@ if ($_POST['formAction'] === 'searchBox') {
         'length'        => $_POST['length'],
         'height'        => $_POST['height'],
         'width'         => $_POST['width'],
-        'packing_box'   => ($_POST['packing_box'] === 'false' ? false : true),
+        'packing_box'   => ($_POST['packing_level'] === 'box_only' ? false : true),
         'packing_level' => ( ! isEmpty($_POST['packing_level']) ? $_POST['packing_level'] : 'box_only')
       ],
       
@@ -58,21 +60,20 @@ if ($_POST['formAction'] === 'searchBox') {
 #################################################################################################### --- INSERT HISTORY
     
     $addToHistory = pg_query($dbc['read_write'], sprintf("
-    INSERT INTO history (
-      history_length,
-      history_width,
-      history_height,
-      history_user_id
-    )
-    VALUES ('%s', '%s', '%s', '%s')
-    ",
-    pg_escape_string($dbc['read_write'], $_POST['length']),
-    pg_escape_string($dbc['read_write'], $_POST['width']),
-    pg_escape_string($dbc['read_write'], $_POST['height']),
-    pg_escape_string($_SESSION['user_id'])
-    
+      INSERT INTO history (
+        history_length,
+        history_width,
+        history_height,
+        history_user_id
+      )
+      VALUES ('%s', '%s', '%s', '%s')
+      ",
+      pg_escape_string($dbc['read_write'], $_POST['length']),
+      pg_escape_string($dbc['read_write'], $_POST['width']),
+      pg_escape_string($dbc['read_write'], $_POST['height']),
+      pg_escape_string($_SESSION['user_id'])
     ));
-      
+
 #################################################################################################### --- COMMIT TRANSACTION
   
     pg_query ($dbc['read_write'], 'COMMIT');

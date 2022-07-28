@@ -80,7 +80,7 @@ const APPLICATION_REGEX = [
   'contains_unicode_letter_upper'  => '~[\p{Lu}]~u',
   
   'contains_unicode_symbol'        => '~[\p{S}\p{P}]~u',
-  'packing_level'                  => '~^(box_only|basic|fragile|custom)$~',
+  'packing_level'                  => '~^(box_only|basic|standard|fragile|custom)$~',
   'box_type'                       => '~^(ups|custom)$~'
 ];
 

@@ -126,7 +126,7 @@ echo '
   @media screen and (min-width: 500px) {
     
     .boxLevel {
-      grid-template-columns: 2em repeat(4, auto) 1fr;
+      grid-template-columns: 2em repeat(5, auto) 1fr;
     }
 
     .boxLevel > div {
@@ -190,7 +190,7 @@ echo '
     }
     
     .boxLevel {
-      grid-template-columns: 7em repeat(4, auto) 1fr;
+      grid-template-columns: 7em repeat(5, auto) 1fr;
     }
   }
 

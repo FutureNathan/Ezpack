@@ -24,12 +24,8 @@ echo '
       
       <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">
       
-      <div>
-        <input type="checkbox" name="packing_box" checked>
-        <label>Add packing</label>
-      </div>
-      
       <span class="packingLevelBtn" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
+      <span class="packingLevelBtn" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
       <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 2') .'</span>
       <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 3') .'</span>
       <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 6') .'</span>
