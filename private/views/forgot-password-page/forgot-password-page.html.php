@@ -33,7 +33,7 @@ echo '
       </form>
       
       <div>
-        <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url'] . '">' . _('Turn back') . '!</a>
+        <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url'] . '">' . _('Go back') . '</a>
       </div>
       
     </section>
