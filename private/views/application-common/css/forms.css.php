@@ -78,7 +78,13 @@ echo '
     margin: 0em 0.3em 0em 0em;
     padding: 0em;
     height: auto;
-  } 
+  }
+  
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0;
+  }
   
   .radio,
   .checkbox {

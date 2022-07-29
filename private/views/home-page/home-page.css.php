@@ -1,5 +1,7 @@
 <?php
 
+#################################################################################################### --- FORM STRUCTURE
+
 echo '
   form {
     display: grid;
@@ -14,57 +16,13 @@ echo '
     grid-gap: 0.5em;
     padding: 0.5em;
   }
-
-  .boxSize {
-    grid-template-columns: 2em repeat(3, auto) 1fr ;
-  }
-
-  .boxSorting {
-    grid-template-columns: 2em repeat(3, auto) 1fr;
-  }
-
-  .boxLevel {
-    grid-template-columns:  repeat(4, auto);
-  }
-
-  .boxLevel > div {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-self: flex-end;
-    grid-column: 2/-1;
-  }
-
-  .boxLevel > div > input{
-    width: 1.5em;
-  }
-
-  .boxSize button{
-    height: 2.5em;
-    
-    margin-left: auto;
-    border: 1px solid #907cff;
-    
-    background-color: #907cff;
-  }
-
-  .boxSize button:hover {
-    border: 1px solid #e2e8f0;
-    color: #606060;
-  }
-
+  
   form h2 {
     display: none;
   }
 
   form img {
     max-width: 2em;
-  }
-
-  .boxSize input{
-    max-width: 3em;
-    border: 0.12em solid #8585854d;
-    
-    background-color: #f0f0f0;
   }
 
   form span {
@@ -87,7 +45,64 @@ echo '
     color: white;
     background-color: #907cff;
   }
+';
 
+#################################################################################################### --- BOX SIZE
+
+echo '
+  .boxSize {
+    grid-template-columns: 2em repeat(3, auto) 1fr;
+  }
+
+  .boxSize button {
+    height: 2.5em;
+    
+    margin-left: auto;
+    border: 1px solid #907cff;
+    
+    background-color: #907cff;
+  }
+
+  .boxSize button:hover {
+    border: 1px solid #e2e8f0;
+    color: #606060;
+  }
+  
+  .boxSize input {
+    max-width: 4em;
+    height: 2.5em;
+    border: 0.12em solid #8585854d;
+    
+    background-color: #f0f0f0;
+  }
+';
+
+#################################################################################################### --- BOX PACKING LEVEL
+
+echo '
+  .boxLevel {
+    grid-template-columns: repeat(4, auto);
+  }
+
+  .boxLevel > div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-self: flex-end;
+    grid-column: 2/-1;
+  }
+
+  .boxLevel > div > input{
+    width: 1.5em;
+  }
+  
+  .boxSorting {
+    grid-template-columns: 2em repeat(3, auto) 1fr;
+  }
+';
+
+#################################################################################################### --- RESULT LIST
+
+echo '
   .active {
     color: #fff;
     background-color: #907cff;
@@ -121,6 +136,13 @@ echo '
 #################################################################################################### --- RESPONSIVE
 
 echo '
+  @media screen and (min-width: 450px) {
+
+    br {
+      display: none;
+    }
+  }
+  
   @media screen and (min-width: 500px) {
     
     .boxLevel {
@@ -189,13 +211,6 @@ echo '
     
     .boxLevel {
       grid-template-columns: 7em repeat(5, auto) 1fr;
-    }
-  }
-
-  @media screen and (min-width: 450px) {
-
-    br {
-      display: none;
     }
   }
 ';
