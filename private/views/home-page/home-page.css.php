@@ -55,6 +55,8 @@ echo '
   }
 
   .boxSize button {
+    grid-column: 6;
+    
     height: 2.5em;
     
     margin-left: auto;
@@ -74,6 +76,10 @@ echo '
     border: 0.12em solid #8585854d;
     
     background-color: #f0f0f0;
+  }
+  
+  .boxSize .feedback {
+    padding: 0em;
   }
 ';
 
@@ -202,7 +208,7 @@ echo '
     }
 
     .boxSize {
-      grid-template-columns: 7em repeat(3, auto) 1fr;
+      grid-template-columns: 7em repeat(3, auto) 1fr 1fr;
     }
     
     .boxSorting {

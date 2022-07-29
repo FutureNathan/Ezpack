@@ -18,7 +18,7 @@ echo '
       <input type="number" name="width"  ' . ($viewOptions['width'] > 0 ? 'value="' . $viewOptions['width'] . '"' : '') . '>
       <input type="number" name="height" ' . ($viewOptions['height'] > 0 ? 'value="' . $viewOptions['height'] . '"' : '') . '>
       
-      <button type="submit" class="button mainBtn">'. _('Find box') . '</button>
+      <button type="submit" class="button mainBtn">'. _('Find') . '</button>
     </div>
     
     <div class="boxLevel lightGreyBox">

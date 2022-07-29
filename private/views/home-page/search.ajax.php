@@ -7,15 +7,19 @@ if ($_POST['formAction'] === 'searchBox') {
 #################################################################################################### --- VALIDATION  
   
   if (isEmpty (filter_input (INPUT_POST, 'length', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_height'] = _('Box length is empty or invalid');
-  }
-  
-  if (isEmpty (filter_input (INPUT_POST, 'height', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_height'] = _('Box height is empty or invalid');
+    #$errors['box_length'] = _('Box length is empty or invalid');
   }
   
   if (isEmpty (filter_input (INPUT_POST, 'width', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_height'] = _('Box width is empty or invalid');
+    #$errors['box_width'] = _('Box width is empty or invalid');
+  }
+  
+  if (isEmpty (filter_input (INPUT_POST, 'height', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    #$errors['box_height'] = _('Box height is empty or invalid');
+  }
+  
+  if (isEmpty($_POST['length']) && isEmpty($_POST['height']) && isEmpty($_POST['width'])) {
+    $errors['height'] = _('Please fill in all fields');
   }
   
   if ( filter_input (INPUT_POST, 'packing_level', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['packing_level']]]) === false) {
@@ -108,10 +112,11 @@ if ($_POST['formAction'] === 'searchBox') {
   if ($errors) {
   
     echo json_encode ([
-      'feedbackSummary'    => [_('Please fill in all fields')],
+      #'feedbackSummary'    => [_('Please fill in all fields')],
       'feedbackType'       => 'attention',
       'feedbackList'       => $errors
     ]);
+
   }
 }
 
