@@ -32,7 +32,7 @@ echo '
       </div>
       
       <div class="boxDimensions">
-        <h2>Box dimensions</h2>
+        <h2>Dimensions</h2>
       
         <label class="required">
           <span>' . _('Length') . '</span>
@@ -60,17 +60,32 @@ echo '
       </div>
       
       <div class="boxPrices">
-        <h2> Box prices</h2>
+        <h2>Pricing</h2>
         
         <label class="required">
-          <span>' . _('Price') . '</span>
-          <input type="text" name="box_price">
+          <span>' . _('Box only') . '</span>
+          <input type="text" name="box_price_box_only">
         </label>
         
         <label class="required">
-          <span>' . _('Packing price') . '</span>
-          <input type="text" name="packing_price">
-        </label>  
+          <span>' . _('Standard') . '</span>
+          <input type="text" name="box_price_standard">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Basic') . '</span>
+          <input type="text" name="box_price_basic">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Fragile') . '</span>
+          <input type="text" name="box_price_fragile">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Custom') . '</span>
+          <input type="text" name="box_price_custom">
+        </label>
       </div>
       
       <div class="formButtons">

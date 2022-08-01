@@ -85,7 +85,7 @@ if ($_POST['formAction'] === 'activateBox') {
   
   if ($_POST['box_type'] === 'custom') {
   
-    $activateBoxQuery = pg_query($dbc['read_write'], sprintf("
+    $updateBoxQuery = pg_query($dbc['read_write'], sprintf("
       UPDATE custom_products
       SET custom_prod_availability = '%s'
       WHERE custom_prod_id = '%s'
@@ -96,14 +96,87 @@ if ($_POST['formAction'] === 'activateBox') {
     
   } else {
     
-    $activateBoxQuery = pg_query($dbc['read_write'], sprintf("
-      UPDATE vendor_products
-      SET vendor_prod_availability = '%s'
-      WHERE vendor_prod_id = '%s'
+    # Check if this package has an edited version of it, by this user,
+    # in the edited_vendor_products table.
+    
+    # We do this so we know where to update the existing package in edited_vendor_products,
+    # or to add a new record in that table.
+    
+    $checkEditedVendorProductQ = pg_query($dbc['read_only'], sprintf("
+      SELECT edited_vendor_prod_id
+      FROM edited_vendor_products
+      WHERE edited_vendor_prod_id = '%s'
+      AND edited_vendor_prod_owner_id = '%s'
       ",
-      pg_escape_string($dbc['read_write'], $_POST['checked']),
-      pg_escape_string($dbc['read_write'], $_POST['box_id'])
+      pg_escape_string($dbc['read_write'], $_POST['box_id']),
+      pg_escape_string($dbc['read_write'], $_SESSION['user_id'])
     ));
+    
+    // ----------
+    
+    if (pg_num_rows($checkEditedVendorProductQ) === 1) {
+      
+      # This package by this user exists in edited_vendor_products. Update that record.
+      
+      $updateBoxQuery = pg_query($dbc['read_write'], sprintf("
+        UPDATE edited_vendor_products
+        SET edited_vendor_prod_availability = '%s'
+        WHERE edited_vendor_prod_id = '%s'
+        AND edited_vendor_prod_owner_id = '%s'
+        ",
+        pg_escape_string($dbc['read_write'], $_POST['checked']),
+        pg_escape_string($dbc['read_write'], $_POST['box_id']),
+        pg_escape_string($dbc['read_write'], $_SESSION['user_id'])
+      ));
+      
+    } else {
+      
+      # This user has never edited this product. We need to add it to the edited_vendor_products table.
+      
+      # Get prices of the existing boxes in "vendor_products"
+      
+      $vendorProductDetailsQ = pg_query($dbc['read_only'], sprintf("
+        SELECT
+          vendor_prod_price_box_only,
+          vendor_prod_price_standard,
+          vendor_prod_price_basic,
+          vendor_prod_price_fragile,
+          vendor_prod_price_custom
+        FROM vendor_products
+        WHERE vendor_prod_id = '%s'
+        ",
+        pg_escape_string($dbc['read_write'], $_POST['box_id']),
+      ));
+      
+      $vendorProductDetailsR = pg_fetch_assoc($vendorProductDetailsQ);
+      
+      // ----------
+      
+      # Add to edited_vendor_products.
+      
+      $addNewUpsEditBoxQ = pg_query($dbc['read_write'], sprintf("
+        INSERT INTO edited_vendor_products (
+          edited_vendor_prod_id,
+          edited_vendor_prod_owner_id,
+          edited_vendor_prod_price_box_only,
+          edited_vendor_prod_price_standard,
+          edited_vendor_prod_price_basic,
+          edited_vendor_prod_price_fragile,
+          edited_vendor_prod_price_custom,
+          edited_vendor_prod_availability
+          )
+        VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+        ",
+        pg_escape_string($dbc['read_write'], $_POST['box_id']),
+        pg_escape_string($dbc['read_write'], $_SESSION['user_id']),
+        pg_escape_string($dbc['read_write'], $vendorProductDetailsR['vendor_prod_price_box_only']),
+        pg_escape_string($dbc['read_write'], $vendorProductDetailsR['vendor_prod_price_standard']),
+        pg_escape_string($dbc['read_write'], $vendorProductDetailsR['vendor_prod_price_basic']),
+        pg_escape_string($dbc['read_write'], $vendorProductDetailsR['vendor_prod_price_fragile']),
+        pg_escape_string($dbc['read_write'], $vendorProductDetailsR['vendor_prod_price_custom']),
+        pg_escape_string($dbc['read_write'], $_POST['checked'])
+      ));
+    }
   }
   
 #################################################################################################### --- COMMIT TRANSACTION

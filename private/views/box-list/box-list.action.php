@@ -34,7 +34,7 @@ $where[] =  "(union_tables.custom_prod_owner_id = " . $_SESSION['user_id'] . ") 
 
 if($viewOptions['viewParams']['style'] === 'search-result') {
  
-  $where[] =  "custom_prod_availability = 'true' ";
+  $where[] = "(custom_prod_availability = 'true' OR custom_prod_availability IS NULL)";
 }
 
 $hasAllThree = true;
@@ -141,7 +141,7 @@ if ( ! isEmpty (filter_var ($viewOptions['searchParams']['orderBy'], FILTER_VALI
 
 # Add a last ordering differentiator, in case the other ordering fields are equal.
 
-$orderBy[] = "custom_prod_id DESC";
+$orderBy[] = "custom_prod_id ASC";
 
 #################################################################################################### --- LIMIT & OFFSET
 
@@ -188,9 +188,15 @@ if ($viewOptions['showPagination'] === true) {
         custom_prod_width,
         custom_prod_height,
         custom_prod_max_weight,
-        custom_prod_price,
-        custom_prod_packing_price,
+        
+        custom_prod_price_box_only,
+        custom_prod_price_standard,
+        custom_prod_price_basic,
+        custom_prod_price_fragile,
+        custom_prod_price_custom,
+        
         custom_prod_availability
+        
       FROM custom_products
         
       UNION
@@ -204,9 +210,14 @@ if ($viewOptions['showPagination'] === true) {
         vendor_prod_width,
         vendor_prod_height,
         vendor_prod_max_weight,
-        vendor_prod_price,
-        vendor_prod_packing_price,
-        vendor_prod_availability
+        
+        vendor_prod_price_box_only,
+        vendor_prod_price_standard,
+        vendor_prod_price_basic,
+        vendor_prod_price_fragile,
+        vendor_prod_price_custom,
+        
+        NULL
       FROM vendor_products
 
       WHERE vendor_prod_id NOT IN  (SELECT vendor_prod_id
@@ -226,9 +237,14 @@ if ($viewOptions['showPagination'] === true) {
         vendor_prod_width,
         vendor_prod_height,
         vendor_prod_max_weight,
-        edited_vendor_prod_price,
-        edited_vendor_prod_packing_price,
-        vendor_prod_availability
+        
+        edited_vendor_prod_price_box_only,
+        edited_vendor_prod_price_standard,
+        edited_vendor_prod_price_basic,
+        edited_vendor_prod_price_fragile,
+        edited_vendor_prod_price_custom,
+        
+        edited_vendor_prod_availability
       FROM vendor_products
       
       JOIN edited_vendor_products ON edited_vendor_prod_id = vendor_prod_id
@@ -264,8 +280,13 @@ $boxesListSQL = sprintf ("
       custom_prod_width,
       custom_prod_height,
       custom_prod_max_weight,
-      custom_prod_price,
-      custom_prod_packing_price,
+      
+      custom_prod_price_box_only,
+      custom_prod_price_standard,
+      custom_prod_price_basic,
+      custom_prod_price_fragile,
+      custom_prod_price_custom,
+      
       custom_prod_availability
     FROM custom_products
       
@@ -280,34 +301,46 @@ $boxesListSQL = sprintf ("
       vendor_prod_width,
       vendor_prod_height,
       vendor_prod_max_weight,
-      vendor_prod_price,
-      vendor_prod_packing_price,
-      vendor_prod_availability
+      
+      vendor_prod_price_box_only,
+      vendor_prod_price_standard,
+      vendor_prod_price_basic,
+      vendor_prod_price_fragile,
+      vendor_prod_price_custom,
+      
+      NULL
     FROM vendor_products
 
-    WHERE vendor_prod_id NOT IN  (SELECT vendor_prod_id
-                                  FROM vendor_products
-                                  JOIN edited_vendor_products
-                                  ON edited_vendor_prod_id = vendor_prod_id
-                                  )
-                                  
+    WHERE vendor_prod_id NOT IN  (
+      SELECT vendor_prod_id
+      FROM vendor_products
+      JOIN edited_vendor_products
+      ON edited_vendor_prod_id = vendor_prod_id
+    )
+      
     UNION
     
     SELECT
-      vendor_prod_owner_id,
-      vendor_prod_id,
-      vendor_prod_name,
-      vendor_prod_type,
-      vendor_prod_length,
-      vendor_prod_width,
-      vendor_prod_height,
-      vendor_prod_max_weight,
-      edited_vendor_prod_price,
-      edited_vendor_prod_packing_price,
-      vendor_prod_availability
+      vendor_products.vendor_prod_owner_id,
+      vendor_products.vendor_prod_id,
+      vendor_products.vendor_prod_name,
+      vendor_products.vendor_prod_type,
+      vendor_products.vendor_prod_length,
+      vendor_products.vendor_prod_width,
+      vendor_products.vendor_prod_height,
+      vendor_products.vendor_prod_max_weight,
+      
+      edited_vendor_products.edited_vendor_prod_price_box_only,
+      edited_vendor_products.edited_vendor_prod_price_standard,
+      edited_vendor_products.edited_vendor_prod_price_basic,
+      edited_vendor_products.edited_vendor_prod_price_fragile,
+      edited_vendor_products.edited_vendor_prod_price_custom,
+      
+      edited_vendor_products.edited_vendor_prod_availability
     FROM vendor_products
     
-    JOIN edited_vendor_products ON edited_vendor_prod_id = vendor_prod_id
+    JOIN edited_vendor_products
+    ON edited_vendor_products.edited_vendor_prod_id = vendor_products.vendor_prod_id
   )
   SELECT %s
   FROM %s
@@ -361,20 +394,11 @@ if ($boxesListQ) {
         
         $boxArray[] = $boxData;
         
-        if ($viewOptions['searchParams']['packing_box'] === true) {
-          
-          $price = $boxesListR['custom_prod_price'] + $boxesListR['custom_prod_packing_price'];
-          
-        } else {
-          
-          $price = $boxesListR['custom_prod_price'];
-        }
-        
         // ----------
         
         $unsortboxData = [
           'name'        => $boxesListR['custom_prod_name'],
-          'price'       => $price,
+          'price'       => $boxesListR['custom_prod_price_' . $packingLevel],
           'type'        => $boxesListR['custom_prod_type'],
           'prod_height' => $boxesListR['custom_prod_height'],
           'prod_length' => $boxesListR['custom_prod_length'],

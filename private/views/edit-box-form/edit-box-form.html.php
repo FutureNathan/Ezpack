@@ -21,7 +21,7 @@ echo '
         </div>
         
         <div class="boxDimensions">
-          <h2>Box dimensions</h2>
+          <h2>Dimensions</h2>
         
           <label class="required">
             <span>' . _('Length') . '</span>
@@ -52,7 +52,7 @@ echo '
         </div>
         
         <div class="boxDimensions">
-          <h2>Box dimensions</h2>
+          <h2>Dimensions</h2>
         
           <div>
             <span>' . _('Length') . '</span>
@@ -75,17 +75,32 @@ echo '
     
     echo ' 
     <div class="boxPrices">
-      <h2> Box prices</h2>
+      <h2>Pricing</h2>
       
       <label class="required">
-        <span>' . _('Price') . '</span>
-        <input type="text" name="box_price" value="'. $boxR['prod_price'] / 100 . '">
+        <span>' . _('Box only') . '</span>
+        <input type="text" name="box_price_box_only" value="'. $boxR['prod_price_box_only'] / 100 . '">
       </label>
       
       <label class="required">
-        <span>' . _('Packing price') . '</span>
-        <input type="text" name="packing_price" value="'. $boxR['prod_packing_price'] / 100 . '">
-      </label>  
+        <span>' . _('Standard') . '</span>
+        <input type="text" name="box_price_standard" value="'. $boxR['prod_price_standard'] / 100 . '">
+      </label>
+      
+      <label class="required">
+        <span>' . _('Basic') . '</span>
+        <input type="text" name="box_price_basic" value="'. $boxR['prod_price_basic'] / 100 . '">
+      </label>
+      
+      <label class="required">
+        <span>' . _('Fragile') . '</span>
+        <input type="text" name="box_price_fragile" value="'. $boxR['prod_price_fragile'] / 100 . '">
+      </label>
+      
+      <label class="required">
+        <span>' . _('Custom') . '</span>
+        <input type="text" name="box_price_custom" value="'. $boxR['prod_price_custom'] / 100 . '">
+      </label>
     </div>
     
     <div class="formButtons">';

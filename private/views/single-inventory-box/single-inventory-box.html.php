@@ -13,7 +13,7 @@ echo '
   <div class="boxContainer blueBox">
     
     <div class="boxInfo">
-      <input type="checkbox"' . ($viewOptions['custom_prod_availability'] === 't' ? " checked" : "") . ' data-prod-id="' . $viewOptions['custom_prod_id']. '" data-prod-type="' . $boxType . '">
+      <input type="checkbox"' . ($viewOptions['custom_prod_availability'] === 'f' ? "" : " checked") . ' data-prod-id="' . $viewOptions['custom_prod_id']. '" data-prod-type="' . $boxType . '">
       <span>' . $viewOptions['custom_prod_name'] . '</span>
       <span>' . ($boxType === 'ups' ? 'UPS' : 'Custom') . '</span>
     </div>

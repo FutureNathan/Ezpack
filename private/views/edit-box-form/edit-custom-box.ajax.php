@@ -23,12 +23,24 @@ if ($_POST['formAction'] === "editCustomBox") {
     $errors['box_height'] = _('Height is empty or invalid');
   }
   
-  if (isEmpty (filter_input (INPUT_POST, 'box_price', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['box_price'] = _('Box only price is empty or invalid');
+  if (isEmpty (filter_input (INPUT_POST, 'box_price_box_only', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    $errors['box_price_box_only'] = _('Box only price is empty or invalid');
   }
   
-  if (isEmpty (filter_input (INPUT_POST, 'packing_price', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
-    $errors['packing_price'] = _('Packing price is empty or invalid');
+  if (isEmpty (filter_input (INPUT_POST, 'box_price_standard', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    $errors['box_price_standard'] = _('Box only price is empty or invalid');
+  }
+  
+  if (isEmpty (filter_input (INPUT_POST, 'box_price_basic', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    $errors['box_price_basic'] = _('Box only price is empty or invalid');
+  }
+  
+  if (isEmpty (filter_input (INPUT_POST, 'box_price_fragile', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    $errors['box_price_fragile'] = _('Box only price is empty or invalid');
+  }
+  
+  if (isEmpty (filter_input (INPUT_POST, 'box_price_custom', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['integer_or_float']]]))) {
+    $errors['box_price_custom'] = _('Box only price is empty or invalid');
   }
   
 #################################################################################################### --- VALIDATION COMPLETE
@@ -61,16 +73,22 @@ if ($_POST['formAction'] === "editCustomBox") {
         custom_prod_width = '%s',
         custom_prod_height = '%s',
         
-        custom_prod_price = '%s',
-        custom_prod_packing_price = '%s'
+        custom_prod_price_box_only = '%s',
+        custom_prod_price_standard = '%s',
+        custom_prod_price_basic = '%s',
+        custom_prod_price_fragile = '%s',
+        custom_prod_price_custom = '%s'
       WHERE custom_prod_id = '%s'
       ",
       pg_escape_string($dbc['read_write'], $_POST['box_name']),
       pg_escape_string($dbc['read_write'], $_POST['box_length']),
       pg_escape_string($dbc['read_write'], $_POST['box_width']),
       pg_escape_string($dbc['read_write'], $_POST['box_height']),
-      pg_escape_string($dbc['read_write'], $_POST['box_price']) * 100,
-      pg_escape_string($dbc['read_write'], $_POST['packing_price']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['box_price_box_only']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['box_price_standard']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['box_price_basic']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['box_price_fragile']) * 100,
+      pg_escape_string($dbc['read_write'], $_POST['box_price_custom']) * 100,
       pg_escape_string($dbc['read_write'], $_POST['boxId'])
     ));
     

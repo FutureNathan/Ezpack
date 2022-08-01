@@ -35,9 +35,32 @@ CREATE TABLE vendor_products (
   
   vendor_prod_max_weight         DECIMAL,
   
-  vendor_prod_price              INT NOT NULL,
-  vendor_prod_packing_price      INT NOT NULL,
-  vendor_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
+  vendor_prod_price_box_only     INT NOT NULL,
+  vendor_prod_price_standard     INT NOT NULL,
+  vendor_prod_price_basic        INT NOT NULL,
+  vendor_prod_price_fragile      INT NOT NULL,
+  vendor_prod_price_custom       INT NOT NULL
+);
+
+-- ################################################################################################# --- EDITED VENDOR PRODUCTS
+
+CREATE TABLE edited_vendor_products (
+  
+  edited_vendor_prod_id                 INT REFERENCES vendor_products (vendor_prod_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_owner_id           INT REFERENCES users (user_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_price_box_only     INT NOT NULL,
+  edited_vendor_prod_price_standard     INT NOT NULL,
+  edited_vendor_prod_price_basic        INT NOT NULL,
+  edited_vendor_prod_price_fragile      INT NOT NULL,
+  edited_vendor_prod_price_custom       INT NOT NULL,
+  
+  edited_vendor_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 -- ################################################################################################# --- PRODUCTS
@@ -60,25 +83,13 @@ CREATE TABLE custom_products (
   
   custom_prod_max_weight         DECIMAL,
   
-  custom_prod_price              INT NOT NULL,
-  custom_prod_packing_price      INT NOT NULL,
+  custom_prod_price_box_only     INT NOT NULL,
+  custom_prod_price_standard     INT NOT NULL,
+  custom_prod_price_basic        INT NOT NULL,
+  custom_prod_price_fragile      INT NOT NULL,
+  custom_prod_price_custom       INT NOT NULL,
+  
   custom_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
-);
-
--- ################################################################################################# --- EDITED VENDOR PRODUCTS
-
-CREATE TABLE edited_vendor_products (
-  
-  edited_vendor_prod_id                 INT REFERENCES vendor_products (vendor_prod_id)
-                                        ON UPDATE CASCADE
-                                        ON DELETE CASCADE,
-  
-  edited_vendor_prod_owner_id           INT REFERENCES users (user_id)
-                                        ON UPDATE CASCADE
-                                        ON DELETE CASCADE,
-  
-  edited_vendor_prod_price              INT NOT NULL,
-  edited_vendor_prod_packing_price      INT NOT NULL
 );
 
 -- ################################################################################################# --- SUBSCRIPTIONS
