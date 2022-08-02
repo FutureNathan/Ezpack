@@ -49,6 +49,7 @@ if ($_POST['formAction'] === 'userRegistration') {
 #################################################################################################### --- VALIDATION COMPLETE
   
   if (isEmpty($errors)) {
+  
 #################################################################################################### --- BEGIN TRANSACTION
     
     pg_query ($dbc['read_write'], 'BEGIN');
@@ -76,7 +77,6 @@ if ($_POST['formAction'] === 'userRegistration') {
       VALUES('%s', '%s', '%s', '%s')
       RETURNING user_id
       ",
-      
       pg_escape_string($dbc['read_write'], $_POST['name']),
       pg_escape_string($dbc['read_write'], strtolower($_POST['email'])),
       pg_escape_string($dbc['read_write'], $_POST['phone_number']),
@@ -87,7 +87,6 @@ if ($_POST['formAction'] === 'userRegistration') {
     $insertUserR = pg_fetch_assoc ($insertUserQ);
     
     $userId = $insertUserR['user_id'];
-    
     
 #################################################################################################### --- COMMIT TRANSACTION
     
@@ -115,7 +114,7 @@ if ($_POST['formAction'] === 'userRegistration') {
     } else {
       
 #################################################################################################### --- SEND EMAIL TO USER
-      
+      /*
       $body = '<p>Welcome to EZ Pack.</p>
       <p>To confirm you account please follow the link below</p>
       <a href="' . WEBSITE_BASE_URL . VIEWS['confirm-account']['meta']['url'] . '?key=' . sha1(strtolower($_POST['email'])) . '">
@@ -135,12 +134,12 @@ if ($_POST['formAction'] === 'userRegistration') {
       ]);
       
       $_SESSION['feedbackMessage'] = feedbackMessage ([_('To login your need to confirm your ezpack account. Check your email to continue.')], 'confirmation');
-      
+      */
       $_SESSION['user_id'] = $userId;
       $_SESSION['username'] = $_POST['name'];
       setUserRole('registered');
 
-      $_SESSION['feedbackMessage'] = feedbackMessage([_('Welcome') . ' ' . escape($_POST['name']) . '! ' . _('End your registration by clicking the link that we sent to your email') . ' "' . strtolower($_POST['email']) . '". ' . _('Please check the junk and spam folders.')], 'confirmation');
+      $_SESSION['feedbackMessage'] = feedbackMessage([_('Welcome') . ' ' . escape($_POST['name']) . '!'], 'confirmation');
       
       echo json_encode([
           'redirectUrl'   => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url']

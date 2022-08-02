@@ -10,7 +10,7 @@ CREATE TABLE users (
   user_email                      TEXT NOT NULL UNIQUE,
   user_phone_number               TEXT NOT NULL UNIQUE,
   
-  user_email_confirmed            BOOLEAN NOT NULL DEFAULT FALSE,
+  user_email_confirmed            BOOLEAN NOT NULL DEFAULT TRUE,
   user_active                     BOOLEAN NOT NULL DEFAULT TRUE,
   
   user_lifetime_subscription      BOOLEAN NOT NULL DEFAULT FALSE
