@@ -4,11 +4,16 @@
 
 ####################################################################################################
 
-if (isEmpty(filter_var($_REQUEST['authenticationCode'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['alphanumeric_all_40']]]))) {
+if (isEmpty (filter_input (INPUT_GET, 'authenticationCode', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => SYSTEM_REGEX['alphanumeric_all_40']]]))) {
+
   $_SESSION['feedbackMessage'] = feedbackMessage([_('Page you were looking for was not found!')], 'attention');
-  header('Location:' . WEBSITE_BASE_URL . WEBSITE_LOCALE);
+  
+  header('Location:' . WEBSITE_BASE_URL . $_SESSION['locale']);
+  
   exit;
 }
+
+####################################################################################################
 
 $getClientQ = pg_query($dbc['read_write'], sprintf("
   
@@ -24,7 +29,8 @@ $getClientQ = pg_query($dbc['read_write'], sprintf("
 if (pg_num_rows($getClientQ) !== 1) {
 
   $_SESSION['feedbackMessage'] = feedbackMessage([_('Authentication code could not be verified!')], 'attention');
-  header('Location:' . WEBSITE_BASE_URL . WEBSITE_LOCALE);
+  
+  header('Location:' . WEBSITE_BASE_URL . $_SESSION['locale']);
   
   exit;
 }
