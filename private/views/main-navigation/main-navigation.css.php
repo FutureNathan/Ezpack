@@ -150,7 +150,7 @@ echo "
 echo "
   $navMenu a.logo {
   
-    padding: 1em 0.5em 1em 0em;
+    padding: 0.5em;
     margin-right: auto;
   }
   
@@ -326,17 +326,6 @@ echo "
   }
 ";
 
-#################################################################################################### --- MIN-WIDTH: 370
-
-echo "
-  @media screen and (min-width: 370px) {
-    
-    $navMenu a.logo {
-      padding: 1em 0.5em;
-    }
-  }
-";
-
 #################################################################################################### --- MIN-WIDTH: 400
 
 echo "
@@ -387,9 +376,8 @@ echo "
   @media screen and (min-width: 700px) {
     
     $navMenu a.logo {
-      order: -1;
+      order: -1;              /* this becomes the first element */
       
-      padding: 1em;                       /* this becomes the first element */
       margin: 0em;
       margin-right: auto;
     }

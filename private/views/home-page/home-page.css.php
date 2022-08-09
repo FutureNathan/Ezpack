@@ -7,6 +7,11 @@ echo '
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 1em;
+    
+    padding-top: 0em;
+    padding-bottom: 0em;
+    
+    margin-bottom: 0em;
   }
 
   form > div {

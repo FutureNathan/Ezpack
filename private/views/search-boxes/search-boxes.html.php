@@ -10,7 +10,7 @@ echo '
     <input type="hidden" name="packing_level" value="standard">
     
     <div class="boxSize lightGreyBox">
-      <h2>Box size</h2>
+      <h2>Item size</h2>
       
       <img src="' . getPubUrl('application-common', 'images/icons8-surface-64.png') . '">
       

@@ -2,7 +2,7 @@
 
 echo '
   main > * {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     padding: 1em;
   }
 
