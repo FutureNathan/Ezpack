@@ -28,7 +28,7 @@ echo '
       
       <p>
         Call the founder Nathan personally 8am-6pm EST:<br>
-        (800)800-0000 <br><br> Or <br><br>
+        (512)586-6452 <br><br> Or <br><br>
         Email anytime:<br>
         hello@ezpack.com
       </p>

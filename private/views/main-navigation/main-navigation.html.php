@@ -89,8 +89,13 @@ echo '
         <div class="responsive expanded loginLinks">
           <ul>
             <li>
+              <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['support-page']['meta']['url'] . '" ">Support</a>
+            </li>
+            
+            <li>
               <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['login-page']['meta']['url'] . '">Login</a>
             </li>
+            
             <li>
               <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['registration-page']['meta']['url'] . '">Register</a>
             </li>

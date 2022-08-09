@@ -17,6 +17,7 @@ const EXCLUDED_VIEWS = [
   'create-subscription',
   'retrieve-subscription-status',
   'payment-confirmation-page',
+  'support-page',
   'logout'
 ];
 
