@@ -60,8 +60,6 @@ echo '
           
           echo '
         </section>
-      
-        <button data-type="reset" class="mainBtn resetBtn">' . _('Reset') .'</button>
       ';
       
     } else {

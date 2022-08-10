@@ -54,7 +54,7 @@ echo '
     text-align: center;
   }
   
-  a.mainBtn.findBtn span {
+  a.primaryBtn.findBtn span {
     display: none;
   }
 ';
@@ -67,7 +67,7 @@ echo '
     grid-template-columns: 1fr 1fr 1fr 3fr;
   }
   
-  a.mainBtn.findBtn span {
+  a.primaryBtn.findBtn span {
     display: inline;
   }
 }

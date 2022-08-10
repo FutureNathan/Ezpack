@@ -50,7 +50,7 @@ if ( ! $errorMsg) {
             <div id="card-errors" role="alert"></div>
           </div>
           
-          <button type="submit" class="primary-btn icon-btn">
+          <button type="submit" class="primaryBtn icon-btn">
             ' . _('Complete purchase') . '
             <div class="spinner hidden" id="spinner"></div>
           </button>

@@ -60,18 +60,10 @@ echo '
   }
 
   .boxSize button {
-    grid-column: 6;
-    
     height: 2.5em;
-    
-    margin-left: auto;
-    border: 1px solid #907cff;
-    
-    background-color: #907cff;
   }
 
   .boxSize button:hover {
-    border: 1px solid #e2e8f0;
     color: #606060;
   }
   
@@ -85,6 +77,9 @@ echo '
   
   .boxSize .feedback {
     padding: 0em;
+    
+    grid-row: 2;
+    grid-column: 2/-2;
   }
 ';
 
@@ -102,12 +97,24 @@ echo '
     grid-column: 2/-1;
   }
 
-  .boxLevel > div > input{
+  .boxLevel > div > input {
     width: 1.5em;
   }
   
   .boxSorting {
     grid-template-columns: 2em repeat(3, auto) 1fr;
+  }
+';
+
+#################################################################################################### --- BOX BUTTONS
+
+echo '
+  #searchBoxes .primaryBtn {
+    justify-self: start;
+  }
+  
+  #searchBoxes .secondaryBtn {
+    justify-self: end;
   }
 ';
 
@@ -136,11 +143,6 @@ echo '
     grid-template-columns: 1fr;
     grid-gap: 1em;
 
-  }
-
-  .resetBtn {
-    align-self: center;
-    margin-bottom: 2em;
   }
 ';
 
@@ -222,6 +224,13 @@ echo '
     
     .boxLevel {
       grid-template-columns: 7em repeat(5, auto) 1fr;
+    }
+    
+    .searchBoxesButtons {
+      grid-row: 1;
+      grid-column: 6;
+      
+      margin-left: auto;
     }
   }
 ';

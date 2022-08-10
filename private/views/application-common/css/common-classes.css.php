@@ -24,15 +24,17 @@ echo '
   }
 
   .secondaryBtn {
-    padding: 0.4em 1em;
+    padding: 0.7em;
     border-radius: 0.5em;
-    border: 1px solid #85858599;
+    
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
     
     background-color: #e2e8f0;
   }
 
-  main .mainBtn {
-    display: inline-block;
+  .primaryBtn {
     padding: 0.7em;
     border-radius: 0.5em;
     
@@ -46,8 +48,8 @@ echo '
     transition-property: background-color,border-color,color,box-shadow,filter;
     transition-duration: 0.3s;
   }
-
-  .mainBtn:hover {
+  
+  .primaryBtn:hover {
     color: #606060;
     background-color: #e2e8f0;
   }
@@ -88,9 +90,6 @@ echo '
   .user-acces > div a {
     margin-bottom: 0.5em;
     border-radius: 0.5em;
-    
-    color: #009ec3;
-    text-decoration: underline;
   }
 
   .boxForm {
@@ -98,6 +97,10 @@ echo '
     border-radius: 0.5em;
     
     background-color: #b9d3e5;
+  }
+  
+  .formButtons > *:first-child {
+    margin-right: 0.5rem;
   }
 ';
 

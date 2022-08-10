@@ -31,7 +31,7 @@ echo '
       <input type="password" name="confirm_password">
     </label>
     
-    <button type="submit" class="primaryButton">' . _('Register') . '</button>
+    <button type="submit" class="primaryBtn">' . _('Register') . '</button>
   </form>
 ';
 

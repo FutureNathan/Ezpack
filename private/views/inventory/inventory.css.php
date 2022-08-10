@@ -11,9 +11,8 @@ echo '
     grid-gap: 1em;
   }
 
-  .addBtn {
+  a.primaryBtn {
     justify-self: flex-end;
-    background-color: #eaeaea;
   }
   
   .boxListHeader {

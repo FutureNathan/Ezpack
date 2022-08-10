@@ -19,7 +19,7 @@ echo '
   <main id="settingsPage">
   
     <section class="searchingContainer">
-      <a class="whiteBox addBtn mainBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
+      <a class="primaryBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['add-box-page']['meta']['url'] . '">Add box</a>
       
       <div class="boxListHeader">
         <div>' . _('Show') . '</div>

@@ -84,6 +84,11 @@ echo '
     filter: none;
   }
   
+  main > section a {
+    color: #009ec3;
+    text-decoration: underline;
+  }
+  
   img {
     max-width: 100%;
     border-radius: 0.2em;

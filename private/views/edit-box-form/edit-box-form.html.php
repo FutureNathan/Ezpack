@@ -111,7 +111,7 @@ echo '
       }
       
       echo '
-      <button type="submit" class="button filledButton">'. _('Save') . '</button>
+      <button type="submit" class="button primaryBtn">'. _('Save') . '</button>
     </div>
   </form>
 ';

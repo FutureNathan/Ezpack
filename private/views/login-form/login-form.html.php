@@ -22,7 +22,7 @@ echo '
       <span>' . _('Remember me') . '</span>
     </label>
     
-    <button type="submit" class="primaryButton">' . _('Login') . '</button>
+    <button type="submit" class="primaryBtn">' . _('Login') . '</button>
   </form>
 ';
 
