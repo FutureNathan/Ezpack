@@ -13,7 +13,9 @@ CREATE TABLE users (
   user_email_confirmed            BOOLEAN NOT NULL DEFAULT TRUE,
   user_active                     BOOLEAN NOT NULL DEFAULT TRUE,
   
-  user_lifetime_subscription      BOOLEAN NOT NULL DEFAULT FALSE
+  user_lifetime_subscription      BOOLEAN NOT NULL DEFAULT FALSE,
+  
+  user_remember_me_token          TEXT
 );
 
 

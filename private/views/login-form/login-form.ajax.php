@@ -33,7 +33,7 @@ if ($_POST['formAction'] === 'userLogin') {
     
     if (pg_num_rows($checkUserQ) !== 1) {
       
-      $errors['email'] = _('This email does not exists.');
+      $errors['email'] = _('This email does not exist.');
       
     } else {
     
@@ -52,6 +52,56 @@ if ($_POST['formAction'] === 'userLogin') {
             ",
             pg_escape_string($dbc['read_write'], $checkUser['user_id'])
           ));
+        }
+        
+#################################################################################################### --- CREATE TOKEN FOR "REMEMBER ME"
+        
+        if ($_POST['remember_me'] === 'true') {
+        
+          # Check if this user already has a "remember me" token saved in the database
+          
+          $checkTokenQ = pg_query($dbc['read_only'], sprintf("
+            SELECT user_remember_me_token
+            FROM users
+            WHERE user_id = '%s'
+            ",
+            pg_escape_string($dbc['read_write'], $checkUser['user_id'])
+          ));
+          
+          $checkTokenR = pg_fetch_assoc($checkTokenQ);
+          
+          if (isEmpty ($checkTokenR['user_remember_me_token'])) {
+            
+            # User does not already have a token.
+            # We create one and insert it in the database.
+            
+            $rememberMeToken = createToken('alphanumeric_all', 40);
+            
+            // ----------
+            
+            $addTokenQ = pg_query($dbc['read_only'], sprintf("
+              UPDATE users
+              SET user_remember_me_token = '%s'
+              WHERE user_id = '%s'
+              ",
+              pg_escape_string($dbc['read_write'], $rememberMeToken),
+              pg_escape_string($dbc['read_write'], $checkUser['user_id'])
+            ));
+            
+            if (pg_affected_rows($addTokenQ) !== 1) {
+              
+              echo json_encode([
+                'feedbackType'    => 'attention',
+                'feedbackSummary' => [_('An unexpected error has occurred. Could not log you in.')]
+              ]);
+              
+              exit;
+            }
+            
+            // ----------
+            
+            setcookie('rememberMeToken', $rememberMeToken, NULL, '/');
+          }
         }
         
 #################################################################################################### --- HANDLE LOGIN
