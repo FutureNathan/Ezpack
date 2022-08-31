@@ -49,6 +49,11 @@ echo '
     transition-duration: 0.3s;
   }
   
+  a.secondaryBtn {
+    color: ' . COLOURS['text_dark'] . ';
+    text-decoration: none;
+  }
+  
   .primaryBtn:hover {
     color: #606060;
     background-color: #e2e8f0;
@@ -93,7 +98,7 @@ echo '
   }
 
   .boxForm {
-    margin: 1em 1em 0em 1em;
+    margin: 1em;
     border-radius: 0.5em;
     
     background-color: #b9d3e5;

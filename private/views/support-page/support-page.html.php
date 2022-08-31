@@ -18,7 +18,7 @@ insertView('page-header',[
 echo '
   <main id="supportPage">
     
-    <section class="lightGreyBigContainer">
+    <section>
     
       <p>Thanks so much for supporting us</p>
       <p>

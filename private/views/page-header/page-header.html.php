@@ -8,7 +8,7 @@ echo '
     if($viewOptions['includePageTitle'] === true) {
       
       echo '
-      <div class="pageTitle lightGreyBigContainer">
+      <div class="pageTitle">
         <h1>' . $viewOptions['pageTitle'] . '</h1>
       </div>';
       

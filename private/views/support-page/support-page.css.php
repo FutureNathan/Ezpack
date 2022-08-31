@@ -1,45 +1,40 @@
 <?php
 
 echo '
+  .boxSize {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-#supportPage > section {
-  margin-top: 1em;
-}
+  .secondNav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.boxSize {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-}
+  .wht {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.secondNav {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-}
+  .wht span {
+    margin-left: 1em;
+  }
 
-.wht {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-}
+  #settingsPage section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+  }
 
-.wht span {
-  margin-left: 1em;
-}
-
-#settingsPage section {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 1em;
-}
-
-.addBtn {
-  justify-self: flex-start;
-}
-  
+  .addBtn {
+    justify-self: flex-start;
+  }
 ';
+  
 ?>

@@ -24,7 +24,7 @@ echo '
       $subscriptionDetailsR = pg_fetch_assoc($checkSubscriptionQ);
       
       echo '
-        <section class="lightGreyBigContainer subscriptionContainer">
+        <section class="subscriptionContainer">
           <h2>' . $subscriptionDetailsR['subscription_title'] . '</h2>
  
           <div class="subscriptionDetails">
@@ -41,7 +41,7 @@ echo '
           
           <p>' . _('Send us an email anytime at') . '
             <a href="mailto:hello@ezpack.net?subject=Cancel subscription"> hello@ezpack.net </a>
-             ' . _('to cancel or call us') . ' +1(512)648-2000.
+             ' . _('to cancel or call us') . ' +1(512)586-6452.
           </p>
         </section>
         
