@@ -28,7 +28,7 @@ echo '
     grid-gap: 1em 1em;
   }
 
-  .boxPricing h2{
+  .boxPricing h2 {
     grid-column: 1/-1;
   }
 
@@ -38,7 +38,7 @@ echo '
     justify-content: space-between;
     align-items: center;
     
-    padding: 1em;
+    padding: 0.5em;
     border-radius: 0.5em;
     background-color: #eaeaea7a;
   }
@@ -53,33 +53,31 @@ echo '
 
   .boxInfo {
     display: grid;
-    grid-template-columns: auto 8rem auto;
+    grid-template-columns: auto 1fr;
     justify-items: start;
     align-items: stretch;
     grid-gap: 1em;
+    
+    flex: 1 0 100%;
   }
   
   .boxInfo input {
-    width: 1.5em;
+    width: 2em;
+    height: 2em;
     margin: 0em;
   }
 
-  .boxInfo span:nth-of-type(2){
-    /*display: none;*/
-  }
-
-  .boxInfo > span {
+  .boxInfo > div {
     width: 100%;
-  }
-  
-  .boxInfo > span > span {
-    font-size: 0.9em;
-    margin-left: 0.5em;
-  }
-
-  .actions img {
-    width: 1.2em;
-    margin-left: 0.5em;
+    
+    display: grid;
+    grid-template-columns: 8em auto 1.5em;
+    justify-items: start;
+    align-items: center;
+    
+    grid-gap: 1em;
+    
+    cursor: pointer;
   }
 ';
 
