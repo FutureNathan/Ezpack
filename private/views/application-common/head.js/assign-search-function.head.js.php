@@ -8,14 +8,13 @@ document.addEventListener ('keyup', function () {
     if (allBoxDimensionsCompleted()) {
       
       searchBox();
-
     }
   }
 }, false);
 
 // ################################################################################################# --- ON CHANGE
 
-document.addEventListener ('change', function () {
+document.addEventListener ('click', function () {
   
   if ( event.target.closest ('.boxLevel > div > input[name="packing_box"]') ) {
     

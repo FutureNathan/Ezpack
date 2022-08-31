@@ -26,13 +26,23 @@ echo '
     <div class="boxLevel lightGreyBox">
       <h2>' . _('Packing level') .'</h2>
       
-      <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">
+      <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">';
       
-      <span class="packingLevelBtn" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
-      <span class="packingLevelBtn active" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
-      <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 4') .'</span>
-      <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 6') .'</span>
-      <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 12') .'</span>
+      if (isEmpty (filter_var ($viewOptions['packing_level'], FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => APPLICATION_REGEX['packing_level']]]))) {
+       
+        $packingLevel = 'standard';
+    
+      } else {
+
+        $packingLevel = $viewOptions['packing_level'];
+      }
+    
+      echo '
+      <span class="packingLevelBtn' . ($packingLevel === 'box_only' ? ' active' : '') . '" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
+      <span class="packingLevelBtn' . ($packingLevel === 'standard' ? ' active' : '') . '" data-span-type="standard">' . _('Standard <br> + 0') .'</span>
+      <span class="packingLevelBtn' . ($packingLevel === 'basic' ? ' active' : '') . '" data-span-type="basic">' . _('Basic <br> + 4') .'</span>
+      <span class="packingLevelBtn' . ($packingLevel === 'fragile' ? ' active' : '') . '" data-span-type="fragile">' . _('Fragile <br> + 6') .'</span>
+      <span class="packingLevelBtn' . ($packingLevel === 'custom' ? ' active' : '') . '" data-span-type="custom">' . _('Custom <br> + 12') .'</span>
       
     </div>
     

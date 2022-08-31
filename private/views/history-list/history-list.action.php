@@ -10,6 +10,7 @@ $select = [
   "history.history_length",
   "history.history_width",
   "history.history_height",
+  "history.history_packing_level",
   "history.history_id"
 
 ];
@@ -23,7 +24,8 @@ $from = [
 #################################################################################################### --- JOIN CLAUSES
 
 $join = []; // initialise
-$join[] = "join distinct_rows on distinct_rows.history_id = history.history_id";
+
+$join[] = "JOIN distinct_rows ON distinct_rows.history_id = history.history_id";
 
 #################################################################################################### --- WHERE CLAUSE
 
@@ -123,7 +125,7 @@ if ($viewOptions['showPagination'] === true) {
   $boxesCountSQL = sprintf ("
     WITH distinct_rows AS (
       SELECT
-        DISTINCT ON (history_length,history_width,history_height) history_height,
+        DISTINCT ON (history_length, history_width, history_height, history_packing_level) history_height,
         history_length,
         history_width,
         history_id
@@ -153,7 +155,7 @@ if ($viewOptions['showPagination'] === true) {
 $boxesListSQL = sprintf ("
   WITH distinct_rows AS (
     SELECT
-      DISTINCT ON (history_length,history_width,history_height) history_height,
+      DISTINCT ON (history_length, history_width, history_height, history_packing_level) history_height,
       history_length,
       history_width,
       history_id

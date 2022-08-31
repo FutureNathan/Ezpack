@@ -23,9 +23,10 @@ echo '
       
         'formId' => 'searchBoxes',
         
-        'length' => $_GET['length'],
-        'height' => $_GET['height'],
-        'width'  => $_GET['width'],
+        'length'        => $_GET['length'],
+        'height'        => $_GET['height'],
+        'width'         => $_GET['width'],
+        'packing_level' => $_GET['packingLevel']
       ]);
       
       echo '
@@ -47,6 +48,7 @@ echo '
               'length'        => $_GET['length'],
               'height'        => $_GET['height'],
               'width'         => $_GET['width'],
+              'packing_level' => $_GET['packingLevel'],
               'packing_box'   => true
             ],
             

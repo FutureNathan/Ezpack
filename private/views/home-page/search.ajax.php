@@ -68,13 +68,15 @@ if ($_POST['formAction'] === 'searchBox') {
         history_length,
         history_width,
         history_height,
+        history_packing_level,
         history_user_id
       )
-      VALUES ('%s', '%s', '%s', '%s')
+      VALUES ('%s', '%s', '%s', '%s', '%s')
       ",
       pg_escape_string($dbc['read_write'], $_POST['length']),
       pg_escape_string($dbc['read_write'], $_POST['width']),
       pg_escape_string($dbc['read_write'], $_POST['height']),
+      pg_escape_string($dbc['read_write'], (isEmpty ($_POST['packing_level']) ? 'standard' : $_POST['packing_level'])),
       pg_escape_string($_SESSION['user_id'])
     ));
 

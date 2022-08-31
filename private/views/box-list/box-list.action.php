@@ -57,7 +57,7 @@ if (! isEmpty (filter_var ($viewOptions['searchParams']['packing_level'], FILTER
   
 } else {
 
-  $packingLevel = 'box_only';
+  $packingLevel = 'standard';
   
 }
 
