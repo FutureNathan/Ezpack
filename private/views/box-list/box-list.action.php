@@ -24,11 +24,10 @@ $join = []; // initialise
 
 $where = [];
 
-$where[] =  "custom_prod_owner_id =" . $_SESSION['user_id'];
-$where[] =  "(union_tables.custom_prod_owner_id = " . $_SESSION['user_id'] . ") OR (union_tables.custom_prod_owner_id IS NULL)";
+// ----------
 
-// this is used with the WITH clause below, to only select primary emails
-//
+$where[] =  "custom_prod_owner_id = '" . $_SESSION['user_id'] . "'";
+$where[] =  "(union_tables.custom_prod_owner_id = '" . $_SESSION['user_id'] . "') OR (union_tables.custom_prod_owner_id IS NULL)";
 
 #################################################################################################### --- FILTERS
 
@@ -341,6 +340,8 @@ $boxesListSQL = sprintf ("
     
     JOIN edited_vendor_products
     ON edited_vendor_products.edited_vendor_prod_id = vendor_products.vendor_prod_id
+    
+    WHERE edited_vendor_products.edited_vendor_prod_owner_id = '%s'
   )
   SELECT %s
   FROM %s
@@ -352,6 +353,8 @@ $boxesListSQL = sprintf ("
   LIMIT %s
   OFFSET %s
   ",
+  
+  pg_escape_string ($dbc['read_only'], $_SESSION['user_id']),
   
   implode (",\n", $select),
   implode (', ', $from),
