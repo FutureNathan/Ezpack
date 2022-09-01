@@ -1,5 +1,49 @@
 <?php
 
+#################################################################################################### --- LANDING PAGE
+
+echo '
+  main > section {
+    padding: 1em;
+    margin: 0em;
+  }
+  
+  main > h1 {
+    text-align: center;
+  }
+  
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+  }
+  
+  .feature > img {
+    box-shadow: 1px 1px 4px rgb(157, 149, 149, 0.2);
+  }
+  
+  .feature li,
+  .feature > p {
+    font-size: 1.2em;
+  }
+  
+  .signUpSection {
+    display: grid;
+    grid-gap: 1em;
+    justify-items: center;
+    align-items: center;
+    
+    margin: 2em;
+    
+    border-top: 0.1em solid #e6e6e6;
+    border-bottom: 0.1em solid #e6e6e6;
+  }
+  
+  .signUpSection > a {
+    text-decoration: none;
+  }
+';
+
 #################################################################################################### --- FORM STRUCTURE
 
 echo '
@@ -23,6 +67,7 @@ echo '
   
   form h2 {
     display: none;
+    font-size: 1rem;
   }
 
   form img {
@@ -111,9 +156,9 @@ echo '
   #searchBoxes .primaryBtn {
     justify-self: start;
   }
-  
+
   #searchBoxes .secondaryBtn {
-    justify-self: end;
+    grid-column: 1/3;
   }
 ';
 
@@ -153,6 +198,17 @@ echo '
     br {
       display: none;
     }
+    
+    .boxSize {
+      grid-template-columns: 7em repeat(3, auto) 1fr 1fr;
+    }
+    
+    #searchBoxes .secondaryBtn {
+      grid-row: 1;
+      grid-column: 6;
+      
+      margin-left: auto;
+    }
   }
   
   @media screen and (min-width: 500px) {
@@ -165,16 +221,26 @@ echo '
       grid-column: 6/7;
       order: 6;
     }
+    
+    main > section:not(.results) {
+      padding: 2em;
+    }
+    
+    .feature {
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 4em;
+      align-items: center;
+    }
   }
 
   @media screen and (min-width: 590px) {
 
-     .results > .resultsHeader {
+    .results > .resultsHeader {
       display: block;
       padding: 0.5em 1em;
     }
     
-     .results > .resultsHeader > div {
+    .results > .resultsHeader > div {
       display: flex;
       flex-flow: row wrap;
       align-items: center;
@@ -213,23 +279,12 @@ echo '
       display: none;
     }
 
-    .boxSize {
-      grid-template-columns: 7em repeat(3, auto) 1fr 1fr;
-    }
-    
     .boxSorting {
       grid-template-columns: 7em repeat(3, auto) 1fr;
     }
     
     .boxLevel {
       grid-template-columns: 7em repeat(5, auto) 1fr;
-    }
-    
-    .searchBoxesButtons {
-      grid-row: 1;
-      grid-column: 6;
-      
-      margin-left: auto;
     }
   }
 ';

@@ -67,23 +67,32 @@ echo '
     } else {
       
       echo '
-        <h1>Ezpack</h1>
+        <h1>A quick and easy way to pick and quote packing service made for UPS stores.</h1>
         
-        <section>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry</p>
+        <section class="feature">
           
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-          </p>
+          <ol>
+            <li>Enter item size and pack level</li>
+            <li>Quote and box!</li>
+          </ol>
           
-          <p>
-            Call the founder Nathan personally 8am-6pm EST:<br>
-            (512)586-6452 <br><br> Or <br><br>
-            Email anytime:<br>
-            hello@ezpack.com
-          </p>
+          <img src="' . getPubUrl('home-page', 'images/searchbox.png') . '">
           
-          <p>Thank you!</p>
+        </section>
+        
+        <section class="signUpSection">
+          <h2>UPS STORE required boxes already added</h2>
+          
+          <p>Start using in less than 5 minutes!</p>
+          
+          <a href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['registration-page']['meta']['url'] . '" class="primaryBtn">Sign up</a>
+        </section>
+        
+        <section class="feature">
+          
+          <img src="' . getPubUrl('home-page', 'images/inventory.png') . '">
+          
+          <p>Quick and Eazy inventory management</p>
         </section>
       ';
     }
@@ -94,7 +103,7 @@ echo '
 
 #################################################################################################### --- PAGE FOOTER
 
-// insertView('page-footer');
+insertView('page-footer');
 
 #################################################################################################### --- WEBSITE FOOT
 

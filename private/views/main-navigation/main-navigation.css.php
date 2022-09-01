@@ -272,7 +272,6 @@ echo "
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    padding: 1em;
   }
     
   $loginLinks ul {
