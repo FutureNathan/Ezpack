@@ -1,3 +1,4 @@
+
 var domParserContent  = new DOMParser().parseFromString (ajaxHandles[identifier].responseText, 'text/html');
 
 var previousResults = document.querySelector ('.resultsSection');

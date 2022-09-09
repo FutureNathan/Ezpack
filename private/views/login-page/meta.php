@@ -6,6 +6,4 @@ $meta['url']          = 'login';
 
 $meta['title']        = _('Login') . ' - Ezpack';
 
-
-
 ?>

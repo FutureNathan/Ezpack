@@ -58,6 +58,8 @@ echo '
     align-items: stretch;
     
     margin: 0em auto;
+    
+    background-color: #f9fbfc;
   }
   
 ';
@@ -67,11 +69,14 @@ echo '
 
 echo '
   main {
-    flex: 1 0 auto;
+    flex: 0 0 auto;
     
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
+    
+    background-color: #fff;
+    box-shadow: 1px 1px 4px rgb(157, 149, 149, 0.2);
   }
   
   footer > section {

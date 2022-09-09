@@ -19,7 +19,6 @@ if ($_POST['formAction'] === 'userLogin') {
   
   if (isEmpty($errors)) {
 
-    
     // check if email exists in database
     
     $checkUserQ = pg_query($dbc['read_write'], sprintf("
@@ -34,7 +33,7 @@ if ($_POST['formAction'] === 'userLogin') {
     
     if (pg_num_rows($checkUserQ) !== 1) {
       
-      $errors['email'] = _('This email does not exists.');
+      $errors['email'] = _('This email does not exist.');
       
     } else {
     
@@ -43,6 +42,7 @@ if ($_POST['formAction'] === 'userLogin') {
       if (password_verify ($_POST['password'], $checkUser['user_password'])) {
         
         // if account is deactivated, activate it
+        
         if ($checkUser['user_active'] === 'f') {
    
           $activateAccountQ = pg_query($dbc['read_write'], sprintf("
@@ -52,26 +52,68 @@ if ($_POST['formAction'] === 'userLogin') {
             ",
             pg_escape_string($dbc['read_write'], $checkUser['user_id'])
           ));
-          
-          $msg = _('Your account has just been reactivated.');
         }
         
-        // ----------
+#################################################################################################### --- CREATE TOKEN FOR "REMEMBER ME"
+        
+        if ($_POST['remember_me'] === 'true') {
+        
+          # Check if this user already has a "remember me" token saved in the database
+          
+          $checkTokenQ = pg_query($dbc['read_only'], sprintf("
+            SELECT user_remember_me_token
+            FROM users
+            WHERE user_id = '%s'
+            ",
+            pg_escape_string($dbc['read_write'], $checkUser['user_id'])
+          ));
+          
+          $checkTokenR = pg_fetch_assoc($checkTokenQ);
+          
+          if (isEmpty ($checkTokenR['user_remember_me_token'])) {
+            
+            # User does not already have a token.
+            # We create one and insert it in the database.
+            
+            $rememberMeToken = createToken('alphanumeric_all', 40);
+            
+            // ----------
+            
+            $addTokenQ = pg_query($dbc['read_only'], sprintf("
+              UPDATE users
+              SET user_remember_me_token = '%s'
+              WHERE user_id = '%s'
+              ",
+              pg_escape_string($dbc['read_write'], $rememberMeToken),
+              pg_escape_string($dbc['read_write'], $checkUser['user_id'])
+            ));
+            
+            if (pg_affected_rows($addTokenQ) !== 1) {
+              
+              echo json_encode([
+                'feedbackType'    => 'attention',
+                'feedbackSummary' => [_('An unexpected error has occurred. Could not log you in.')]
+              ]);
+              
+              exit;
+            }
+            
+            // ----------
+            
+            setcookie('rememberMeToken', $rememberMeToken, NULL, '/');
+          }
+        }
+        
+#################################################################################################### --- HANDLE LOGIN
         
         // user login
         
         $_SESSION['username'] = $checkUser['user_name'];
-        $_SESSION['user_id'] = $checkUser['user_id'];
+        $_SESSION['user_id']  = $checkUser['user_id'];
+        
         setUserRole('registered');
         
-//       var_dump($_POST);
-//       var_dump($_SESSION);
-//         if (!isEmpty($msg)) {
-//    
-//           $_SESSION['feedbackMessage'] = feedbackMessage([_('Mirë se erdhe') . ' ' . $checkUser['user_name'] . '! ' . $msg], 'confirmation');
-//         } else {
-//           $_SESSION['feedbackMessage'] = feedbackMessage([_('whateveeer');
-//         }
+        // ----------
         
         echo json_encode([
           'redirectUrl' => WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['home-page']['meta']['url']
@@ -81,13 +123,13 @@ if ($_POST['formAction'] === 'userLogin') {
         
         $errors['email'] = _('Email and password do not match.');
       }
-      
-    
     }
   }
-  // ----------
+  
+#################################################################################################### --- DISPLAY ERRORS
   
   if ($errors) {
+  
     echo json_encode([
       'feedbackType'    => 'attention',
       'feedbackSummary' => [_('Please fill in all fields.')],

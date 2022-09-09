@@ -21,7 +21,7 @@ echo '
   
   .singleBox{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 2fr;
+    grid-template-columns: repeat(4, 1fr) 2fr;
     justify-content: center;
     grid-gap: 0.3em;
     align-items: center;
@@ -54,7 +54,7 @@ echo '
     text-align: center;
   }
   
-  a.mainBtn.findBtn span {
+  a.primaryBtn.findBtn span {
     display: none;
   }
 ';
@@ -64,10 +64,10 @@ echo '
 @media screen and (min-width: 350px) {
 
   .singleBox{
-    grid-template-columns: 1fr 1fr 1fr 3fr;
+    grid-template-columns: repeat(4, 1fr) 3fr;
   }
   
-  a.mainBtn.findBtn span {
+  a.primaryBtn.findBtn span {
     display: inline;
   }
 }

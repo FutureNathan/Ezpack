@@ -69,7 +69,7 @@ echo '
 #################################################################################################### --- RESPONSIVE
 
 echo '
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 450px) {
     .table-head {
       padding: 0.5em;
       
@@ -83,6 +83,7 @@ echo '
           -ms-flex-flow: row wrap;
               flex-flow: row wrap;
       
+      border-top: 0.05em solid #e6e6e6;
       border-bottom: 0.05em solid #e6e6e6;
       -webkit-box-shadow: 0 0 5px rgb(0, 0, 0, 0.1);
               box-shadow: 0 0 5px rgb(0, 0, 0, 0.1);

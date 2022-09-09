@@ -14,8 +14,7 @@ echo '
   
   input,
   textarea,
-  select,
-  button[type="submit"] {
+  select {
     font-family: inherit;
     font-size: inherit;
     
@@ -48,18 +47,6 @@ echo '
     width: 100%;
   }
   
-  button[type="submit"] {
-    font-family: "default", sans-serif;
-    background: #000;
-    color: #fff;
-    
-    padding: 0.3em 0.8em;
-    border: 1px solid black;
-    border-radius: 0.5em;
-
-    letter-spacing: 0.1em;
-  }
-  
   input[type="file"] {
     padding: 0em;
     
@@ -78,14 +65,26 @@ echo '
     margin: 0em 0.3em 0em 0em;
     padding: 0em;
     height: auto;
-  } 
+  }
+  
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0;
+  }
   
   .radio,
   .checkbox {
+    display: flex;
     flex-flow: row nowrap;
     align-items: baseline;
 
     margin: 0.3em 0em 0em 0em;
+  }
+  
+  .radio input,
+  .checkbox input {
+    width: auto;
   }
   
   fieldset {

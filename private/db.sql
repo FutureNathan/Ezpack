@@ -10,10 +10,12 @@ CREATE TABLE users (
   user_email                      TEXT NOT NULL UNIQUE,
   user_phone_number               TEXT NOT NULL UNIQUE,
   
-  user_email_confirmed            BOOLEAN NOT NULL DEFAULT FALSE,
+  user_email_confirmed            BOOLEAN NOT NULL DEFAULT TRUE,
   user_active                     BOOLEAN NOT NULL DEFAULT TRUE,
   
-  user_lifetime_subscription      BOOLEAN NOT NULL DEFAULT FALSE
+  user_lifetime_subscription      BOOLEAN NOT NULL DEFAULT FALSE,
+  
+  user_remember_me_token          TEXT
 );
 
 
@@ -35,9 +37,32 @@ CREATE TABLE vendor_products (
   
   vendor_prod_max_weight         DECIMAL,
   
-  vendor_prod_price              INT NOT NULL,
-  vendor_prod_packing_price      INT NOT NULL,
-  vendor_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
+  vendor_prod_price_box_only     INT NOT NULL,
+  vendor_prod_price_standard     INT NOT NULL,
+  vendor_prod_price_basic        INT NOT NULL,
+  vendor_prod_price_fragile      INT NOT NULL,
+  vendor_prod_price_custom       INT NOT NULL
+);
+
+-- ################################################################################################# --- EDITED VENDOR PRODUCTS
+
+CREATE TABLE edited_vendor_products (
+  
+  edited_vendor_prod_id                 INT REFERENCES vendor_products (vendor_prod_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_owner_id           INT REFERENCES users (user_id)
+                                        ON UPDATE CASCADE
+                                        ON DELETE CASCADE,
+  
+  edited_vendor_prod_price_box_only     INT NOT NULL,
+  edited_vendor_prod_price_standard     INT NOT NULL,
+  edited_vendor_prod_price_basic        INT NOT NULL,
+  edited_vendor_prod_price_fragile      INT NOT NULL,
+  edited_vendor_prod_price_custom       INT NOT NULL,
+  
+  edited_vendor_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 -- ################################################################################################# --- PRODUCTS
@@ -60,25 +85,13 @@ CREATE TABLE custom_products (
   
   custom_prod_max_weight         DECIMAL,
   
-  custom_prod_price              INT NOT NULL,
-  custom_prod_packing_price      INT NOT NULL,
+  custom_prod_price_box_only     INT NOT NULL,
+  custom_prod_price_standard     INT NOT NULL,
+  custom_prod_price_basic        INT NOT NULL,
+  custom_prod_price_fragile      INT NOT NULL,
+  custom_prod_price_custom       INT NOT NULL,
+  
   custom_prod_availability       BOOLEAN NOT NULL DEFAULT TRUE
-);
-
--- ################################################################################################# --- EDITED VENDOR PRODUCTS
-
-CREATE TABLE edited_vendor_products (
-  
-  edited_vendor_prod_id                 INT REFERENCES vendor_products (vendor_prod_id)
-                                        ON UPDATE CASCADE
-                                        ON DELETE CASCADE,
-  
-  edited_vendor_prod_owner_id           INT REFERENCES users (user_id)
-                                        ON UPDATE CASCADE
-                                        ON DELETE CASCADE,
-  
-  edited_vendor_prod_price              INT NOT NULL,
-  edited_vendor_prod_packing_price      INT NOT NULL
 );
 
 -- ################################################################################################# --- SUBSCRIPTIONS
@@ -98,14 +111,12 @@ CREATE TABLE subscriptions (
   subscription_renewal_date         TIMESTAMPTZ NOT NULL,
   subscription_billing_period       TEXT NOT NULL,        -- monthly, annually, etc.
   
-  subscription_active               BOOLEAN NOT NULL DEFAULT FALSE,
+  subscription_active               BOOLEAN NOT NULL DEFAULT TRUE,
   
   subscription_stripe_sub_id        TEXT NOT NULL,
   subscription_stripe_product_id    TEXT NOT NULL,
   subscription_stripe_price_id      TEXT NOT NULL,
   subscription_stripe_customer_id   TEXT NOT NULL,
-  subscription_stripe_coupon_id     TEXT
-  
   
   UNIQUE (subscription_user_id, subscription_stripe_product_id)
 );
@@ -120,38 +131,54 @@ CREATE TABLE invoices (
                                 REFERENCES users (user_id)
                                 ON UPDATE CASCADE,
   
-  invoice_total                 INT NOT NULL,
-  
-  invoice_subscription_title    TEXT NOT NULL,
+  invoice_total_amount          INT NOT NULL,
   
   invoice_issue_date            TIMESTAMPTZ NOT NULL,
+  
   invoice_sub_renewal_date      TIMESTAMPTZ NOT NULL,
   invoice_billing_period        TEXT NOT NULL,
   
-  invoice_user_name             TEXT NOT NULL,
-  invoice_user_email            TEXT NOT NULL,
-  invoice_user_phone_number     TEXT NOT NULL,
+  invoice_customer_details      JSONB NOT NULL, /*
+                                                  {
+                                                    "user_name"           => "Full name",
+                                                    "user_email"          => "user@gmail.com",
+                                                    "user_phone_number"   => "+355 6974070444",
+                                                    
+                                                    "billing_address" => {
+                                                      "address_street_and_number"   =>  "Blv. Gjergj Fishta Nd.23",
+                                                      "address_zip_code"            =>  "1013",
+                                                      "address_city"                =>  "Tiranë",
+                                                      "address_country"             =>  "Shqipëri"
+                                                    }
+                                                  }
+                                                */
   
-  invoice_stripe_invoice_id     TEXT NOT NULL,
-  invoice_stripe_sub_id         TEXT NOT NULL,
-  invoice_stripe_product_id     TEXT NOT NULL,
-  invoice_stripe_price_id       TEXT NOT NULL,
-  invoice_stripe_customer_id    TEXT NOT NULL,
-  
-  invoice_stripe_coupon_id      TEXT,
-  invoice_stripe_coupon_name    TEXT
+  invoice_stripe_details        JSONB NOT NULL  /*
+                                                  {
+                                                    "stripe_invoice_id"         => "",
+                                                    "stripe_subscription_id"    => "",
+                                                    "stripe_product_id"         => "",
+                                                    "stripe_price_id"           => "",
+                                                    "stripe_customer_id"        => ""
+                                                  }
+                                                */
 );
 
 -- ################################################################################################# HISTORY
 
 CREATE TABLE history (
+
   history_id                 INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1),
+  
   history_length             DECIMAL NOT NULL,
   history_width              DECIMAL NOT NULL,
   history_height             DECIMAL NOT NULL,
+  
+  history_packing_level      TEXT NOT NULL,
+  
   history_user_id            INT NOT NULL
-                            REFERENCES users (user_id)
-                            ON UPDATE CASCADE
+                             REFERENCES users (user_id)
+                             ON UPDATE CASCADE
 )
 
 

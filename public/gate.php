@@ -62,6 +62,44 @@ setUserRole();
 
 #################################################################################################### --- INITIALISE META OVERRIDE
 
+/*
+  When the page is loaded, we match the "remember me" token in the cookie with the token stored in the database,
+  for that user. If the tokens match, we get the user's id associated with the token and log the user in.
+*/
+
+if (! in_array ($_SESSION['userRole'], USER_ROLES)) {
+  
+  # Guest user
+  
+  if (! isEmpty($_COOKIE['rememberMeToken'])) {
+    
+    # There is a rememberMeToken in the cookie
+    
+    $checkRememberMeTokenQ = pg_query($dbc['read_only'], sprintf("
+      SELECT user_id, user_name
+      FROM users
+      WHERE user_remember_me_token = '%s'
+      ",
+      pg_escape_string($dbc['read_only'], $_COOKIE['rememberMeToken'])
+    ));
+
+    if (pg_num_rows($checkRememberMeTokenQ) === 1) {
+      
+      # Tokens match.
+      # Do login.
+      
+      $userDetails = pg_fetch_assoc($checkRememberMeTokenQ);
+      
+      $_SESSION['username'] = $userDetails['user_name'];
+      $_SESSION['user_id']  = $userDetails['user_id'];
+      
+      setUserRole('registered');
+    }
+  }
+}
+
+#################################################################################################### --- INITIALISE META OVERRIDE
+
 $metaOverride = [];
 
 #################################################################################################### --- INITIALISE PAGE COMPONENTS ARRAY

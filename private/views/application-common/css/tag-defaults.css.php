@@ -37,7 +37,7 @@ echo '
   }
   
   h2 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     flex: 0 0 100%;
     font-weight: bold;
     
@@ -45,7 +45,8 @@ echo '
   }
   
   h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
     margin: 0em;
   }
   
@@ -82,6 +83,11 @@ echo '
   a.btn:hover{
     -webkit-filter: none;
     filter: none;
+  }
+  
+  main > section a {
+    color: #009ec3;
+    text-decoration: underline;
   }
   
   img {

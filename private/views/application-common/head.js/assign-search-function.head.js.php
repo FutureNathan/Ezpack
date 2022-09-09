@@ -1,3 +1,4 @@
+
 // ################################################################################################# --- ON KEYUP
 
 document.addEventListener ('keyup', function () {
@@ -13,13 +14,13 @@ document.addEventListener ('keyup', function () {
 
 // ################################################################################################# --- ON CHANGE
 
-document.addEventListener ('change', function () {
+document.addEventListener ('click', function () {
   
   if ( event.target.closest ('.boxLevel > div > input[name="packing_box"]') ) {
     
     if (allBoxDimensionsCompleted()) {
-        searchBox();
       
+      searchBox();
     }
   }
   
@@ -28,8 +29,8 @@ document.addEventListener ('change', function () {
   if ( event.target.closest ('.boxSize > input') ) {
     
     if (allBoxDimensionsCompleted()) {
-        searchBox();
       
+      searchBox();
     }
   }
   
@@ -41,20 +42,26 @@ document.addEventListener ('click', function () {
   
   if (event.target.closest ('.boxLevel > .packingLevelBtn')) {
     
-    var packingLevelBtn = event.target.closest ('.boxLevel > .packingLevelBtn');
-    var activeBtn = document.querySelector('.packingLevelBtn.active');
+    var packingLevelBtn         = event.target.closest ('.boxLevel > .packingLevelBtn');
+    var currentlyHighlightedBtn = document.querySelector('.packingLevelBtn.active');
     
-    if (activeBtn){
-      activeBtn.classList.remove('active');
+    if (currentlyHighlightedBtn) {
+      currentlyHighlightedBtn.classList.remove('active');
     }
     
-    if (allBoxDimensionsCompleted()){
-      
-      packingLevelBtn.classList.add('active');
+    packingLevelBtn.classList.add('active');
+    
+    // ----------
+    
+    updatePackingLevelInput(packingLevelBtn.getAttribute('data-span-type'));
+    
+    // ----------
+    
+    if (allBoxDimensionsCompleted()) {
       
       searchBox();
-      
     }
     
   }
 }, false);
+ 

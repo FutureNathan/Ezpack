@@ -1,29 +1,40 @@
+
 document.addEventListener ('click', function () {
+  
   event.stopPropagation();
   
-  if (event.target.closest ('.boxDetails > input[type="checkbox"]')) {
+  if (event.target.closest ('.boxInfo > input[type="checkbox"]')) {
     
-    var checkbox = event.target.closest ('.boxDetails > input[type="checkbox"]');
-    var box = checkbox.getAttribute('data-prod-id');
-    activateBox(checkbox.checked, box)
+    var checkbox = event.target.closest ('.boxInfo > input[type="checkbox"]');
+    
+    var boxId = checkbox.getAttribute('data-prod-id');
+    
+    var boxType = checkbox.getAttribute('data-prod-type');
+    
+    // ----------
+    
+    activateBox(checkbox.checked, boxId, boxType)
   }
   
 }, false);
 
+//################################################################################################## --- ACTIVATE BOX
 
-function activateBox(checked, box){
-  
-//   console.log(checked);
-//   console.log(box);
+function activateBox (checked, boxId, boxType) {
   
   var formData = new FormData();
+  
   formData.append('formAction', 'activateBox');
   formData.append('checked', checked);
-  formData.append('box_id', box);
+  formData.append('box_id', boxId);
+  formData.append('box_type', boxType);
   
+  // ----------
   
-  var identifier = createToken('alphanumeric_all', 40);
+  var identifier  = createToken('alphanumeric_all', 40);
   var url         = "<?php echo getPubUrl('application-common', 'ajax/activate-box.ajax.php'); ?>";
+  
+  // ----------
   
   ajaxRequest (identifier, "POST", url, formData, function () {
     

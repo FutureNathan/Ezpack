@@ -19,6 +19,10 @@ $meta['url']          = 'inventory'; // relative URL path
 
 $meta['title']        = _('EZ pack - Settings');
 
+$meta['access'] = [
+  'registered'
+];
+
 /*
 $meta['og_type']      = '';
 $meta['og_image']     = '';

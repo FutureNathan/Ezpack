@@ -1,86 +1,60 @@
 <?php
 
-if($viewOptions['custom_prod_type'] === 'ups') {
+if ($viewOptions['custom_prod_type'] === 'custom') {
 
-  $boxUpdate = 'ups';
-  
+  $boxType = 'custom';
+
 } else {
-
-  $boxUpdate = 'editable';
+  
+  $boxType = 'ups';
 }
 
 echo '
-
-<div class="boxContainer blueBox">
-  
-  <div class="boxDetails">
-    <input type="checkbox" ' . ($viewOptions['custom_prod_availability'] === 't'  ? "checked" : ""). ' data-prod-id="' . $viewOptions['custom_prod_id']. '" 
-    ' . ($viewOptions['custom_prod_type'] === 'ups'  ? "disabled" : ""). '>
-    <span>' . $viewOptions['custom_prod_name'] . '</span>
-  </div>
-  
-  <div class="actions">
-  
-    <button class="expandCollapseBtn">
-      <img src="' . getPubUrl('application-common', 'images/icons8-chevron-down-50.png') . '">
-    </button>
+  <div class="boxContainer blueBox">
     
-  </div>
-
-  <div class="expandable">
-    <div class="boxExpanded">
+    <div class="boxInfo">
+      <input type="checkbox"' . ($viewOptions['custom_prod_availability'] === 'f' ? "" : " checked") . ' data-prod-id="' . $viewOptions['custom_prod_id']. '" data-prod-type="' . $boxType . '">
+      
+      <div class="expandCollapseBtn">
+        <span>' . $viewOptions['custom_prod_name'] . '</span>
+        <span>' . ($boxType === 'ups' ? 'UPS' : 'Custom') . '</span>
+        <button>
+          <img src="' . getPubUrl('application-common', 'images/icons8-chevron-down-50.png') . '">
+        </button>
+      </div>
+      
+    </div>
     
-      <div class="boxInformation ">
-        <div class="boxDimensions" >
-          <h2>Box Type</h2>
-          <span>' . $viewOptions['custom_prod_type']. '</span>
-        </div>
+    <div class="expandable">
+      <div class="boxExpanded">';
         
-        <div class="boxDimensions" >
-          <h2>Dimensions</h2>
-          <span class="whiteBox">' . $viewOptions['custom_prod_length'] . '\'\'</span>
-          <span class="whiteBox">' . $viewOptions['custom_prod_width'] . '\'\'</span>
-          <span class="whiteBox">' . $viewOptions['custom_prod_height'] . '\'\'</span>
-        </div>
-        
-        <div class="boxPricing" >
-        
-          <h2>Pricing</h2>
+        if ($viewOptions['custom_prod_type'] === 'custom') {
           
-          <div class="whiteBox price">Box only
-            <span>$' . $viewOptions['custom_prod_price'] / 100 . '</span>
-          </div>
+          $formAction = 'editCustomBox';
           
-          <div class="whiteBox price">Packing price
-            <span>$' . $viewOptions['custom_prod_packing_price'] / 100 . '</span>
-          </div>
-          
-        </div>
+          $actionFile = 'edit-custom-box.ajax.php';
         
-         <div>';
-         
-          if ($viewOptions['custom_prod_type'] === 'custom') {
-            echo '
-              <button class="deleteBoxBtn secondaryBtn" data-action="deleteBox" data-delete-box-id="' . $viewOptions['custom_prod_id'] . '" title="' . _('Delete box') .'">
-                ' . _('Remove') . '
-              </button>
-            ';
-          }
+        } else {
           
-          echo '
-          <button class="secondaryBtn">
-            <a  href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['edit-box-page']['meta']['url'] . '?box=' . $viewOptions['custom_prod_id'] . '&boxtype=' . $viewOptions['custom_prod_type'] . '" title="' . _('Edit box') .'">
-              ' . _('Edit') . '
-            </a>
-          </button>
-        </div>
+          $formAction = 'editUpsBox';
+          
+          $actionFile = 'edit-ups-box.ajax.php';
+        }
         
+        // ----------
+        
+        insertView('edit-box-form', [
+
+          'boxId'       => $viewOptions['custom_prod_id'],
+          'boxType'     => $boxType,
+          'formAction'  => $formAction,
+          'actionFile'  => $actionFile
+        ]);
+        
+        echo '
       </div>
     </div>
   </div>
-</div>
-
-
 ';
 
 ?>

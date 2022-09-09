@@ -25,25 +25,14 @@ echo '
       <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('add-box-page', 'add-box-page.ajax.php') . '">
       
       <div class="boxDetails">
-      <label class="required">
-        <span>' . _('Box name') . '</span>
-        <input type="text" name="box_name">
-      </label>
-      
-      <label class="required">
-      
-        <span>' . _('Box type') . '</span>
-        <select name="box_type">
-          <option value="custom">Custom</option>
-          <option value="ups">UPS</option>
-        </select>
-        
-      </label>
-      
+        <label class="required">
+          <span>' . _('Box name') . '</span>
+          <input type="text" name="box_name">
+        </label>  
       </div>
       
       <div class="boxDimensions">
-        <h2>Box dimensions</h2>
+        <h2>Dimensions</h2>
       
         <label class="required">
           <span>' . _('Length') . '</span>
@@ -71,20 +60,33 @@ echo '
       </div>
       
       <div class="boxPrices">
-        <h2> Box prices</h2>
+        <h2>Pricing</h2>
         
         <label class="required">
-          <span>' . _('Price') . '</span>
-          <input type="text" name="box_price">
+          <span>' . _('Box only') . '</span>
+          <input type="text" name="box_price_box_only">
         </label>
         
         <label class="required">
-          <span>' . _('Packing price') . '</span>
-          <input type="text" name="packing_price">
+          <span>' . _('Standard') . '</span>
+          <input type="text" name="box_price_standard">
         </label>
         
+        <label class="required">
+          <span>' . _('Basic') . '</span>
+          <input type="text" name="box_price_basic">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Fragile') . '</span>
+          <input type="text" name="box_price_fragile">
+        </label>
+        
+        <label class="required">
+          <span>' . _('Custom') . '</span>
+          <input type="text" name="box_price_custom">
+        </label>
       </div>
-      
       
       <div class="formButtons">
         <a class="secondaryBtn" href="' . WEBSITE_BASE_URL . $_SESSION['locale'] . '/' . VIEWS['inventory']['meta']['url'] . '" role="button" class="button unfilledButton">' . _('Cancel') . '</a>

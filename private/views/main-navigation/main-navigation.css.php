@@ -150,7 +150,7 @@ echo "
 echo "
   $navMenu a.logo {
   
-    padding: 1em 0.5em 1em 0em;
+    padding: 0.5em;
     margin-right: auto;
   }
   
@@ -272,7 +272,6 @@ echo "
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: stretch;
-    padding: 1em;
   }
     
   $loginLinks ul {
@@ -322,17 +321,6 @@ echo "
     
     $navMenu a.logo {
       /*max-width: none;*/
-    }
-  }
-";
-
-#################################################################################################### --- MIN-WIDTH: 370
-
-echo "
-  @media screen and (min-width: 370px) {
-    
-    $navMenu a.logo {
-      padding: 1em 0.5em;
     }
   }
 ";
@@ -387,9 +375,8 @@ echo "
   @media screen and (min-width: 700px) {
     
     $navMenu a.logo {
-      order: -1;
+      order: -1;              /* this becomes the first element */
       
-      padding: 1em;                       /* this becomes the first element */
       margin: 0em;
       margin-right: auto;
     }
