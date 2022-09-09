@@ -26,14 +26,14 @@ echo '
     font-weight: bold;
     color: #222;
     border-radius: 0.5em;
-    cursor: pointer;
+    /*cursor: pointer;*/
   }
-  
+  /*
   .billingPeriodBtn:hover {
     color: #fff;
     background-color: #907cff;
   }
-  
+  */
   .billingPeriodBtn.active {
     color: #fff;
     background-color: #907cff;
