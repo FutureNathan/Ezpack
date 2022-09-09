@@ -1,0 +1,42 @@
+<?php
+
+echo '
+  <form id="' . $viewOptions['formId'] . '" method="post">
+    
+    <input type="hidden" name="formAction" value="searchBox">
+    <input type="hidden" name="formToken" value="' . createToken('alphanumeric_all', 40) . '">
+    <input type="hidden" name="formAjaxUrl" value="' . getPubUrl('home-page', 'search.ajax.php') . '">
+
+    <div class="boxSize lightGreyBox">
+      <h2>Box size</h2>
+      
+      <img src="' . getPubUrl('application-common', 'images/icons8-surface-64.png') . '">
+      
+      <input type="number" name="length" ' . ($viewOptions['length'] > 0 ? 'value="' . $viewOptions['length'] . '"' : '') . '>
+      <input type="number" name="width"  ' . ($viewOptions['width'] > 0 ? 'value="' . $viewOptions['width'] . '"' : '') . '>
+      <input type="number" name="height" ' . ($viewOptions['height'] > 0 ? 'value="' . $viewOptions['height'] . '"' : '') . '>
+      
+      <button type="submit" class="button mainBtn">'. _('Find box') . '</button>
+    </div>
+    
+    <div class="boxLevel lightGreyBox">
+      <h2>' . _('Packing level') .'</h2>
+      
+      <img src="' . getPubUrl('application-common', 'images/icons8-box-50.png') . '">
+      
+      <div>
+        <input type="checkbox" name="packing_box" checked>
+        <label>Add packing</label>
+      </div>
+      
+      <span class="packingLevelBtn" data-span-type="box_only">' . _('Box only <br> + 0') .'</span>
+      <span class="packingLevelBtn" data-span-type="basic">' . _('Basic <br> + 2') .'</span>
+      <span class="packingLevelBtn" data-span-type="fragile">' . _('Fragile <br> + 3') .'</span>
+      <span class="packingLevelBtn" data-span-type="custom">' . _('Custom <br> + 6') .'</span>
+      
+    </div>
+    
+  </form>
+';
+
+?>
