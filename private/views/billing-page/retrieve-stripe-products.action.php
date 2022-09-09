@@ -15,7 +15,7 @@
 # For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
 
 #################################################################################################### ---
-
+/*
 require_once PATH_PRIVATE_THIRD_PARTY . 'stripe-php-8.11.0/init.php';
 
 $stripe = new \Stripe\StripeClient (STRIPE_SECRET_KEY);
@@ -25,6 +25,6 @@ $stripe = new \Stripe\StripeClient (STRIPE_SECRET_KEY);
 # Get the stripe prices
 
 $prices = $stripe->prices->all();
-
+*/
 ?> 
  

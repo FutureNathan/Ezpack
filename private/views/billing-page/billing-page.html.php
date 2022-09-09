@@ -106,13 +106,13 @@ echo '
             
             <div class="chooseBillingPeriod">
             
-              <h2>' . _('Choose billing period') . '</h2>';
+              <h2>' . _('Billing period') . '</h2>';
               
               # Recruiters and crew have different subscription plans.
               # Display the right plan based on the user role.
-              
+              /*
               foreach ($prices as $price) {
-                  
+
                 # When the product and prices were created on Stripe, we have added
                 # the "account_type" metadata, to mark the account type this subscription is for.
                 
@@ -134,8 +134,10 @@ echo '
                   ';
                 }
               }
+              */
               
               echo '
+              <span class="billingPeriodBtn">$120/' . _('year') . '</span>
             </div>
             
             <div class="billingDetails">

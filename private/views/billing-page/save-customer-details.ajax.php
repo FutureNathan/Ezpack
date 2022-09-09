@@ -5,7 +5,7 @@ if ($_POST['formAction'] === 'saveCustomerDetails') {
 #################################################################################################### --- INPUT VALIDATION
   
   # Check if the stripe product IDs exist
-  
+  /*
   if ( ! in_array ($_POST['priceId'], SUBSCRIPTION_PRICES)) {
   
     echo json_encode ([
@@ -15,7 +15,7 @@ if ($_POST['formAction'] === 'saveCustomerDetails') {
     
     exit;
   }
-  
+  */
   // ----------
   
   if (isEmpty (filter_input (INPUT_POST, 'billing_address_first_name', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => APPLICATION_REGEX['name'])))) === true) {
@@ -80,7 +80,7 @@ if ($_POST['formAction'] === 'saveCustomerDetails') {
       ],
       
       'metadata'      => [
-        'price_id'    => $_POST['priceId']
+        'price_id'    => 'price_1LNBwBHXrA7rRLFTLZbuF0qe'     # Currently this is the only product that is being used
       ]
     ]);
   
