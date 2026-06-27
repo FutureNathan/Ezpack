@@ -63,13 +63,23 @@ export function CopyButton({
     }
   }
 
+  // When there's a visible text label, let it be the accessible name (so the
+  // accessible name contains the visible label — WCAG "label in name"). Only
+  // synthesize an aria-label for icon-only / non-text labels.
+  const ariaLabel =
+    typeof label === "string"
+      ? undefined
+      : copied
+        ? "Copied"
+        : `Copy ${value}`;
+
   return (
     <Button
       type="button"
       variant={copied ? "secondary" : variant}
       size={size}
       onClick={copy}
-      aria-label={copied ? "Copied" : `Copy ${value}`}
+      aria-label={ariaLabel}
       className={cn(className)}
       {...props}
     >

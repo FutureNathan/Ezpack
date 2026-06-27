@@ -171,8 +171,9 @@ function RowEditor({
         </p>
       ) : null}
 
-      <Field label="Name">
+      <Field label="Name" htmlFor={`name-${box.id}`}>
         <Input
+          id={`name-${box.id}`}
           value={draft.name}
           onChange={(e) => setField("name", e.target.value)}
           onBlur={commit}
@@ -180,8 +181,9 @@ function RowEditor({
         />
       </Field>
 
-      <Field label="Type / category label">
+      <Field label="Type / category label" htmlFor={`type-${box.id}`}>
         <Input
+          id={`type-${box.id}`}
           value={draft.type}
           onChange={(e) => setField("type", e.target.value)}
           onBlur={commit}
@@ -212,8 +214,9 @@ function RowEditor({
       </div>
 
       <div className="grid grid-cols-2 gap-2">
-        <Field label="Base price (Box only) $">
+        <Field label="Base price (Box only) $" htmlFor={`base-${box.id}`}>
           <Input
+            id={`base-${box.id}`}
             value={draft.basePrice}
             onChange={(e) => setField("basePrice", e.target.value)}
             onBlur={commit}
@@ -224,8 +227,9 @@ function RowEditor({
             className="tabular-nums"
           />
         </Field>
-        <Field label="Weight (lb, optional)">
+        <Field label="Weight (lb, optional)" htmlFor={`weight-${box.id}`}>
           <Input
+            id={`weight-${box.id}`}
             value={draft.weight}
             onChange={(e) => setField("weight", e.target.value)}
             onBlur={commit}
@@ -291,14 +295,19 @@ function RowEditor({
 
 function Field({
   label,
+  htmlFor,
   children,
 }: {
   label: string;
+  htmlFor?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <Label className="text-muted-foreground text-xs uppercase tracking-wide">
+      <Label
+        htmlFor={htmlFor}
+        className="text-muted-foreground text-xs uppercase tracking-wide"
+      >
         {label}
       </Label>
       {children}
@@ -337,6 +346,7 @@ function TierPriceInput({
           min={0}
           step="0.01"
           placeholder={computed.toFixed(2)}
+          aria-label={`${level.label} price`}
           className={cn("pl-6 tabular-nums", overridden && "border-primary")}
         />
       </div>
