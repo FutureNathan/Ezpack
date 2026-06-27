@@ -36,13 +36,11 @@ export function AboutSection() {
         <span>Made with</span>
         <span aria-hidden="true">❤️</span>
         <span>by</span>
-        <span className="font-semibold underline decoration-dotted underline-offset-2 group-hover:decoration-solid">
-          Nathan
-        </span>
+        <span className="font-semibold">Nathan</span>
         {/* Nathan's black & white astronaut (public/astronaut.png). */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/astronaut.png" alt="" aria-hidden="true" className="h-7 w-auto" />
-        <ArrowUpRight className="text-muted-foreground size-3.5" />
+        <img src="/astronaut.png" alt="" aria-hidden="true" className="h-9 w-auto" />
+        <ArrowUpRight className="size-4" />
       </a>
 
       <p className="text-muted-foreground text-center text-xs">
