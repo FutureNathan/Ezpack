@@ -148,6 +148,29 @@ Notes baked into the seeding routine (`lib/seed.ts`):
 - Rows with an **empty name** display as their dimensions; the two **foam sheets**
   are `material`, so they never appear as box recommendations.
 
+### Import your own box list
+
+A store can load its own boxes and pricing from **Inventory → Import** (file
+upload or paste). The importer (`lib/import-boxes.ts`) is forgiving about
+headers — it maps synonyms like `L/W/H`, `price`/`box only` → `basePrice`,
+`wt` → `weight`, etc. The only requirement is length/width/height columns;
+everything else is optional. Per-tier price columns (`standard`,
+`standard_plus`, `fragile`, `custom`) become price overrides, and rows that look
+like foam/material are categorized as `material` (excluded from matching).
+
+- **Add to inventory** appends the imported boxes (as `source: 'custom'`).
+- **Replace all** swaps the whole catalog for the imported list.
+- **Template** downloads a starter CSV; **Export current** downloads the live
+  inventory as a re-importable CSV (round-trips tier-price overrides).
+
+Minimal example:
+
+```csv
+name,length,width,height,weight,basePrice,sku,category
+My Small Box,12,9,4,1,3.50,SB-001,box
+My Large Box,24,18,12,3,7.00,LB-001,box
+```
+
 ---
 
 ## The matching algorithm
@@ -228,8 +251,8 @@ the same way.)
 
 **Built:** Find Box (live matching, copy, level selector, sort toggle, Custom
 price override), Inventory (search, show/hide, inline editing, add/remove, tier
-prices, suspect-weight flags), Settings (editable upcharges/paddings, reset
-catalog), History (logged on dimension-copy).
+prices, suspect-weight flags, **CSV import/export**), Settings (editable
+upcharges/paddings, reset catalog), History (logged on dimension-copy).
 
 **Stubbed:** Billing and Support are intentional visible-but-empty placeholders.
 

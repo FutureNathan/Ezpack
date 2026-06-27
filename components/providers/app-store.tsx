@@ -11,6 +11,7 @@ import {
   type NewBox,
 } from "@/lib/repository";
 import { getSeedBoxes } from "@/lib/seed";
+import type { ImportDraft } from "@/lib/import-boxes";
 import {
   STORAGE_KEYS,
   genId,
@@ -49,7 +50,11 @@ interface AppStore {
   updateBox: (id: string, patch: Partial<Omit<Box, "id">>) => Promise<void>;
   removeBox: (id: string) => Promise<void>;
 
-  // Catalog / levels
+  // Import / catalog / levels
+  importBoxes: (
+    drafts: ImportDraft[],
+    mode: "append" | "replace"
+  ) => Promise<number>;
   resetCatalog: () => Promise<void>;
   updateLevel: (key: PackingLevelKey, patch: Partial<PackingLevel>) => void;
   resetLevels: () => void;
@@ -121,6 +126,22 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     [repo]
   );
 
+  const importBoxes = React.useCallback(
+    async (drafts: ImportDraft[], mode: "append" | "replace") => {
+      const created: Box[] = drafts.map((d) => ({
+        ...d,
+        id: genId("cust"),
+        source: "custom",
+        inStock: true,
+      }));
+      const next = mode === "replace" ? created : [...boxes, ...created];
+      const saved = await repo.bulkSet(next);
+      setBoxes(saved);
+      return created.length;
+    },
+    [repo, boxes]
+  );
+
   const resetCatalog = React.useCallback(async () => {
     const seeded = await repo.bulkSet(getSeedBoxes());
     setBoxes(seeded);
@@ -186,6 +207,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     addBox,
     updateBox,
     removeBox,
+    importBoxes,
     resetCatalog,
     updateLevel,
     resetLevels,

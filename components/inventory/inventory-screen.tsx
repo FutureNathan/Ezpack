@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useStore } from "@/components/providers/app-store";
 import { InventoryRow } from "./inventory-row";
+import { ImportPanel } from "./import-panel";
 import { dimsString } from "@/lib/box-display";
 import type { Box } from "@/lib/types";
 
@@ -28,6 +29,7 @@ export function InventoryScreen() {
   const { ready, boxes, addBox } = useStore();
   const [query, setQuery] = React.useState("");
   const [expanded, setExpanded] = React.useState<Set<string>>(new Set());
+  const [importing, setImporting] = React.useState(false);
 
   const filtered = React.useMemo(
     () => boxes.filter((b) => matchesQuery(b, query)),
@@ -71,10 +73,23 @@ export function InventoryScreen() {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-lg font-semibold">Inventory</h1>
-        <Button type="button" size="sm" onClick={handleAdd}>
-          <Plus /> Add box
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => setImporting((v) => !v)}
+            aria-expanded={importing}
+          >
+            <Upload /> Import
+          </Button>
+          <Button type="button" size="sm" onClick={handleAdd}>
+            <Plus /> Add box
+          </Button>
+        </div>
       </div>
+
+      {importing ? <ImportPanel onClose={() => setImporting(false)} /> : null}
 
       <div className="relative">
         <Search className="text-muted-foreground absolute left-2.5 top-1/2 size-4 -translate-y-1/2" />
