@@ -1,0 +1,1 @@
+EZ Pack — a packing estimator. Type three dimensions and pick a packing level to instantly get the best box, its outer dimensions to paste into shipping software, and the packing price.
