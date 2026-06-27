@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Plus, Search, Upload } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,6 +59,7 @@ export function InventoryScreen() {
     });
     setExpanded((prev) => new Set(prev).add(created.id));
     setQuery("");
+    toast.success("Box added");
     // Bring the new (appended) row into view.
     requestAnimationFrame(() => {
       document

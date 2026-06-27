@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ChevronDown, Trash2, TriangleAlert } from "lucide-react";
+import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,14 +29,23 @@ export function InventoryRow({
   const suspectWeight = hasSuspectWeight(box);
 
   return (
-    <div className="bg-card overflow-hidden rounded-lg border">
+    <div
+      className={cn(
+        "bg-card overflow-hidden rounded-lg border transition-[border-color,border-width]",
+        // Highlight the row being edited with a thicker black border.
+        expanded && "border-2 border-foreground"
+      )}
+    >
       {/* Collapsed header row */}
       <div className="flex items-center gap-3 p-3">
         <Switch
           checked={box.inStock}
-          onCheckedChange={(checked) =>
-            void updateBox(box.id, { inStock: checked })
-          }
+          onCheckedChange={(checked) => {
+            void updateBox(box.id, { inStock: checked });
+            toast.success(checked ? "Shown in results" : "Hidden from results", {
+              id: `stock-${box.id}`,
+            });
+          }}
           aria-label={`Show ${displayName(box)} in results`}
         />
         <button
@@ -144,7 +154,7 @@ function RowEditor({
 
   /** Persist the whole draft (called on blur of any editable field). */
   function commit() {
-    void updateBox(box.id, {
+    const patch = {
       name: draft.name,
       type: draft.type,
       length: numOr(box.length, draft.length),
@@ -156,7 +166,30 @@ function RowEditor({
           : numOr(box.weight ?? 0, draft.weight),
       basePrice: numOr(box.basePrice, draft.basePrice),
       priceOverrides: buildOverrides(),
-    });
+    };
+    // Only persist + toast when something actually changed.
+    const unchanged =
+      patch.name === box.name &&
+      patch.type === box.type &&
+      patch.length === box.length &&
+      patch.width === box.width &&
+      patch.height === box.height &&
+      (patch.weight ?? null) === (box.weight ?? null) &&
+      patch.basePrice === box.basePrice &&
+      JSON.stringify(patch.priceOverrides ?? null) ===
+        JSON.stringify(box.priceOverrides ?? null);
+    if (unchanged) return;
+    void updateBox(box.id, patch);
+    toast.success("Saved", { id: `save-${box.id}` });
+  }
+
+  function handleRemove() {
+    const ok = window.confirm(
+      `Remove "${displayName(box)}"? This can't be undone.`
+    );
+    if (!ok) return;
+    void removeBox(box.id);
+    toast.success("Box removed");
   }
 
   const liveBase = numOr(box.basePrice, draft.basePrice);
@@ -272,11 +305,13 @@ function RowEditor({
           type="button"
           variant="ghost"
           size="sm"
-          onClick={() =>
-            void updateBox(box.id, {
-              category: box.category === "box" ? "material" : "box",
-            })
-          }
+          onClick={() => {
+            const next = box.category === "box" ? "material" : "box";
+            void updateBox(box.id, { category: next });
+            toast.success(next === "material" ? "Marked as material" : "Marked as box", {
+              id: `cat-${box.id}`,
+            });
+          }}
         >
           {box.category === "box" ? "Mark as material" : "Mark as box"}
         </Button>
@@ -284,7 +319,7 @@ function RowEditor({
           type="button"
           variant="destructive"
           size="sm"
-          onClick={() => void removeBox(box.id)}
+          onClick={handleRemove}
         >
           <Trash2 /> Remove
         </Button>

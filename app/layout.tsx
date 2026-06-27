@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/app-shell";
 import { AppStoreProvider } from "@/components/providers/app-store";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +68,7 @@ export default function RootLayout({
         <AppStoreProvider>
           <AppShell>{children}</AppShell>
         </AppStoreProvider>
+        <Toaster />
       </body>
     </html>
   );

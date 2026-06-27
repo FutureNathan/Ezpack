@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { RotateCcw } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -20,7 +21,15 @@ export function SettingsScreen() {
       "Reset the catalog to the seeded boxes? This replaces all boxes " +
         "(including your custom ones and edits) with the original catalog."
     );
-    if (ok) void resetCatalog();
+    if (ok) {
+      void resetCatalog();
+      toast.success("Catalog reset to the seeded boxes");
+    }
+  }
+
+  function handleResetLevels() {
+    resetLevels();
+    toast.success("Packing levels reset to defaults");
   }
 
   return (
@@ -61,7 +70,7 @@ export function SettingsScreen() {
         </div>
 
         <div>
-          <Button type="button" variant="outline" size="sm" onClick={resetLevels}>
+          <Button type="button" variant="outline" size="sm" onClick={handleResetLevels}>
             <RotateCcw /> Reset levels to defaults
           </Button>
         </div>
@@ -120,13 +129,25 @@ function LevelSettingRow({
 
   function commitUpcharge() {
     const n = Number(upcharge);
-    if (Number.isFinite(n) && n >= 0) onUpcharge(n);
-    else setUpcharge(String(level.upcharge));
+    if (!Number.isFinite(n) || n < 0) {
+      setUpcharge(String(level.upcharge));
+      return;
+    }
+    if (n !== level.upcharge) {
+      onUpcharge(n);
+      toast.success("Saved", { id: `level-${level.key}` });
+    }
   }
   function commitPadding() {
     const n = Number(padding);
-    if (Number.isFinite(n) && n >= 0) onPadding(n);
-    else setPadding(String(level.padding));
+    if (!Number.isFinite(n) || n < 0) {
+      setPadding(String(level.padding));
+      return;
+    }
+    if (n !== level.padding) {
+      onPadding(n);
+      toast.success("Saved", { id: `level-${level.key}` });
+    }
   }
 
   return (
