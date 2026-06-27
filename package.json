@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "gen:seed": "node scripts/generate-seed-mirror.mjs",
+    "verify:seed": "node scripts/verify-seed.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.10",
