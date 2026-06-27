@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "@/components/providers/app-store";
+import { AboutSection } from "@/components/about-section";
 import type { PackingLevel } from "@/lib/types";
 
 export function SettingsScreen() {
@@ -84,6 +85,10 @@ export function SettingsScreen() {
             Reset to seeded catalog
           </Button>
         </div>
+      </Card>
+
+      <Card className="gap-4 p-4">
+        <AboutSection />
       </Card>
     </div>
   );

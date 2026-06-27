@@ -3,15 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ReceiptText, Settings } from "lucide-react";
+import { Home } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 const TABS = [
   { href: "/", label: "Find Box" },
   { href: "/inventory", label: "Inventory" },
-  { href: "/billing", label: "Billing" },
-  { href: "/support", label: "Support" },
+  { href: "/history", label: "History" },
+  { href: "/settings", label: "Settings" },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
@@ -39,27 +39,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="text-muted-foreground hidden text-xs sm:inline">
               packing estimator
             </span>
-          </Link>
-
-          <Link
-            href="/history"
-            aria-label="History"
-            className={cn(
-              "hover:bg-accent flex size-9 items-center justify-center rounded-md transition-colors",
-              isActive(pathname, "/history") && "bg-accent"
-            )}
-          >
-            <ReceiptText className="size-5" />
-          </Link>
-          <Link
-            href="/settings"
-            aria-label="Settings"
-            className={cn(
-              "hover:bg-accent flex size-9 items-center justify-center rounded-md transition-colors",
-              isActive(pathname, "/settings") && "bg-accent"
-            )}
-          >
-            <Settings className="size-5" />
           </Link>
         </div>
 

@@ -65,7 +65,7 @@ fresh, use **Settings → Reset to seeded catalog**, or clear site data.
 ### Project layout
 
 ```
-app/                 # routes: / (Find Box), /inventory, /settings, /history, /billing, /support
+app/                 # routes: / (Find Box), /inventory, /history, /settings
 components/
   app-shell.tsx      # top bar + tab nav
   copy-button.tsx    # one-tap clipboard copy
@@ -251,10 +251,15 @@ the same way.)
 
 **Built:** Find Box (live matching, copy, level selector, sort toggle, Custom
 price override), Inventory (search, show/hide, inline editing, add/remove, tier
-prices, suspect-weight flags, **CSV import/export**), Settings (editable
-upcharges/paddings, reset catalog), History (logged on dimension-copy).
-
-**Stubbed:** Billing and Support are intentional visible-but-empty placeholders.
+prices, suspect-weight flags, **CSV import/export**), History (logged on
+dimension-copy), Settings (editable upcharges/paddings, reset catalog, About).
 
 **Never built (out of scope):** carrier shipping-rate lookups, auth, payments, a
 server backend.
+
+---
+
+## License
+
+MIT © [Nathan Towianski](https://nathantowianski.com). Free and open source —
+view the code, file an idea, or make it your own. Questions or feedback welcome.
