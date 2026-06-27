@@ -123,9 +123,9 @@ clearance for fit (more protection → more void fill → a bigger box). Default
 | --- | --- | --- | --- |
 | `box_only` | Box only | $0.00 | 0.5″ |
 | `standard` | Standard | $1.99 | 1.0″ |
-| `standard_plus` | Standard+ | $4.00 | 1.5″ |
-| `fragile` | Fragile | $10.00 | 2.0″ |
-| `custom` | Custom | $20.00 | 2.0″ |
+| `standard_plus` | Standard+ | $4.00 | 2.0″ |
+| `fragile` | Fragile | $10.00 | 3.0″ |
+| `custom` | Custom | $20.00 | 4.0″ |
 
 **Price for a level** = `priceOverrides[level] ?? (basePrice + upcharge)`. Custom
 is meant to be tuned per job, so the estimate screen lets you override its price

@@ -17,9 +17,9 @@ import type {
 export const DEFAULT_PACKING_LEVELS: PackingLevelsConfig = [
   { key: "box_only", label: "Box only", upcharge: 0.0, padding: 0.5 },
   { key: "standard", label: "Standard", upcharge: 1.99, padding: 1.0 },
-  { key: "standard_plus", label: "Standard+", upcharge: 4.0, padding: 1.5 },
-  { key: "fragile", label: "Fragile", upcharge: 10.0, padding: 2.0 },
-  { key: "custom", label: "Custom", upcharge: 20.0, padding: 2.0 },
+  { key: "standard_plus", label: "Standard+", upcharge: 4.0, padding: 2.0 },
+  { key: "fragile", label: "Fragile", upcharge: 10.0, padding: 3.0 },
+  { key: "custom", label: "Custom", upcharge: 20.0, padding: 4.0 },
 ];
 
 export const PACKING_LEVEL_KEYS: PackingLevelKey[] =

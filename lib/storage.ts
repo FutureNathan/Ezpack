@@ -44,7 +44,10 @@ export function genId(prefix: string): string {
 /** localStorage keys, namespaced so the swap to a backend is a clean boundary. */
 export const STORAGE_KEYS = {
   boxes: "ezpack.boxes.v1",
-  levels: "ezpack.levels.v1",
+  // Bumped to v2 when the default paddings changed (standard+ 2", fragile 3",
+  // custom 4") so existing sessions adopt the new defaults instead of a stale
+  // cached config.
+  levels: "ezpack.levels.v2",
   history: "ezpack.history.v1",
   prefs: "ezpack.prefs.v1",
 } as const;
